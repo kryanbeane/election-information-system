@@ -3,7 +3,7 @@ package electionSystem;
 public class List {
 
     public void thing() {
-        System.out.println("die");
+        System.out.println("diee");
     }
 
 }
