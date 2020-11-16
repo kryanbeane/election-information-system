@@ -1,4 +1,4 @@
-package sample;
+package electionSystem;
 
 public class Controller {
 
