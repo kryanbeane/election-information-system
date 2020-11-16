@@ -7,6 +7,6 @@ public class Controller {
     }
 
     public void testPrint2() {
-        System.out.println("Fuck YEAH");
+        System.out.println("FUCK YEAH");
     }
 }
