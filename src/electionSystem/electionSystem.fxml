@@ -1,8 +1,123 @@
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.GridPane?>
+<?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<GridPane fx:controller="electionSystem.Controller"
-          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
-</GridPane>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="MAIN">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+          <Tab text="ElECTION">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <HBox prefHeight="122.0" prefWidth="600.0" />
+                        <VBox layoutY="122.0" prefHeight="249.0" prefWidth="298.0" />
+                        <VBox layoutX="299.0" layoutY="122.0" prefHeight="249.0" prefWidth="301.0">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="17.0" prefWidth="322.0" text="VIEW ELECTIONS">
+                                 <VBox.margin>
+                                    <Insets left="5.0" right="5.0" top="5.0" />
+                                 </VBox.margin>
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextArea prefHeight="250.0" prefWidth="286.0">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
+                                 </VBox.margin>
+                              </TextArea>
+                              <Button contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="93.0" text="Refresh List">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" />
+                                 </VBox.margin>
+                              </Button>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+               </content>
+          </Tab>
+            <Tab text="CANDIDATE">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <HBox prefHeight="122.0" prefWidth="600.0" />
+                        <VBox layoutY="122.0" prefHeight="249.0" prefWidth="298.0" />
+                        <VBox layoutX="299.0" layoutY="122.0" prefHeight="249.0" prefWidth="301.0">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="17.0" prefWidth="322.0" text="VIEW CANDIDATES">
+                                 <VBox.margin>
+                                    <Insets left="5.0" right="5.0" top="5.0" />
+                                 </VBox.margin>
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextArea prefHeight="250.0" prefWidth="286.0">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
+                                 </VBox.margin>
+                              </TextArea>
+                              <Button contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="93.0" text="Refresh List">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" />
+                                 </VBox.margin>
+                              </Button>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="POLITICIAN">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <HBox prefHeight="122.0" prefWidth="600.0" />
+                        <VBox layoutY="122.0" prefHeight="249.0" prefWidth="298.0" />
+                        <VBox layoutX="299.0" layoutY="122.0" prefHeight="249.0" prefWidth="301.0">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="17.0" prefWidth="322.0" text="VIEW POLITICIANS">
+                                 <VBox.margin>
+                                    <Insets left="5.0" right="5.0" top="5.0" />
+                                 </VBox.margin>
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextArea prefHeight="250.0" prefWidth="286.0">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
+                                 </VBox.margin>
+                              </TextArea>
+                              <Button contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="93.0" text="Refresh List">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" />
+                                 </VBox.margin>
+                              </Button>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

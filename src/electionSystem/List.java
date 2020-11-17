@@ -8,7 +8,6 @@ public class List<F> implements Iterable<F>{
     public Node<F> head, tail=null;
     private int countOfContents = 0;
 
-
     //adds an element to the list.
     public void addNode(F e) {
         //We want to add it in at the end, not the start. Not FIFO
@@ -33,17 +32,13 @@ public class List<F> implements Iterable<F>{
         countOfContents++;
     }
 
-
     public boolean isEmpty(){
         return head==null;
     }
 
-
     public int length(){
         return countOfContents;
     }
-
-
 
     //returns the first node in the list
     public Node<F> accessFirst(){
@@ -51,7 +46,6 @@ public class List<F> implements Iterable<F>{
     }
 
     //adapted from example in notes
-
 
     public void removeNode(int index){
 
@@ -83,9 +77,6 @@ public class List<F> implements Iterable<F>{
     }
 
 
-
-
-
     //returns the second node in the list
     public Node<F> accessSecond(){
         if(head.next!=null) {
@@ -94,7 +85,6 @@ public class List<F> implements Iterable<F>{
             return null;
         }
     }
-
 
     //returns the node at the inputted index in the list
     public Node<F> accessAtIndex(int index){
@@ -111,12 +101,9 @@ public class List<F> implements Iterable<F>{
         return temp;
     }
 
-
-
     public void clear() { //Empty list
         head=null;
     }
-
 
     public  String printList()
     {
@@ -150,6 +137,9 @@ public class List<F> implements Iterable<F>{
     public void emptyList(){
         head=null;
     }
+
+    
+
 }
 
 
