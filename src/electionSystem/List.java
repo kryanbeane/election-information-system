@@ -138,8 +138,6 @@ public class List<F> implements Iterable<F>{
         head=null;
     }
 
-    
-
 }
 
 

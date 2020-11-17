@@ -1,6 +1,8 @@
 package electionSystem;
 
-public class Candidate {
+public class Candidate extends Politician {
+
+    int totalVotes;
 
 
 }
