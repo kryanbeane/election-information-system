@@ -8,11 +8,13 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+    static List<Politician> politicianList = new List<>();
+
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("electionSystem.fxml"));
         primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 600, 450));
+        primaryStage.setScene(new Scene(root, 700, 500));
         primaryStage.show();
     }
 
