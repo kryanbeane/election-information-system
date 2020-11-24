@@ -7,7 +7,7 @@ public class Node <N>{ //N is also called a generic parameter.
     private N contents; //ADT reference!
     public N getContents() { return contents; }
     public void setContents(N c) { contents=c; }
-    public boolean hasNext(){return next!=null;}
+    public boolean hasNext(){return next != null;}
 
 }
 
