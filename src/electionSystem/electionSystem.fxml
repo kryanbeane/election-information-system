@@ -5,113 +5,116 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="electionSystem.Controller">
    <children>
-      <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane prefHeight="500.0" prefWidth="700.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab text="MAIN">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
-          </Tab>
-          <Tab text="ELECTION">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <HBox prefHeight="122.0" prefWidth="600.0" />
-                        <VBox layoutY="122.0" prefHeight="249.0" prefWidth="298.0" />
-                        <VBox layoutX="299.0" layoutY="122.0" prefHeight="249.0" prefWidth="301.0">
-                           <children>
-                              <Label alignment="CENTER" prefHeight="17.0" prefWidth="322.0" text="VIEW ELECTIONS">
-                                 <VBox.margin>
-                                    <Insets left="5.0" right="5.0" top="5.0" />
-                                 </VBox.margin>
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <TextArea prefHeight="250.0" prefWidth="286.0">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
-                                 </VBox.margin>
-                              </TextArea>
-                              <Button contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="93.0" text="Refresh List">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" />
-                                 </VBox.margin>
-                              </Button>
-                           </children>
-                        </VBox>
-                     </children>
-                  </AnchorPane>
-               </content>
-          </Tab>
-            <Tab text="CANDIDATE">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <HBox prefHeight="122.0" prefWidth="600.0" />
-                        <VBox layoutY="122.0" prefHeight="249.0" prefWidth="298.0" />
-                        <VBox layoutX="299.0" layoutY="122.0" prefHeight="249.0" prefWidth="301.0">
-                           <children>
-                              <Label alignment="CENTER" prefHeight="17.0" prefWidth="322.0" text="VIEW CANDIDATES">
-                                 <VBox.margin>
-                                    <Insets left="5.0" right="5.0" top="5.0" />
-                                 </VBox.margin>
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <TextArea prefHeight="250.0" prefWidth="286.0">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
-                                 </VBox.margin>
-                              </TextArea>
-                              <Button contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="93.0" text="Refresh List">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" />
-                                 </VBox.margin>
-                              </Button>
-                           </children>
-                        </VBox>
-                     </children>
-                  </AnchorPane>
-               </content>
-            </Tab>
             <Tab text="POLITICIAN">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="700.0">
                      <children>
-                        <HBox prefHeight="122.0" prefWidth="600.0" />
-                        <VBox layoutY="122.0" prefHeight="249.0" prefWidth="298.0" />
-                        <VBox layoutX="299.0" layoutY="122.0" prefHeight="249.0" prefWidth="301.0">
-                           <children>
-                              <Label alignment="CENTER" prefHeight="17.0" prefWidth="322.0" text="VIEW POLITICIANS">
-                                 <VBox.margin>
-                                    <Insets left="5.0" right="5.0" top="5.0" />
-                                 </VBox.margin>
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <TextArea prefHeight="250.0" prefWidth="286.0">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
-                                 </VBox.margin>
-                              </TextArea>
-                              <Button contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="93.0" text="Refresh List">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" />
-                                 </VBox.margin>
-                              </Button>
-                           </children>
-                        </VBox>
+                        <BorderPane prefHeight="285.0" prefWidth="700.0">
+                           <left>
+                              <VBox alignment="CENTER" prefHeight="313.0" prefWidth="100.0" style="-fx-background-color: aliceblue;" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Button fx:id="floorAisleList21" mnemonicParsing="false" prefHeight="27.0" prefWidth="55.0" text="Add">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="20.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <Button mnemonicParsing="false" text="Delete">
+                                       <VBox.margin>
+                                          <Insets left="20.0" top="5.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                 </children>
+                              </VBox>
+                           </left>
+                           <center>
+                              <VBox minHeight="250.0" minWidth="600.0" prefHeight="200.0" prefWidth="384.0" style="-fx-background-color: aliceblue;" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Label fx:id="warningLabel3" prefHeight="17.0" prefWidth="546.0" />
+                                    <Label prefHeight="17.0" prefWidth="128.0" text="Politician Name">
+                                       <VBox.margin>
+                                          <Insets left="20.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <TextField fx:id="textDescription">
+                                       <VBox.margin>
+                                          <Insets left="20.0" right="20.0" />
+                                       </VBox.margin>
+                                    </TextField>
+                                    <Label prefHeight="17.0" prefWidth="131.0" text="Date Of Birth">
+                                       <VBox.margin>
+                                          <Insets left="20.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <TextField fx:id="textQuantity" prefHeight="27.0" prefWidth="217.0">
+                                       <VBox.margin>
+                                          <Insets left="20.0" right="20.0" />
+                                       </VBox.margin>
+                                    </TextField>
+                                    <Label prefHeight="17.0" prefWidth="174.0" text="Political Party">
+                                       <VBox.margin>
+                                          <Insets left="20.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <TextField fx:id="textMinTemp">
+                                       <VBox.margin>
+                                          <Insets left="20.0" right="20.0" />
+                                       </VBox.margin>
+                                    </TextField>
+                                    <Label prefHeight="17.0" prefWidth="195.0" text="Home County">
+                                       <VBox.margin>
+                                          <Insets left="20.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <TextField fx:id="textMaxTemp">
+                                       <VBox.margin>
+                                          <Insets left="20.0" right="20.0" />
+                                       </VBox.margin>
+                                    </TextField>
+                                    <Label prefHeight="17.0" prefWidth="195.0" text="Image URL">
+                                       <padding>
+                                          <Insets left="20.0" right="20.0" />
+                                       </padding>
+                                    </Label>
+                                    <TextField fx:id="textMaxTemp1">
+                                       <VBox.margin>
+                                          <Insets left="20.0" right="20.0" />
+                                       </VBox.margin>
+                                    </TextField>
+                                 </children>
+                              </VBox>
+                           </center>
+                           <bottom>
+                              <VBox prefHeight="368.0" prefWidth="700.0" style="-fx-background-color: lightblue;" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Label text="Politicians in Database">
+                                       <padding>
+                                          <Insets left="10.0" top="10.0" />
+                                       </padding>
+                                    </Label>
+                                    <TableView fx:id="palletTable" maxHeight="-Infinity" maxWidth="700.0" prefHeight="228.0" prefWidth="600.0">
+                                       <columns>
+                                          <TableColumn fx:id="description" prefWidth="204.0" style="color: red;" text="Name" />
+                                          <TableColumn fx:id="quantity" prefWidth="93.0" text="DOB" />
+                                          <TableColumn fx:id="minTemp" prefWidth="95.0" text="Political Party" />
+                                          <TableColumn fx:id="maxTemp" prefWidth="128.0" text="Home County" />
+                                          <TableColumn fx:id="maxTemp1" prefWidth="179.0" text="Image URL" />
+                                       </columns>
+                                    </TableView>
+                                 </children>
+                              </VBox>
+                           </bottom>
+                        </BorderPane>
                      </children>
                   </AnchorPane>
                </content>

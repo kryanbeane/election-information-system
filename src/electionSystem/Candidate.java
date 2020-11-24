@@ -2,7 +2,8 @@ package electionSystem;
 
 public class Candidate extends Politician {
 
-    int totalVotes;
 
-
+    public Candidate(String currentParty, String name, String DOB, String politicalParty, String homeCounty, String photoURL) {
+        super(currentParty, name, DOB, politicalParty, homeCounty, photoURL);
+    }
 }
