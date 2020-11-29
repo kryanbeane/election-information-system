@@ -61,12 +61,12 @@
                                           <Insets left="20.0" right="20.0" />
                                        </VBox.margin>
                                     </TextField>
-                                    <Label fx:id="t" prefHeight="17.0" prefWidth="174.0" text="Political Party">
+                                    <Label fx:id="t" prefHeight="17.0" prefWidth="174.0" text="Current Party">
                                        <VBox.margin>
                                           <Insets left="20.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <TextField fx:id="textPoliticianParty">
+                                    <TextField fx:id="textCurrentParty">
                                        <VBox.margin>
                                           <Insets left="20.0" right="20.0" />
                                        </VBox.margin>
@@ -102,13 +102,13 @@
                                           <Insets left="10.0" top="10.0" />
                                        </padding>
                                     </Label>
-                                    <TableView fx:id="palletTable" maxHeight="-Infinity" maxWidth="700.0" prefHeight="194.0" prefWidth="700.0">
+                                    <TableView fx:id="politicianTable" maxHeight="-Infinity" maxWidth="700.0" prefHeight="194.0" prefWidth="700.0">
                                        <columns>
-                                          <TableColumn fx:id="description" prefWidth="204.0" style="color: red;" text="Name" />
-                                          <TableColumn fx:id="quantity" prefWidth="93.0" text="DOB" />
-                                          <TableColumn fx:id="minTemp" prefWidth="95.0" text="Political Party" />
-                                          <TableColumn fx:id="maxTemp" prefWidth="128.0" text="Home County" />
-                                          <TableColumn fx:id="maxTemp1" prefWidth="179.0" text="Image URL" />
+                                          <TableColumn fx:id="pNameColumn" prefWidth="204.0" style="color: red;" text="Name" />
+                                          <TableColumn fx:id="pDOBColumn" prefWidth="93.0" text="DOB" />
+                                          <TableColumn fx:id="currentPartyColumn" prefWidth="95.0" text="Political Party" />
+                                          <TableColumn fx:id="pHomeCountyColumn" prefWidth="128.0" text="Home County" />
+                                          <TableColumn fx:id="pPhotoURLColumn" prefWidth="179.0" text="Image URL" />
                                        </columns>
                                     </TableView>
                                  </children>
