@@ -127,6 +127,7 @@ public class Controller {
         Politician pol = candidateSelectionTable.getSelectionModel().getSelectedItem();
 
         Candidate cand = new Candidate(pol.name, pol.currentParty, pol.DOB, pol.homeCounty, pol.photoURL);
+        Main.candidatesList.addNode(cand);
         myCandidateObsList.add(cand);
 
         candidateTable.setItems(myCandidateObsList);
