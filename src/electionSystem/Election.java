@@ -4,17 +4,40 @@ public class Election {
 
     String electionType;
     String location;
-    int dayOfMonth;
-    int month;
-    int year;
+    String date;
     int numberOfWinners;
 
-    public Election(String electionType, String location, int dayOfMonth, int month, int year, int numberOfWinners) {
+
+    public String getElectionType() {
+        return electionType;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public int getNumberOfWinners() {
+        return numberOfWinners;
+    }
+
+    public Election(String electionType, String location, String date, int numberOfWinners) {
         this.electionType = electionType;
         this.location = location;
-        this.dayOfMonth = dayOfMonth;
-        this.month = month;
-        this.year = year;
+        this.date = date;
         this.numberOfWinners = numberOfWinners;
+    }
+
+    @Override
+    public String toString() {
+        return "Election{" +
+                "electionType='" + electionType + '\'' +
+                ", location='" + location + '\'' +
+                ", date='" + date + '\'' +
+                ", numberOfWinners=" + numberOfWinners +
+                '}';
     }
 }

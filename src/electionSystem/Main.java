@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     static List<Politician> politicianList = new List<>();
+    static List<Election> electionsList = new List<>();
 
     @Override
     public void start(Stage primaryStage) throws Exception{

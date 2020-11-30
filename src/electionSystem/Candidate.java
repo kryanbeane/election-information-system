@@ -2,8 +2,14 @@ package electionSystem;
 
 public class Candidate extends Politician {
 
+    String name;
+    String currentParty;
+    String DOB;
+    String homeCounty;
+    String photoURL;
 
-    public Candidate(String currentParty, String name, String DOB, String politicalParty, String homeCounty, String photoURL) {
-        super(currentParty, name, DOB, homeCounty, photoURL);
+    public Candidate(String name, String currentParty, String DOB, String homeCounty, String photoURL) {
+        super(name, currentParty, DOB, homeCounty, photoURL);
     }
+
 }
