@@ -34,6 +34,11 @@ public class Controller {
         updatePoliticianTable();
         System.out.println(Main.politicianList.printList());
         // Need to figure out Image URL
+        textCurrentParty.clear();
+        textPoliticianName.clear();
+        textDateOfBirth.clear();
+        textHomeCounty.clear();
+        textImageURL.clear();
     }
 
     public void updatePoliticianTable(){
