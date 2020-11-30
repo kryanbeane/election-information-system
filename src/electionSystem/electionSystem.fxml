@@ -30,7 +30,7 @@
                                           <Insets bottom="5.0" left="20.0" />
                                        </VBox.margin>
                                     </Button>
-                                    <Button mnemonicParsing="false" text="Delete">
+                                    <Button mnemonicParsing="false" onAction="#deletePolitician" text="Delete">
                                        <VBox.margin>
                                           <Insets left="20.0" top="5.0" />
                                        </VBox.margin>
@@ -134,7 +134,7 @@
                                           <Insets bottom="5.0" left="20.0" />
                                        </VBox.margin>
                                     </Button>
-                                    <Button mnemonicParsing="false" text="Delete">
+                                    <Button mnemonicParsing="false" onAction="#deleteElection" text="Delete">
                                        <VBox.margin>
                                           <Insets left="20.0" top="5.0" />
                                        </VBox.margin>
@@ -199,6 +199,7 @@
                                     </Label>
                                     <TableView fx:id="electionTable" maxHeight="-Infinity" maxWidth="700.0" prefHeight="194.0" prefWidth="700.0">
                                        <columns>
+                                          <TableColumn fx:id="electionIDColumn" prefWidth="59.0" text="ID" />
                                           <TableColumn fx:id="electionTypeColumn" prefWidth="204.0" style="color: red;" text="Type" />
                                           <TableColumn fx:id="electionLocationColumn" prefWidth="93.0" text="Location" />
                                           <TableColumn fx:id="electionDateColumn" prefWidth="95.0" text="Date" />
@@ -242,7 +243,7 @@
                                                       <Insets left="290.0" />
                                                    </HBox.margin>
                                                 </Button>
-                                                <Button mnemonicParsing="false" text="Delete">
+                                                <Button mnemonicParsing="false" onAction="#deleteCandidate" text="Delete">
                                                    <HBox.margin>
                                                       <Insets left="20.0" />
                                                    </HBox.margin>

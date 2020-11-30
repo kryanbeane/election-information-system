@@ -1,12 +1,15 @@
 package electionSystem;
 
 public class Election {
-
+    String Id;
     String electionType;
     String location;
     String date;
     int numberOfWinners;
 
+    public String getId() {
+        return Id;
+    }
 
     public String getElectionType() {
         return electionType;
@@ -24,7 +27,8 @@ public class Election {
         return numberOfWinners;
     }
 
-    public Election(String electionType, String location, String date, int numberOfWinners) {
+    public Election(String Id, String electionType, String location, String date, int numberOfWinners) {
+        this.Id = Id;
         this.electionType = electionType;
         this.location = location;
         this.date = date;

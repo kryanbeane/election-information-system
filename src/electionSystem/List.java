@@ -46,7 +46,6 @@ public class List<F> implements Iterable<F>{
     }
 
     //adapted from example in notes
-
     public void removeNode(int index){
 
         if (head!=null){                                    //check to make sure not empty
@@ -76,7 +75,6 @@ public class List<F> implements Iterable<F>{
         else System.out.println("The list was empty!");
     }
 
-
     //returns the second node in the list
     public Node<F> accessSecond(){
         if(head.next!=null) {
@@ -105,8 +103,7 @@ public class List<F> implements Iterable<F>{
         head=null;
     }
 
-    public  String printList()
-    {
+    public  String printList() {
         Node<F> currNode = head;
         String fullList ="";
 
