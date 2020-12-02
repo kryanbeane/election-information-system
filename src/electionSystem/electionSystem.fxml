@@ -238,7 +238,7 @@
                                           </TableView>
                                           <HBox prefHeight="41.0" prefWidth="700.0">
                                              <children>
-                                                <Button mnemonicParsing="false" onAction="#updateCandidateTable" text="Add">
+                                                <Button mnemonicParsing="false" onAction="#addCandidate" text="Add">
                                                    <HBox.margin>
                                                       <Insets left="290.0" />
                                                    </HBox.margin>

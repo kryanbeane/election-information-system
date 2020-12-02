@@ -148,6 +148,9 @@ public class Controller {
         electionTable.setItems(myElectionObsList);
     }
 
+    /**
+     *
+     */
     public void deleteElection() {
         try {
             currElection = electionTable.getSelectionModel().getSelectedItem();
@@ -166,11 +169,15 @@ public class Controller {
         }
     }
 
+    /**
+     *
+     */
     public void addCandidate() {
         Politician pol = candidateSelectionTable.getSelectionModel().getSelectedItem();
         Candidate cand = new Candidate(pol.getId(), pol.name, pol.currentParty, pol.DOB, pol.homeCounty, pol.photoURL);
-        myCandidateObsList.add(cand);
+
         Main.candidatesList.addNode(cand);
+
         updateCandidateTable();
 
     }
@@ -193,6 +200,9 @@ public class Controller {
     public void updateCandidateTable() {
         myCandidateObsList.clear();
         candidateNameColumn.setCellValueFactory(new PropertyValueFactory<Candidate,String >("name"));
+        for(Candidate candidate: Main.candidatesList) {
+            myCandidateObsList.add(candidate);
+        }
         candidateTable.setItems(myCandidateObsList);
     }
 
