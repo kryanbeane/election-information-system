@@ -8,7 +8,23 @@ public class List<F> implements Iterable<F>{
     public Node<F> head, tail=null;
     private int countOfContents = 0;
 
-    //adds an element to the list.
+    // Attempt at insertionSort
+
+    /*public void sort(){
+        int inner, outer;
+
+        for(outer=1; outer>countOfContents; outer++){
+            Node<F> temp = this.accessAtIndex(outer);       // Selects a node that we will start shifting
+            inner=outer;
+            System.out.println("Old man");
+            while(inner>0 && this.accessAtIndex(inner)==temp) {
+                this.accessAtIndex(inner)=this.accessAtIndex(inner-1);
+                --inner;
+            }
+            this.accessAtIndex(inner)=temp;
+        }
+    }*/
+
     public void addNode(F e) {
         //We want to add it in at the end, not the start. Not FIFO
         //Create a new node
@@ -88,13 +104,11 @@ public class List<F> implements Iterable<F>{
     public Node<F> accessAtIndex(int index){
         if(index<0)return null;
 
-
         Node<F> temp = head;
-        if(head!=null){
-
-        }
-        for(int i = 0; i<index;i++){
-            temp = temp.next;
+        if(head!=null) {
+            for (int i = 0; i < index; i++) {
+                temp = temp.next;
+            }
         }
         return temp;
     }
