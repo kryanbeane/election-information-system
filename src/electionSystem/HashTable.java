@@ -29,10 +29,11 @@ public class HashTable {
                 }
                 return key % TABLE_SIZE;                    // This is the bones of the function
             }
+
             void insert(String value) {
                 int hash = HashFunc(value);
                 if (table[hash] == null) {                  // What if table hash is not equal to null?
-                    table[hash] = new HashEntry(value);
+                    table[hash] = new HashEntry(value);     // Need to add else statement for if hash =/= null
                 }
             }
 
@@ -45,6 +46,7 @@ public class HashTable {
                         return table[hash];
                 }
             }
+
             void remove(String value) {
                 int hash = HashFunc(value);
                 if (table[hash] != null) {
