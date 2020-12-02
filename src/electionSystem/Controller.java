@@ -28,6 +28,10 @@ public class Controller {
     @FXML TableView<Election> electionTable;
     @FXML TableView<Candidate> candidateTable;
 
+    /**
+     * Generates ID to be assigned to Politicians, Candidates and Elections.
+     * @return - Randomly generated ID.
+     */
     public String generateID(){
         //generates an id
         String ID;
@@ -82,6 +86,9 @@ public class Controller {
         candidateSelectionTable.setItems(myPoliticianObsList.sorted());
     }
 
+    /**
+     *
+     */
     public void deletePolitician() {
         try {
         currPolitician = politicianTable.getSelectionModel().getSelectedItem();
@@ -99,6 +106,7 @@ public class Controller {
             System.out.println("You have not chosen a Politician!");
         }
     }
+
     /**
      * Adds election to the list of elections.
      */
