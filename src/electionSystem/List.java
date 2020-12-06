@@ -1,6 +1,5 @@
 package electionSystem;
 
-
 import java.util.Iterator;
 
 public class List<F> implements Iterable<F>{
@@ -25,6 +24,7 @@ public class List<F> implements Iterable<F>{
             this.accessAtIndex(inner)=temp;
         }
     }*/
+
     //first attempt at swapping nodes.
     /*public void swap(int node1Index, int node2Index){
         Node<F>  node1 = head, node2 = head;
@@ -189,21 +189,21 @@ public class List<F> implements Iterable<F>{
         countOfContents++;
     }
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return head==null;
     }
 
-    public int length(){
+    public int length() {
         return countOfContents;
     }
 
     //returns the first node in the list
-    public Node<F> accessFirst(){
+    public Node<F> accessFirst() {
         return head;
     }
 
     //adapted from example in notes
-    public void removeNode(int index){
+    public void removeNode(int index) {
 
         if (head!=null){                                    //check to make sure not empty
             Node<F> temp;                                   //Update, now using two nodes

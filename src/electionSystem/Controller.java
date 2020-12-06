@@ -250,7 +250,7 @@ public class Controller {
         }
     }*/
 
-    public int findLargestCandidatePos(List<Candidate> candList,int length){
+    public int findLargestCandidatePos(List<Candidate> candList, int length){
         int largestPos = 0;
         for(int i = 1; i<length;i++){
             if(candList.accessAtIndex(i).getContents().getName().compareTo(candList.accessAtIndex(largestPos).getContents().getName())>0){
