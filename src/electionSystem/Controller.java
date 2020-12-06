@@ -228,7 +228,48 @@ public class Controller {
     }
 
     public void sortCandidateList(){
-        Main.candidatesList.sort();
+        Main.candidatesList = candidateSelectionSort(Main.candidatesList);
+        updateCandidateTable();
     }
+
+    //Insertionsort
+   /* public void sort(List<Candidate> candlist){
+        int n= candlist.length();
+        for(int i=1 ; i<n ; i++){
+            String key = candlist.accessAtIndex(i).getContents().getName();
+            int j = i-1;
+            while(j>=0 && candlist.accessAtIndex(j).getContents().getName().compareToIgnoreCase(key)>0){
+                Node<Candidate> temp = candlist.accessAtIndex(j+1);
+                temp=candlist.accessAtIndex(j);
+                temp.previous = candlist.accessAtIndex(j-1)
+
+                 =candlist.accessAtIndex(j);
+                j=j-1;
+            }
+
+        }
+    }*/
+
+    public int findLargestCandidatePos(List<Candidate> candList){
+        int largestPos = 0;
+        for(int i = 0; i<candList.length()+1;i++){
+            if(candList.accessAtIndex(i).getContents().getName().compareTo(candList.accessAtIndex(largestPos).getContents().getName())>0){
+                largestPos = i;
+            }
+        }
+        return largestPos;
+    }
+
+    public List<Candidate> candidateSelectionSort(List<Candidate> candList) {
+        for (int i = candList.length(); i >= 0; i--) {
+            int posLargest = findLargestCandidatePos(candList);
+            candList.swapContents(posLargest, i - 1);
+        }
+        return candList;
+    }
+
+
+
+
 
 }

@@ -13,4 +13,15 @@ public class Candidate extends Politician {
         super(id ,name, currentParty, DOB, homeCounty, photoURL);
     }
 
+    @Override
+    public String toString() {
+        return "Candidate{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", currentParty='" + currentParty + '\'' +
+                ", DOB='" + DOB + '\'' +
+                ", homeCounty='" + homeCounty + '\'' +
+                ", photoURL='" + photoURL + '\'' +
+                '}';
+    }
 }

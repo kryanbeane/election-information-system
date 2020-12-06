@@ -39,4 +39,16 @@ public class Politician {
     public String getPhotoURL() {
         return photoURL;
     }
+
+    @Override
+    public String toString() {
+        return "Politician{" +
+                "id='" + id + '\'' +
+                ", currentParty='" + currentParty + '\'' +
+                ", name='" + name + '\'' +
+                ", DOB='" + DOB + '\'' +
+                ", homeCounty='" + homeCounty + '\'' +
+                ", photoURL='" + photoURL + '\'' +
+                '}';
+    }
 }

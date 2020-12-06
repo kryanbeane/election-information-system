@@ -11,6 +11,7 @@ public class Main extends Application {
     static List<Politician> politicianList = new List<>();
     static List<Election> electionsList = new List<>();
     static List<Candidate> candidatesList = new List<>();
+    static List<Candidate> sortedCandidatesList = new List<>();
 
     @Override
     public void start(Stage primaryStage) throws Exception{
