@@ -55,7 +55,7 @@ public class Controller {
         String homeCounty = textHomeCounty.getText();
         String photoURL = textImageURL.getText();
 
-        Main.politicianList.addNode(new Politician(generateID(), currentParty, name, DOB, homeCounty, photoURL));
+        Main.politicianList.addNode(new Politician(generateID(),name,currentParty, DOB, homeCounty, photoURL));
         updatePoliticiansTables();
         System.out.println(Main.politicianList.printList());
         // Need to figure out Image URL
@@ -250,9 +250,9 @@ public class Controller {
         }
     }*/
 
-    public int findLargestCandidatePos(List<Candidate> candList){
+    public int findLargestCandidatePos(List<Candidate> candList,int length){
         int largestPos = 0;
-        for(int i = 0; i<candList.length()+1;i++){
+        for(int i = 1; i<length;i++){
             if(candList.accessAtIndex(i).getContents().getName().compareTo(candList.accessAtIndex(largestPos).getContents().getName())>0){
                 largestPos = i;
             }
@@ -261,9 +261,10 @@ public class Controller {
     }
 
     public List<Candidate> candidateSelectionSort(List<Candidate> candList) {
-        for (int i = candList.length(); i >= 0; i--) {
-            int posLargest = findLargestCandidatePos(candList);
+        for (int i = candList.length(); i > 0; i--) {
+            int posLargest = findLargestCandidatePos(candList, i);
             candList.swapContents(posLargest, i - 1);
+            System.out.println(candList);
         }
         return candList;
     }
