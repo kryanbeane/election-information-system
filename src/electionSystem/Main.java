@@ -16,16 +16,11 @@ public class Main extends Application {
     static List<Candidate> candidatesList = new List<>();
     static List<Candidate> sortedCandidatesList = new List<>();
 
-    /**
-     *
-     */
-    static int polCandHashTableSize = 800;
-    static int electionHashTableSize = 100;
-    static HashTable<Politician> politicianHashTable = new HashTable<>(polCandHashTableSize);
-    static HashTable<Candidate> candidateHashTable = new HashTable<>(polCandHashTableSize);
-    static HashTable<Election> electionHashTable = new HashTable<>(electionHashTableSize);
-
-
+//    static int polCandHashTableSize = 800;
+//    static int electionHashTableSize = 100;
+//    static HashTable<Politician> politicianHashTable = new HashTable<>(polCandHashTableSize);
+//    static HashTable<Candidate> candidateHashTable = new HashTable<>(polCandHashTableSize);
+//    static HashTable<Election> electionHashTable = new HashTable<>(electionHashTableSize);
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -37,5 +32,7 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
+
     }
+
 }

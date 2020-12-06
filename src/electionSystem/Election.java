@@ -10,6 +10,7 @@ public class Election {
     List<Candidate> electionCandidateList = new List<>();
 
 
+
     public String getId() {
         return Id;
     }
