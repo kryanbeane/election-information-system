@@ -107,6 +107,13 @@ public class Controller {
         }
     }
 
+    public Politician getPolitician() {
+        // stuff
+
+
+        return null;
+    }
+
     /**
      * Adds election to the list of elections.
      */
@@ -169,6 +176,12 @@ public class Controller {
         }
     }
 
+    public Election getElection() {
+        // stuff
+
+        return null;
+    }
+
     /**
      *
      */
@@ -225,6 +238,12 @@ public class Controller {
         } catch (Exception e) {
             System.out.println("You have not chosen a Politician!");
         }
+    }
+
+    public Candidate getCandidate() {
+        // stuff
+
+        return null;
     }
 
     public void sortCandidateList(){

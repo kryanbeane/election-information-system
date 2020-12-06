@@ -1,11 +1,14 @@
 package electionSystem;
 
 public class Election {
+
     String Id;
     String electionType;
     String location;
     String date;
     int numberOfWinners;
+    List<Candidate> electionCandidateList = new List<>();
+
 
     public String getId() {
         return Id;
