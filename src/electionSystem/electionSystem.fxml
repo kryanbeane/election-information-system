@@ -35,7 +35,7 @@
                                           <Insets left="20.0" top="5.0" />
                                        </VBox.margin>
                                     </Button>
-                                    <Button mnemonicParsing="false" onAction="#insertionSortPoliticianList" text="Sort">
+                                    <Button mnemonicParsing="false" onAction="#quickSortPoliticianList" text="Sort">
                                        <VBox.margin>
                                           <Insets left="20.0" top="10.0" />
                                        </VBox.margin>
