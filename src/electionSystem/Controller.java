@@ -108,6 +108,8 @@ public class Controller {
                 System.out.println("Removed Politician at index" + i);
                 updatePoliticiansTables();
                 System.out.println("Removed Aisle at index" + i);
+                // Removes hash of deleted politician from hash table
+                Main.politicianHashTable.removeHash(currPolitician.name, currPolitician);
                 }
             }
         } catch (Exception e) {
@@ -230,6 +232,9 @@ public class Controller {
                     System.out.println("Removed Politician at index" + i);
                     updateCandidateTable();
                     System.out.println("Removed Aisle at index" + i);
+
+                    // Removes hash of deleted candidate from hash table
+                    Main.candidateHashTable.removeHash(currCandidate.name, currCandidate);
                 }
             }
         } catch (Exception e) {
