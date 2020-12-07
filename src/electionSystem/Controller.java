@@ -293,19 +293,20 @@ public class Controller {
         if(start == end)
             return start;
 
-        Node<Politician> pivot_prev = start;
+        Node<Politician> previousOfPivot = start;
         Node<Politician> curr = start;
         Politician pivot = end.getContents();
 
         // iterate till one before the end,
         // no need to iterate till the end
         // because end is pivot
-        while(start != end )
+
+        //
+        while(start != end )                                //for the entire length of the dataset
         {
             if(start.getContents().getName().compareTo(pivot.getName()) < 0) {
-                // keep tracks of last modified item
-                pivot_prev = curr;
-                Politician temp = curr.getContents();
+                previousOfPivot = curr;                          // = start(at beginning of loop)
+                Politician temp = curr.getContents();       //swap current and start
                 curr.setContents(start.getContents());
                 start.setContents(temp);
                 curr = curr.next;
@@ -313,48 +314,35 @@ public class Controller {
             start = start.next;
         }
 
-        // swap the position of curr i.e.
-        // next suitable index and pivot
         Politician temp = curr.getContents();
         curr.setContents(pivot);
         end.setContents(temp);
 
-        // return one previous to current
-        // because current is now pointing to pivot
-        return pivot_prev;
+        return previousOfPivot;
     }
 
-    void polInsertionSort(Node<Politician> start, Node<Politician> end)
+    void polQuickSort(Node<Politician> start, Node<Politician> end)
     {
         if(start == end )
             return;
 
-        // split list and partion recurse
-        Node<Politician> pivot_prev = partitionLast(start, end);
-        polInsertionSort(start, pivot_prev);
+        // split the list and partition recursively
+        Node<Politician> previousOfPivot = partitionLast(start, end);
+        polQuickSort(start, previousOfPivot);
 
-        // if pivot is picked and moved to the start,
-        // that means start and pivot is same
-        // so pick from next of pivot
-        if( pivot_prev != null &&
-                pivot_prev == start )
-            polInsertionSort(pivot_prev.next, end);
-
-            // if pivot is in between of the list,
-            // start from next of pivot,
-            // since we have pivot_prev, so we move two nodes
-        else if(pivot_prev != null &&
-                pivot_prev.next != null)
-            polInsertionSort(pivot_prev.next.next, end);
+        if( previousOfPivot != null && previousOfPivot == start ){
+            polQuickSort(previousOfPivot.next, end);
+        }else if( previousOfPivot != null && previousOfPivot.next != null)
+            polQuickSort(previousOfPivot.next.next, end);
     }
 
-    public void insertionSortPoliticianList(){
+    public void quickSortPoliticianList(){
         Node<Politician> headNode = Main.politicianList.head;
         System.out.println(headNode.getContents());
         Node<Politician> endNode = Main.politicianList.accessAtIndex(Main.politicianList.length()-1);
         System.out.println(endNode.getContents());
         System.out.println("Before:" + Main.politicianList.printList());
-        polInsertionSort(headNode, endNode);
+        polQuickSort(headNode, endNode);
         System.out.println("After:" + Main.politicianList.printList());
 
         updatePoliticiansTables();
