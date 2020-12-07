@@ -32,12 +32,17 @@
                                     </Button>
                                     <Button mnemonicParsing="false" onAction="#deletePolitician" text="Delete">
                                        <VBox.margin>
-                                          <Insets left="20.0" top="5.0" />
+                                          <Insets bottom="5.0" left="20.0" top="5.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onAction="#deletePolitician" text="Update">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="20.0" top="5.0" />
                                        </VBox.margin>
                                     </Button>
                                     <Button mnemonicParsing="false" onAction="#quickSortPoliticianList" text="Sort">
                                        <VBox.margin>
-                                          <Insets left="20.0" top="10.0" />
+                                          <Insets left="20.0" top="5.0" />
                                        </VBox.margin>
                                     </Button>
                                  </children>

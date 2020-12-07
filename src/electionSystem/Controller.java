@@ -71,7 +71,10 @@ public class Controller {
         textDateOfBirth.clear();
         textHomeCounty.clear();
         textImageURL.clear();
+    }
 
+    public void editPolitician() {
+        Politician polToChange = new Politician();
     }
 
     /**
@@ -214,6 +217,7 @@ public class Controller {
         candidateNameColumn.setCellValueFactory(new PropertyValueFactory<Candidate,String >("name"));
         for(Candidate candidate: Main.candidatesList) {
             myCandidateObsList.add(candidate);
+
         }
         candidateTable.setItems(myCandidateObsList);
     }
