@@ -3,14 +3,10 @@ package electionSystem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-
 import java.util.Random;
 
 public class Controller {
@@ -20,37 +16,23 @@ public class Controller {
     ObservableList<Candidate> myCandidateObsList = FXCollections.observableArrayList();
     Politician currPolitician;
     Politician currPolitician2Candidate;
-    Election currElection, currElection2;
+    Election currElection;
     Candidate currCandidate;
-    @FXML
-    TextField textCurrentParty, textPoliticianName, textDateOfBirth, textHomeCounty, textImageURL;
-    @FXML
-    TextField textElectionType, textElectionLocation, textElectionDate, textElectionNumberOfWinners;
-    @FXML
-    TableColumn<Politician, String> sex;
-    @FXML
-    TableColumn<Politician, String> currentPartyColumn, pNameColumn, pDOBColumn, pHomeCountyColumn, pPhotoURLColumn, pSelectionNameColumn;
-    @FXML
-    TableColumn<Election, String> electionIDColumn, electionTypeColumn, electionLocationColumn, electionDateColumn, electionNumberOfWInnersColumn;
-    @FXML
-    TableColumn<Election, String> electionIDColumn1, electionTypeColumn1, electionLocationColumn1, electionDateColumn1, electionNumberOfWInnersColumn1;
-    @FXML
-    TableColumn<Candidate, String> candidateNameColumn;
-    @FXML
-    TableView<Politician> politicianTable, candidateSelectionTable;
-    @FXML
-    TableView<Election> electionTable, electionTable2;
-    @FXML
-    TableView<Candidate> candidateTable;
-    @FXML
-    DatePicker polDatePicker, textElectionDatePicker;
+    @FXML TextField textCurrentParty, textPoliticianName, textDateOfBirth, textHomeCounty, textImageURL;
+    @FXML TextField textElectionType, textElectionLocation, textElectionDate, textElectionNumberOfWinners;
+    @FXML TableColumn<Politician, String> sex;
+    @FXML TableColumn<Politician, String> currentPartyColumn, pNameColumn, pDOBColumn, pHomeCountyColumn, pPhotoURLColumn, pSelectionNameColumn;
+    @FXML TableColumn<Election, String>  electionIDColumn, electionTypeColumn, electionLocationColumn, electionDateColumn, electionNumberOfWInnersColumn;
+    @FXML TableColumn<Candidate, String> candidateNameColumn;
+    @FXML TableView<Politician> politicianTable, candidateSelectionTable;
+    @FXML TableView<Election> electionTable;
+    @FXML TableView<Candidate> candidateTable;
 
     /**
      * Generates ID to be assigned to Politicians, Candidates and Elections.
-     *
      * @return - Randomly generated ID.
      */
-    public String generateID() {
+    public String generateID(){
         //generates an id
         String ID;
         Random rand = new Random();
@@ -68,41 +50,30 @@ public class Controller {
     public void addPolitician() {
         String currentParty = textCurrentParty.getText();
         String name = textPoliticianName.getText();
-        String DOB = polDatePicker.getValue().toString();
+        String DOB = textDateOfBirth.getText();
         String homeCounty = textHomeCounty.getText();
         String photoURL = textImageURL.getText();
 
         // Creates a new politician with the above values.
-        Politician politician = (new Politician(generateID(), name, currentParty, DOB, homeCounty, photoURL));
+        Politician politician = (new Politician(generateID(),name,currentParty, DOB, homeCounty, photoURL));
         // Adds that politician to the politicianList.
         Main.politicianList.addNode(politician);
         updatePoliticiansTables();
         System.out.println(Main.politicianList.printList());
 
-        // Hashes the politician and adds it to the hash table.
-        Main.politicianHashTable.insertHash(name, politician);
-        /*System.out.println(Main.politicianHashTable.);*/
+
 
         // Need to figure out Image URL
         textCurrentParty.clear();
         textPoliticianName.clear();
-        polDatePicker.getEditor().clear();
+        textDateOfBirth.clear();
         textHomeCounty.clear();
         textImageURL.clear();
     }
 
     public void editPolitician() {
-        currPolitician = politicianTable.getSelectionModel().getSelectedItem();
-
-        textPoliticianName.setText(currPolitician.getName());
-        textDateOfBirth.setText(currPolitician.getDOB());
-        textHomeCounty.setText(currPolitician.getCurrentParty());
-        textImageURL.setText(currPolitician.getPhotoURL());
+        Politician polToChange = new Politician();
     }
-
-
-
-
 
     /**
      * Updates politician table with recently added politicians.
@@ -138,17 +109,13 @@ public class Controller {
                 System.out.println("Removed Politician at index" + i);
                 updatePoliticiansTables();
                 System.out.println("Removed Aisle at index" + i);
-                // Removes hash of deleted politician from hash table
-                Main.politicianHashTable.removeHash(currPolitician.name, currPolitician);
+
                 }
             }
         } catch (Exception e) {
             System.out.println("You have not chosen a Politician!");
         }
     }
-
-
-
 
     /**
      * Adds election to the list of elections.
@@ -163,14 +130,14 @@ public class Controller {
 
         String electionType = textElectionType.getText();
         String electionLocation = textElectionLocation.getText();
-        String electionDate = textElectionDatePicker.getValue().toString();
+        String electionDate = textElectionDate.getText();
         int electionNumberOfWinners = Integer.parseInt(textElectionNumberOfWinners.getText());
 
         Main.electionsList.addNode(new Election(generateID(), electionType, electionLocation, electionDate, electionNumberOfWinners));
         updateElectionTable();
         textElectionType.clear();
         textElectionLocation.clear();
-        textElectionDatePicker.getEditor().clear();
+        textElectionDate.clear();
         textElectionNumberOfWinners.clear();
     }
 
@@ -185,14 +152,11 @@ public class Controller {
         electionLocationColumn.setCellValueFactory(new PropertyValueFactory<Election,String >("location"));
         electionNumberOfWInnersColumn.setCellValueFactory(new PropertyValueFactory<Election,String >("numberOfWinners"));
 
-
         for(Election election: Main.electionsList){
             myElectionObsList.add(election);
         }
         electionTable.setItems(myElectionObsList);
-        electionTable2.setItems(myElectionObsList);
     }
-
 
     /**
      *
@@ -219,31 +183,13 @@ public class Controller {
      *
      */
     public void addCandidate() {
-        Election elec = currElection2;
         Politician pol = candidateSelectionTable.getSelectionModel().getSelectedItem();
         String name = pol.name;
         // Creates new candidate object from a selected politician.
+        Candidate cand = new Candidate(pol.getId(), name, pol.currentParty, pol.DOB, pol.homeCounty, pol.photoURL);
+        Main.candidatesList.addNode(cand);
 
-        if (elec!=null) {
-            Candidate cand = new Candidate(pol.getId(), name, pol.currentParty, pol.DOB, pol.homeCounty, pol.photoURL);
-            elec.electionCandidateList.addNode(cand);
-            // Hashes new candidate and adds it to the hash table.
-            Main.candidateHashTable.insertHash(name, cand);
-            updateCandidateTable();
-        }
-
-    }
-
-    @FXML
-    public void clickItem(MouseEvent event)
-    {
-        if (event.getClickCount() == 1) //checking click
-        {
-            currElection2 = electionTable2.getSelectionModel().getSelectedItem();
-            System.out.println(currElection2);
-            updateCandidateTable();
-
-        }
+        updateCandidateTable();
 
     }
 
@@ -263,18 +209,14 @@ public class Controller {
      *
      */
     public void updateCandidateTable() {
-        Election elec = electionTable2.getSelectionModel().getSelectedItem();
         myCandidateObsList.clear();
         candidateNameColumn.setCellValueFactory(new PropertyValueFactory<Candidate,String >("name"));
-        for(Candidate candidate: elec.electionCandidateList) {
+        for(Candidate candidate: Main.candidatesList) {
             myCandidateObsList.add(candidate);
 
         }
         candidateTable.setItems(myCandidateObsList);
     }
-
-
-
 
     /**
      *
@@ -291,8 +233,6 @@ public class Controller {
                     updateCandidateTable();
                     System.out.println("Removed Aisle at index" + i);
 
-                    // Removes hash of deleted candidate from hash table
-                    Main.candidateHashTable.removeHash(currCandidate.name, currCandidate);
                 }
             }
         } catch (Exception e) {
@@ -300,7 +240,10 @@ public class Controller {
         }
     }
 
-
+    public void sortCandidateList(){
+        Main.candidatesList = candidateSelectionSort(Main.candidatesList);
+        updateCandidateTable();
+    }
 
     // Searching //
     public Politician searchPolitician() {
@@ -354,32 +297,63 @@ public class Controller {
         return candList;
     }
 
-    public void sortCandidateList(){
-        Main.candidatesList = candidateSelectionSort(Main.candidatesList);
-        updateCandidateTable();
-    }
+    public Node<Politician> partitionLast(Node<Politician> start, Node<Politician> end) {
+        if(start == end)
+            return start;
 
-    public int findLargestPoliticianPos(List<Politician> polList, int length){
-        int largestPos = 0;
-        for(int i = 1; i<length;i++){
-            if(polList.accessAtIndex(i).getContents().getName().compareTo(polList.accessAtIndex(largestPos).getContents().getName())>0){
-                largestPos = i;
+        Node<Politician> previousOfPivot = start;
+        Node<Politician> curr = start;
+        Politician pivot = end.getContents();
+
+        // iterate till one before the end,
+        // no need to iterate till the end
+        // because end is pivot
+
+        //
+        while(start != end )                                //for the entire length of the dataset
+        {
+            if(start.getContents().getName().compareTo(pivot.getName()) < 0) {
+                previousOfPivot = curr;                          // = start(at beginning of loop)
+                Politician temp = curr.getContents();       //swap current and start
+                curr.setContents(start.getContents());
+                start.setContents(temp);
+                curr = curr.next;
             }
+            start = start.next;
         }
-        return largestPos;
+
+        Politician temp = curr.getContents();
+        curr.setContents(pivot);
+        end.setContents(temp);
+
+        return previousOfPivot;
     }
 
-    public List<Politician> politicianSelectionSort(List<Politician> polList) {
-        for (int i = polList.length(); i > 0; i--) {
-            int posLargest = findLargestPoliticianPos(polList, i);
-            polList.swapContents(posLargest, i - 1);
-            System.out.println(polList);
-        }
-        return polList;
+
+    // QuickSort //
+    void polQuickSort(Node<Politician> start, Node<Politician> end) {
+        if(start == end )
+            return;
+
+        // split the list and partition recursively
+        Node<Politician> previousOfPivot = partitionLast(start, end);
+        polQuickSort(start, previousOfPivot);
+
+        if( previousOfPivot != null && previousOfPivot == start ){
+            polQuickSort(previousOfPivot.next, end);
+        }else if( previousOfPivot != null && previousOfPivot.next != null)
+            polQuickSort(previousOfPivot.next.next, end);
     }
 
-    public void sortPoliticianList(){
-        Main.politicianList = politicianSelectionSort(Main.politicianList);
+    public void quickSortPoliticianList(){
+        Node<Politician> headNode = Main.politicianList.head;
+        System.out.println(headNode.getContents());
+        Node<Politician> endNode = Main.politicianList.accessAtIndex(Main.politicianList.length()-1);
+        System.out.println(endNode.getContents());
+        System.out.println("Before:" + Main.politicianList.printList());
+        polQuickSort(headNode, endNode);
+        System.out.println("After:" + Main.politicianList.printList());
+
         updatePoliticiansTables();
     }
 
