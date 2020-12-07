@@ -56,11 +56,8 @@ public class HashTable<T> {
         insertHash(newName, newPerson);
     }
 
-    public void showHashTable() {
-
+    public T getHash(int hash, int element) {
+        return hashTableArray[hash].accessAtIndex(element).getContents();
     }
 
-    public void displayHashTable() {
-
-    }
 }

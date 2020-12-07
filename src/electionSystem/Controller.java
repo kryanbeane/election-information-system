@@ -63,6 +63,7 @@ public class Controller {
 
         // Hashes the politician and adds it to the hash table.
         Main.politicianHashTable.insertHash(name, politician);
+        System.out.println(Main.politicianHashTable.);
 
         // Need to figure out Image URL
         textCurrentParty.clear();
@@ -112,13 +113,6 @@ public class Controller {
         } catch (Exception e) {
             System.out.println("You have not chosen a Politician!");
         }
-    }
-
-    public Politician getPolitician() {
-        // stuff
-
-
-        return null;
     }
 
     /**
@@ -171,7 +165,7 @@ public class Controller {
             List<Election> electionList = Main.electionsList;
 
             for (int i = 0; i < electionList.length(); i++) {
-                if (electionList.accessAtIndex(i).getContents().getId() == currElection.getId()) {
+                if (electionList.accessAtIndex(i).getContents().getId().equals(currElection.getId())) {
                     Main.electionsList.removeNode(i);
                     System.out.println("Removed Politician at index" + i);
                     updateElectionTable();
@@ -181,12 +175,6 @@ public class Controller {
         } catch (Exception e) {
             System.out.println("You have not chosen a Politician!");
         }
-    }
-
-    public Election getElection() {
-        // stuff
-
-        return null;
     }
 
     /**
@@ -237,7 +225,7 @@ public class Controller {
             List<Candidate> canList = Main.candidatesList;
 
             for (int i = 0; i < canList.length(); i++) {
-                if (canList.accessAtIndex(i).getContents().getId() == currCandidate.getId()) {
+                if (canList.accessAtIndex(i).getContents().getId().equals(currCandidate.getId())) {
                     Main.candidatesList.removeNode(i);
                     System.out.println("Removed Politician at index" + i);
                     updateCandidateTable();
@@ -249,18 +237,27 @@ public class Controller {
         }
     }
 
-    public Candidate getCandidate() {
-        // stuff
-
-        return null;
-    }
-
     public void sortCandidateList(){
         Main.candidatesList = candidateSelectionSort(Main.candidatesList);
         updateCandidateTable();
     }
 
-    // InsertionSort
+    // Searching //
+    public Politician searchPolitician() {
+        // stuff
+
+
+        return null;
+    }
+
+    public Candidate searchCandidate() {
+        // stuff
+
+        return null;
+    }
+
+    // InsertionSort //
+
    /* public void sort(List<Candidate> candlist){
         int n= candlist.length();
         for(int i=1 ; i<n ; i++){
@@ -329,6 +326,8 @@ public class Controller {
         return previousOfPivot;
     }
 
+
+    // QuickSort //
     void polQuickSort(Node<Politician> start, Node<Politician> end) {
         if(start == end )
             return;
