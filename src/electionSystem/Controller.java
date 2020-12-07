@@ -55,15 +55,25 @@ public class Controller {
         String homeCounty = textHomeCounty.getText();
         String photoURL = textImageURL.getText();
 
-        Main.politicianList.addNode(new Politician(generateID(),name,currentParty, DOB, homeCounty, photoURL));
+        // Creates a new politician with the above values.
+        Politician politician = (new Politician(generateID(),name,currentParty, DOB, homeCounty, photoURL));
+        // Adds that politician to the politicianList.
+        Main.politicianList.addNode(politician);
         updatePoliticiansTables();
         System.out.println(Main.politicianList.printList());
+
+        // Hashes the politician and adds it to the hash table.
+        Main.politicianHashTable.insertHash(name, politician);
+
         // Need to figure out Image URL
         textCurrentParty.clear();
         textPoliticianName.clear();
         textDateOfBirth.clear();
         textHomeCounty.clear();
         textImageURL.clear();
+
+
+
     }
 
     /**
@@ -87,7 +97,7 @@ public class Controller {
     }
 
     /**
-     *
+     * Deletes politician from the politician list.
      */
     public void deletePolitician() {
         try {
