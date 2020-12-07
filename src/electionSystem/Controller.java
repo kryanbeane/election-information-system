@@ -41,8 +41,7 @@ public class Controller {
         int stringIndex = rand2.nextInt(26);
         String alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         char charPart = alpha.charAt(stringIndex);
-        String returnValue = String.valueOf(charPart) + intPart;
-        return returnValue;
+        return String.valueOf(charPart) + intPart;
     }
 
     /**
@@ -71,8 +70,6 @@ public class Controller {
         textDateOfBirth.clear();
         textHomeCounty.clear();
         textImageURL.clear();
-
-
 
     }
 
@@ -105,7 +102,7 @@ public class Controller {
         List<Politician> polList = Main.politicianList;
 
         for (int i = 0; i < polList.length(); i++) {
-            if (polList.accessAtIndex(i).getContents().getId() == currPolitician.id) {
+            if (polList.accessAtIndex(i).getContents().getId().equals(currPolitician.id)) {
                 Main.politicianList.removeNode(i);
                 System.out.println("Removed Politician at index" + i);
                 updatePoliticiansTables();
@@ -197,10 +194,12 @@ public class Controller {
      */
     public void addCandidate() {
         Politician pol = candidateSelectionTable.getSelectionModel().getSelectedItem();
-        Candidate cand = new Candidate(pol.getId(), pol.name, pol.currentParty, pol.DOB, pol.homeCounty, pol.photoURL);
-
+        String name = pol.name;
+        // Creates new candidate object from a selected politician.
+        Candidate cand = new Candidate(pol.getId(), name, pol.currentParty, pol.DOB, pol.homeCounty, pol.photoURL);
         Main.candidatesList.addNode(cand);
-
+        // Hashes new candidate and adds it to the hash table.
+        Main.candidateHashTable.insertHash(name, cand);
         updateCandidateTable();
 
     }
@@ -261,7 +260,7 @@ public class Controller {
         updateCandidateTable();
     }
 
-    //Insertionsort
+    // InsertionSort
    /* public void sort(List<Candidate> candlist){
         int n= candlist.length();
         for(int i=1 ; i<n ; i++){
@@ -298,8 +297,7 @@ public class Controller {
         return candList;
     }
 
-    public Node<Politician> partitionLast(Node<Politician> start, Node<Politician> end)
-    {
+    public Node<Politician> partitionLast(Node<Politician> start, Node<Politician> end) {
         if(start == end)
             return start;
 
@@ -331,8 +329,7 @@ public class Controller {
         return previousOfPivot;
     }
 
-    void polQuickSort(Node<Politician> start, Node<Politician> end)
-    {
+    void polQuickSort(Node<Politician> start, Node<Politician> end) {
         if(start == end )
             return;
 
