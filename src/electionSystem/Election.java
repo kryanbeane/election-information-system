@@ -9,8 +9,6 @@ public class Election {
     int numberOfWinners;
     List<Candidate> electionCandidateList = new List<>();
 
-
-
     public String getId() {
         return Id;
     }
