@@ -16,8 +16,6 @@ import java.util.Random;
 
 public class Controller {
 
-
-
     // Searching //
     /**
      * Method to find the index of the hashed object user is looking for.
@@ -26,9 +24,9 @@ public class Controller {
      */
     public int getListIndex(String key) {
         int index=0;
-        int hash=polHashTable.hashFunction(key);
-        int x=polHashTable.hashTableList[hash].length();
-        Node temp=polHashTable.hashTableList[hash].head;
+        int hash=polNameHashTable.hashFunction(key);
+        int x=polNameHashTable.hashTableList[hash].length();
+        Node temp=polNameHashTable.hashTableList[hash].head;
 
         for(int i=0; i<=x; i++) {
             if(temp.getContents().equals(key)) {
@@ -41,57 +39,136 @@ public class Controller {
 
     // Size and hash tables //
     int size=800;
-    HashTable<Politician> polHashTable = new HashTable<Politician>(size);
-    HashTable<Candidate> candHashTable = new HashTable<Candidate>(size);
+    HashTable<Politician> polNameHashTable = new HashTable<Politician>(size);
+    HashTable<Politician> polCountyHashTable = new HashTable<Politician>(size);
+    HashTable<Politician> polPartyHashTable = new HashTable<Politician>(size);
+    HashTable<Candidate> candNameHashTable = new HashTable<Candidate>(size);
+    HashTable<Candidate> candCountyHashTable = new HashTable<Candidate>(size);
+    HashTable<Candidate> candPartyHashTable = new HashTable<Candidate>(size);
 
 
     // Search Politician Methods //
-    public Politician searchPolByName(String name) {
-        currPolitician=polHashTable.getHash(polHashTable.hashFunction(name), getListIndex(name));
-        System.out.println(currPolitician);
-        return currPolitician;
+    public List<Politician> searchPolByName(String name) {
+        // Hash = hash of search
+        int hash = polNameHashTable.hashFunction(name);
+        // New list to return search results
+        List<Politician> namedPols = new List<>();
+
+
+        for(int i = 0; i < polNameHashTable.hashSize(hash); i++){
+            if(name.equals(currPolitician.name)) {
+                // Add each politician to namedPols list and return the list to a table in GUI?
+                currPolitician=polNameHashTable.getHash(hash, i);
+                namedPols.addNode(currPolitician);
+            }
+            System.out.println("There was no politician by that name.");
+            return null;
+        }
+        return namedPols;
     }
 
-    public Politician searchPolByCounty(String county) {
-        currPolitician=polHashTable.getHash(polHashTable.hashFunction(county), getListIndex(county));
-        System.out.println(currPolitician);
-        return currPolitician;
+    public List<Politician> searchPolByCounty(String county) {
+        // Hash = hash of search
+        int hash = polCountyHashTable.hashFunction(county);
+        // New list to return search results
+        List<Politician> countyPols = new List<>();
+
+
+        for(int i = 0; i < polCountyHashTable.hashSize(hash); i++){
+            if(county.equals(currPolitician.homeCounty)) {
+                // Add each politician to countyPols list and return the list to a table in GUI?
+                currPolitician=polCountyHashTable.getHash(hash, i);
+                countyPols.addNode(currPolitician);
+            }
+            System.out.println("There are no politicians in that county.");
+            return null;
+        }
+        return countyPols;
     }
 
-    public Politician searchPolByParty(String party) {
-        currPolitician=polHashTable.getHash(polHashTable.hashFunction(party), getListIndex(party));
-        System.out.println(currPolitician);
-        return currPolitician;
-    }
+    public List<Politician> searchPolByParty(String party) {
+        // Hash = hash of search
+        int hash = polPartyHashTable.hashFunction(party);
+        // New list to return search results
+        List<Politician> partyPols = new List<>();
 
+
+        for(int i = 0; i < polPartyHashTable.hashSize(hash); i++){
+            if(party.equals(currPolitician.currentParty)) {
+                // Add each politician to partyPols list and return the list to a table in GUI?
+                currPolitician=polPartyHashTable.getHash(hash, i);
+                partyPols.addNode(currPolitician);
+            }
+            System.out.println("There are no politicians in that party.");
+            return null;
+        }
+        return partyPols;
+    }
 
     // Search Candidate Methods //
-    public Candidate searchCandByName(String name) {
-        currCandidate=candHashTable.getHash(polHashTable.hashFunction(name), getListIndex(name));
-        System.out.println(currCandidate);
-        return currCandidate;
+    public List<Candidate> searchCandByName(String name) {
+        // Hash = hash of search
+        int hash = candNameHashTable.hashFunction(name);
+        // New list to return search results
+        List<Candidate> namedCands = new List<>();
+
+
+        for(int i = 0; i < candNameHashTable.hashSize(hash); i++){
+            if(name.equals(currCandidate.name)) {
+                // Add each politician to namedPols list and return the list to a table in GUI?
+                currCandidate=candNameHashTable.getHash(hash, i);
+                namedCands.addNode(currCandidate);
+            }
+            System.out.println("There was no politician by that name.");
+            return null;
+        }
+        return namedCands;
     }
 
-    public Candidate searchCandByCounty(String county) {
-        currCandidate=candHashTable.getHash(polHashTable.hashFunction(county), getListIndex(county));
-        System.out.println(currCandidate);
-        return currCandidate;
+    public List<Candidate> searchCandByCounty(String county) {
+        // Hash = hash of search
+        int hash = candCountyHashTable.hashFunction(county);
+        // New list to return search results
+        List<Candidate> countyCands = new List<>();
+
+
+        for(int i = 0; i < candCountyHashTable.hashSize(hash); i++){
+            if(county.equals(currCandidate.homeCounty)) {
+                // Add each politician to countyPols list and return the list to a table in GUI?
+                currCandidate=candCountyHashTable.getHash(hash, i);
+                countyCands.addNode(currCandidate);
+            }
+            System.out.println("There are no candidates in that county.");
+            return null;
+        }
+        return countyCands;
     }
 
-    public Candidate searchCandByParty(String party) {
-        currCandidate=candHashTable.getHash(polHashTable.hashFunction(party), getListIndex(party));
-        System.out.println(currCandidate);
-        return currCandidate;
+    public List<Candidate> searchCandByParty(String party) {
+        // Hash = hash of search
+        int hash = candPartyHashTable.hashFunction(party);
+        // New list to return search results
+        List<Candidate> partyCands = new List<>();
+
+
+        for(int i = 0; i < candPartyHashTable.hashSize(hash); i++){
+            if(party.equals(currCandidate.currentParty)) {
+                // Add each politician to partyCands list and return the list to a table in GUI?
+                currCandidate=candPartyHashTable.getHash(hash, i);
+                partyCands.addNode(currCandidate);
+            }
+            System.out.println("There are no candidates in that party.");
+            return null;
+        }
+        return partyCands;
     }
-
-
-
 
 
 
     ObservableList<Politician> myPoliticianObsList = FXCollections.observableArrayList();
     ObservableList<Election> myElectionObsList = FXCollections.observableArrayList();
     ObservableList<Candidate> myCandidateObsList = FXCollections.observableArrayList();
+    ObservableList<Candidate> myCandidateObsList2 = FXCollections.observableArrayList();
     Politician currPolitician;
     Politician currPolitician2Candidate;
     Election currElection, currElection2;
@@ -99,7 +176,7 @@ public class Controller {
     @FXML
     TextField textCurrentParty, textPoliticianName, textDateOfBirth, textHomeCounty, textImageURL;
     @FXML
-    TextField textElectionType, textElectionLocation, textElectionDate, textElectionNumberOfWinners;
+    TextField textElectionType, textElectionLocation, textElectionNumberOfWinners;
     @FXML
     TableColumn<Politician, String> sex;
     @FXML
@@ -126,7 +203,6 @@ public class Controller {
      */
     public String generateID() {
         //generates an id
-        String ID;
         Random rand = new Random();
         int intPart = rand.nextInt(10);
         Random rand2 = new Random();
@@ -134,6 +210,8 @@ public class Controller {
         String alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         char charPart = alpha.charAt(stringIndex);
         return String.valueOf(charPart) + intPart;
+
+
     }
 
     /**
@@ -153,6 +231,10 @@ public class Controller {
         updatePoliticiansTables();
         System.out.println(Main.politicianList.printList());
 
+        //hash politician values when it's added.
+        polNameHashTable.insertHash(politician.name, politician);
+        polCountyHashTable.insertHash(politician.homeCounty, politician);
+        polPartyHashTable.insertHash(politician.currentParty, politician);
 
         // Need to figure out Image URL
         textCurrentParty.clear();
@@ -217,19 +299,17 @@ public class Controller {
         }
     }
 
-
-
-
     /**
      * Adds election to the list of elections.
      */
     public void addElection(){
-        //checks to see if ID already used.
+        String iD=generateID();
         for(Election election: Main.electionsList){
-            if (election.getId().equals(generateID())) {
-                generateID();
+            if (election.getId().equals(iD)) {
+                iD=generateID();
             }
         }
+
 
         String electionType = textElectionType.getText();
         String electionLocation = textElectionLocation.getText();
@@ -238,6 +318,9 @@ public class Controller {
 
         Main.electionsList.addNode(new Election(generateID(), electionType, electionLocation, electionDate, electionNumberOfWinners));
         updateElectionTable();
+
+
+
         textElectionType.clear();
         textElectionLocation.clear();
         textElectionDatePicker.getEditor().clear();
@@ -294,15 +377,21 @@ public class Controller {
      *
      */
     public void addCandidate() {
-        Election elec = currElection2;
         Politician pol = candidateSelectionTable.getSelectionModel().getSelectedItem();
         String name = pol.name;
         // Creates new candidate object from a selected politician.
 
-        if (elec!=null) {
+
+
+
+        if (currElection!=null) {
             Candidate cand = new Candidate(pol.getId(), name, pol.currentParty, pol.DOB, pol.homeCounty, pol.photoURL);
-            elec.electionCandidateList.addNode(cand);
-            updateCandidateTable();
+            currElection.electionCandidateList.addNode(cand);
+            updateCandidatesTable();
+            // Hashes candidates when it's added
+            candNameHashTable.insertHash(cand.name, cand);
+            polCountyHashTable.insertHash(cand.homeCounty, cand);
+            polPartyHashTable.insertHash(cand.currentParty, cand);
         }
 
     }
@@ -314,7 +403,7 @@ public class Controller {
         {
             currElection2 = electionTable2.getSelectionModel().getSelectedItem();
             System.out.println(currElection2);
-            updateCandidateTable();
+            updateCandidatesTable();
 
         }
 
@@ -335,13 +424,23 @@ public class Controller {
     /**
      *
      */
-    public void updateCandidateTable() {
-        Election elec = currElection2;
+    public void updateCandidatesTable() {
         myCandidateObsList.clear();
+        myCandidateObsList2.clear();
         candidateNameColumn.setCellValueFactory(new PropertyValueFactory<Candidate,String >("name"));
-        for(Candidate candidate: elec.electionCandidateList) {
+        for(Candidate candidate: currElection.electionCandidateList) {
             myCandidateObsList.add(candidate);
 
+        }
+        candidateTable.setItems(myCandidateObsList);
+
+
+        if (currElection2 != null);
+        {
+            for (Candidate candidate : currElection2.electionCandidateList) {
+                myCandidateObsList2.add(candidate);
+
+            }
         }
         candidateTable.setItems(myCandidateObsList);
 
@@ -362,7 +461,7 @@ public class Controller {
                 if (canList.accessAtIndex(i).getContents().getId().equals(currCandidate.getId())) {
                     Main.candidatesList.removeNode(i);
                     System.out.println("Removed Politician at index" + i);
-                    updateCandidateTable();
+                    updateCandidatesTable();
                     System.out.println("Removed Aisle at index" + i);
                 }
             }
@@ -415,7 +514,7 @@ public class Controller {
 
     public void sortCandidateList(){
         Main.candidatesList = candidateSelectionSort(Main.candidatesList);
-        updateCandidateTable();
+        updateCandidatesTable();
     }
 
     public int findLargestPoliticianPos(List<Politician> polList, int length){

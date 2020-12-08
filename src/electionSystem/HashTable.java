@@ -16,7 +16,7 @@ public class HashTable<T> {
     }
 
     /**
-     *  Hashes a politician or a candidate name.
+     *  Hashes a string.
      * @param key - Key to be hashed.
      * @return - Remainder after dividing total by hash table size.
      */
