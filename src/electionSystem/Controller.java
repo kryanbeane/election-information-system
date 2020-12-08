@@ -16,34 +16,78 @@ import java.util.Random;
 
 public class Controller {
 
+
+
+    // Searching //
+    /**
+     * Method to find the index of the hashed object user is looking for.
+     * @param key - String field of object being searched for.
+     * @return - The index that object is hashed to.
+     */
+    public int getListIndex(String key) {
+        int index=0;
+        int hash=polHashTable.hashFunction(key);
+        int x=polHashTable.hashTableList[hash].length();
+        Node temp=polHashTable.hashTableList[hash].head;
+
+        for(int i=0; i<=x; i++) {
+            if(temp.getContents().equals(key)) {
+                index=i;
+            }
+            temp=temp.next;
+        }
+        return index;
+    }
+
+    // Size and hash tables //
     int size=800;
     HashTable<Politician> polHashTable = new HashTable<Politician>(size);
     HashTable<Candidate> candHashTable = new HashTable<Candidate>(size);
 
-//    public int hashNames(String name) {
-//        int nameHash=0;
-//        for(int i=0; i<name.length(); i++) {
-//            nameHash += name.charAt(i);
-//        }
-//        return nameHash%polHashTable.hashTableArray.length;
-//    }
 
-    // Searching //
-    public Politician searchPolitician(String name) {
-        int temp=polHashTable.hashFunction(name);
-        // it wont let me fucking call the method I just WRFIORWUJIGDYUKIAWGFUYWsegtfluysegtf FUCKKKKKKKKKKKKKKKK
-        /*currPolitician=polHashTable.getHash(temp, polHashTable)*/
-
-
-
-        return null;
+    // Search Politician Methods //
+    public Politician searchPolByName(String name) {
+        currPolitician=polHashTable.getHash(polHashTable.hashFunction(name), getListIndex(name));
+        System.out.println(currPolitician);
+        return currPolitician;
     }
 
-    public Candidate searchCandidate() {
-        // stuff
-
-        return null;
+    public Politician searchPolByCounty(String county) {
+        currPolitician=polHashTable.getHash(polHashTable.hashFunction(county), getListIndex(county));
+        System.out.println(currPolitician);
+        return currPolitician;
     }
+
+    public Politician searchPolByParty(String party) {
+        currPolitician=polHashTable.getHash(polHashTable.hashFunction(party), getListIndex(party));
+        System.out.println(currPolitician);
+        return currPolitician;
+    }
+
+
+    // Search Candidate Methods //
+    public Candidate searchCandByName(String name) {
+        currCandidate=candHashTable.getHash(polHashTable.hashFunction(name), getListIndex(name));
+        System.out.println(currCandidate);
+        return currCandidate;
+    }
+
+    public Candidate searchCandByCounty(String county) {
+        currCandidate=candHashTable.getHash(polHashTable.hashFunction(county), getListIndex(county));
+        System.out.println(currCandidate);
+        return currCandidate;
+    }
+
+    public Candidate searchCandByParty(String party) {
+        currCandidate=candHashTable.getHash(polHashTable.hashFunction(party), getListIndex(party));
+        System.out.println(currCandidate);
+        return currCandidate;
+    }
+
+
+
+
+
 
     ObservableList<Politician> myPoliticianObsList = FXCollections.observableArrayList();
     ObservableList<Election> myElectionObsList = FXCollections.observableArrayList();

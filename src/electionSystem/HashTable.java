@@ -66,26 +66,6 @@ public class HashTable<T> {
         insertHash(newKey, newPerson);
     }
 
-    /**
-     *
-     * @param key - String field of object being searched for.
-     * @return - The index that object is hashed to.
-     */
-    public int getListIndex(String key) {
-        int index=0;
-        int hash=hashFunction(key);
-        int x=hashTableList[hash].length();
-        Node temp=hashTableList[hash].head;
-
-        for(int i=0; i<=x; i++) {
-            if(temp.getContents().equals(key)) {
-                index=i;
-            }
-            temp=temp.next;
-        }
-        return index;
-    }
-
     public T getHash(int hash, int index) {
         return hashTableList[hash].accessAtIndex(index).getContents();
     }

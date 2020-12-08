@@ -156,6 +156,8 @@ public class List<F> implements Iterable<F>{
         ithNode.next = jNext;
     }*/
 
+
+
     public void swapContents(int index1, int index2){
         Node<F> node1 = this.accessAtIndex(index1);
         Node<F> node2 = this.accessAtIndex(index2);
