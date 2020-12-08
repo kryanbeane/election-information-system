@@ -11,9 +11,39 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
+import java.util.Hashtable;
 import java.util.Random;
 
 public class Controller {
+
+    int size=800;
+    HashTable<Politician> polHashTable = new HashTable<Politician>(size);
+    HashTable<Candidate> candHashTable = new HashTable<Candidate>(size);
+
+//    public int hashNames(String name) {
+//        int nameHash=0;
+//        for(int i=0; i<name.length(); i++) {
+//            nameHash += name.charAt(i);
+//        }
+//        return nameHash%polHashTable.hashTableArray.length;
+//    }
+
+    // Searching //
+    public Politician searchPolitician(String name) {
+        int temp=polHashTable.hashFunction(name);
+        // it wont let me fucking call the method I just WRFIORWUJIGDYUKIAWGFUYWsegtfluysegtf FUCKKKKKKKKKKKKKKKK
+        /*currPolitician=polHashTable.getHash(temp, polHashTable)*/
+
+
+
+        return null;
+    }
+
+    public Candidate searchCandidate() {
+        // stuff
+
+        return null;
+    }
 
     ObservableList<Politician> myPoliticianObsList = FXCollections.observableArrayList();
     ObservableList<Election> myElectionObsList = FXCollections.observableArrayList();
@@ -79,9 +109,6 @@ public class Controller {
         updatePoliticiansTables();
         System.out.println(Main.politicianList.printList());
 
-        // Hashes the politician and adds it to the hash table.
-        Main.politicianHashTable.insertHash(name, politician);
-        /*System.out.println(Main.politicianHashTable.);*/
 
         // Need to figure out Image URL
         textCurrentParty.clear();
@@ -129,17 +156,16 @@ public class Controller {
      */
     public void deletePolitician() {
         try {
-        currPolitician = politicianTable.getSelectionModel().getSelectedItem();
-        List<Politician> polList = Main.politicianList;
+            currPolitician = politicianTable.getSelectionModel().getSelectedItem();
+            List<Politician> polList = Main.politicianList;
 
-        for (int i = 0; i < polList.length(); i++) {
-            if (polList.accessAtIndex(i).getContents().getId().equals(currPolitician.id)) {
-                Main.politicianList.removeNode(i);
-                System.out.println("Removed Politician at index" + i);
-                updatePoliticiansTables();
-                System.out.println("Removed Aisle at index" + i);
-                // Removes hash of deleted politician from hash table
-                Main.politicianHashTable.removeHash(currPolitician.name, currPolitician);
+            for (int i = 0; i < polList.length(); i++) {
+                if (polList.accessAtIndex(i).getContents().getId().equals(currPolitician.id)) {
+                    Main.politicianList.removeNode(i);
+                    System.out.println("Removed Politician at index" + i);
+                    updatePoliticiansTables();
+                    System.out.println("Removed Aisle at index" + i);
+
                 }
             }
         } catch (Exception e) {
@@ -184,6 +210,11 @@ public class Controller {
         electionDateColumn.setCellValueFactory(new PropertyValueFactory<Election,String >("date"));
         electionLocationColumn.setCellValueFactory(new PropertyValueFactory<Election,String >("location"));
         electionNumberOfWInnersColumn.setCellValueFactory(new PropertyValueFactory<Election,String >("numberOfWinners"));
+        electionIDColumn1.setCellValueFactory(new PropertyValueFactory<Election, String >("id"));
+        electionTypeColumn1.setCellValueFactory(new PropertyValueFactory<Election,String >("electionType"));
+        electionDateColumn1.setCellValueFactory(new PropertyValueFactory<Election,String >("date"));
+        electionLocationColumn1.setCellValueFactory(new PropertyValueFactory<Election,String >("location"));
+        electionNumberOfWInnersColumn1.setCellValueFactory(new PropertyValueFactory<Election,String >("numberOfWinners"));
 
 
         for(Election election: Main.electionsList){
@@ -227,8 +258,6 @@ public class Controller {
         if (elec!=null) {
             Candidate cand = new Candidate(pol.getId(), name, pol.currentParty, pol.DOB, pol.homeCounty, pol.photoURL);
             elec.electionCandidateList.addNode(cand);
-            // Hashes new candidate and adds it to the hash table.
-            Main.candidateHashTable.insertHash(name, cand);
             updateCandidateTable();
         }
 
@@ -263,7 +292,7 @@ public class Controller {
      *
      */
     public void updateCandidateTable() {
-        Election elec = electionTable2.getSelectionModel().getSelectedItem();
+        Election elec = currElection2;
         myCandidateObsList.clear();
         candidateNameColumn.setCellValueFactory(new PropertyValueFactory<Candidate,String >("name"));
         for(Candidate candidate: elec.electionCandidateList) {
@@ -271,6 +300,7 @@ public class Controller {
 
         }
         candidateTable.setItems(myCandidateObsList);
+
     }
 
 
@@ -290,9 +320,6 @@ public class Controller {
                     System.out.println("Removed Politician at index" + i);
                     updateCandidateTable();
                     System.out.println("Removed Aisle at index" + i);
-
-                    // Removes hash of deleted candidate from hash table
-                    Main.candidateHashTable.removeHash(currCandidate.name, currCandidate);
                 }
             }
         } catch (Exception e) {
@@ -302,19 +329,7 @@ public class Controller {
 
 
 
-    // Searching //
-    public Politician searchPolitician() {
-        // stuff
 
-
-        return null;
-    }
-
-    public Candidate searchCandidate() {
-        // stuff
-
-        return null;
-    }
 
     // InsertionSort //
 
