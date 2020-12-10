@@ -13,10 +13,9 @@ public class Politician {
     String name;
     String DOB; //go back and divide into day, month, year, and make returnDOBString method.
     String homeCounty;
-    String photoName; //need to figure out how to add to javafx... imageView?
-    ImageView photo;
+    Image photo;
 
-    public Politician(String id, String name, String currentParty, String DOB, String homeCounty, ImageView photo) throws FileNotFoundException {
+    public Politician(String id, String name, String currentParty, String DOB, String homeCounty, Image photo) throws FileNotFoundException {
         this.id = id;
         this.name = name;
         this.currentParty = currentParty;
@@ -43,11 +42,11 @@ public class Politician {
         return homeCounty;
     }
 
-    public String getPhotoURL() {
-        return photoName;
-    }
-
-    public ImageView getPolImage(){return photo; }
+    public ImageView getPolImage(){
+        ImageView imagev = new ImageView(photo);
+        imagev.setFitWidth(50);
+        imagev.setFitHeight(50);
+        return imagev; }
 
     @Override
     public String toString() {
@@ -57,7 +56,7 @@ public class Politician {
                 ", name='" + name + '\'' +
                 ", DOB='" + DOB + '\'' +
                 ", homeCounty='" + homeCounty + '\'' +
-                ", photoName='" + photoName + '\'' +
+                ", photo='" + photo + '\'' +
                 '}';
     }
 }

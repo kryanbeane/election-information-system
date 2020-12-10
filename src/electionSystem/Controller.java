@@ -3,10 +3,7 @@ package electionSystem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -179,19 +176,17 @@ public class Controller {
     @FXML
     TextField textElectionType, textElectionLocation, textElectionNumberOfWinners;
     @FXML
-    TableColumn<Politician, String> sex;
+    TableColumn<Politician, String> pIDColumn, pIDColumn1;
     @FXML
-    TableColumn<Politician, String> currentPartyColumn;
+    TableColumn<Politician, String> currentPartyColumn, currentPartyColumn1;
     @FXML
-    TableColumn<Politician, String> pNameColumn;
+    TableColumn<Politician, String> pNameColumn, pNameColumn1;
     @FXML
-    TableColumn<Politician, String> pDOBColumn;
+    TableColumn<Politician, String> pDOBColumn, pDOBColumn1;
     @FXML
-    TableColumn<Politician, String> pHomeCountyColumn;
+    TableColumn<Politician, String> pHomeCountyColumn, pHomeCountyColumn1;
     @FXML
-    TableColumn<Politician, ImageView> pPhotoURLColumn;
-    @FXML
-    TableColumn<Politician, String> pSelectionNameColumn;
+    TableColumn<Politician, ImageView> pPhotoURLColumn, pPhotoURLColumn1;
     @FXML
     TableColumn<Election, String> electionIDColumn, electionTypeColumn, electionLocationColumn, electionDateColumn, electionNumberOfWInnersColumn;
     @FXML
@@ -233,12 +228,11 @@ public class Controller {
         String name = textPoliticianName.getText();
         String DOB = polDatePicker.getValue().toString();
         String homeCounty = textHomeCounty.getText();
-        ImageView photo = new ImageView(new Image("file:resources/" + textImageURL.getText()));
-        photo.setFitHeight(40);
-        photo.setFitWidth(40);
+        Image image = new Image("file:resources/" + textImageURL.getText());
+
 
         // Creates a new politician with the above values.
-        Politician politician = (new Politician(generateID(), name, currentParty, DOB, homeCounty, photo));
+        Politician politician = (new Politician(generateID(), name, currentParty, DOB, homeCounty, image));
         // Adds that politician to the politicianList.
         Main.politicianList.addNode(politician);
         updatePoliticiansTables();
@@ -263,7 +257,7 @@ public class Controller {
         textPoliticianName.setText(currPolitician.getName());
         textDateOfBirth.setText(currPolitician.getDOB());
         textHomeCounty.setText(currPolitician.getCurrentParty());
-        textImageURL.setText(currPolitician.getPhotoURL());
+        textImageURL.setText(currPolitician.getPolImage().getImage().toString());
     }
 
 
@@ -275,13 +269,18 @@ public class Controller {
      */
     public void updatePoliticiansTables(){
         myPoliticianObsList.clear();
-        sex.setCellValueFactory(new PropertyValueFactory<Politician, String>("id"));
+        pIDColumn.setCellValueFactory(new PropertyValueFactory<Politician, String>("id"));
         pDOBColumn.setCellValueFactory(new PropertyValueFactory<Politician,String >("DOB"));
         pNameColumn.setCellValueFactory(new PropertyValueFactory<Politician,String >("name"));
         pHomeCountyColumn.setCellValueFactory(new PropertyValueFactory<Politician,String >("homeCounty"));
         pPhotoURLColumn.setCellValueFactory(new PropertyValueFactory<Politician, ImageView>("polImage"));
         currentPartyColumn.setCellValueFactory(new PropertyValueFactory<Politician,String >("currentParty"));
-        pSelectionNameColumn.setCellValueFactory(new PropertyValueFactory<Politician,String >("name"));
+        pIDColumn1.setCellValueFactory(new PropertyValueFactory<Politician, String>("id"));
+        pDOBColumn1.setCellValueFactory(new PropertyValueFactory<Politician,String >("DOB"));
+        pNameColumn1.setCellValueFactory(new PropertyValueFactory<Politician,String >("name"));
+        pHomeCountyColumn1.setCellValueFactory(new PropertyValueFactory<Politician,String >("homeCounty"));
+        pPhotoURLColumn1.setCellValueFactory(new PropertyValueFactory<Politician, ImageView>("polImage"));
+        currentPartyColumn1.setCellValueFactory(new PropertyValueFactory<Politician,String >("currentParty"));
 
 
         for(Politician pol: Main.politicianList){
@@ -290,7 +289,6 @@ public class Controller {
         }
 
         politicianTable.setItems(myPoliticianObsList);
-
         candidateSelectionTable.setItems(myPoliticianObsList);
     }
 
@@ -401,10 +399,11 @@ public class Controller {
 
 
 
-        if (currElection!=null) {
+        if (currElection2!=null) {
             Candidate cand = new Candidate(pol.getId(), name, pol.currentParty, pol.DOB, pol.homeCounty, pol.photo);
-            currElection.electionCandidateList.addNode(cand);
+            currElection2.electionCandidateList.addNode(cand);
             updateCandidatesTable();
+
             // Hashes candidates when it's added
             candNameHashTable.insertHash(cand.name, cand);
             polCountyHashTable.insertHash(cand.homeCounty, cand);
@@ -445,7 +444,7 @@ public class Controller {
         myCandidateObsList.clear();
         myCandidateObsList2.clear();
         candidateNameColumn.setCellValueFactory(new PropertyValueFactory<Candidate,String >("name"));
-        for(Candidate candidate: currElection.electionCandidateList) {
+        for(Candidate candidate: currElection2.electionCandidateList) {
             myCandidateObsList.add(candidate);
 
         }
