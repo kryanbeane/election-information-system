@@ -44,9 +44,10 @@ public class Controller {
     HashTable<Candidate> candCountyHashTable = new HashTable<Candidate>(size);
     HashTable<Candidate> candPartyHashTable = new HashTable<Candidate>(size);
 
-
+    @FXML TextField searchPolName;
     // Search Politician Methods //
-    public List<Politician> searchPolByName(String name) {
+    public List<Politician> searchPolByName() {
+        String name = searchPolName.getText();
         // Hash = hash of search
         int hash = polNameHashTable.hashFunction(name);
         // New list to return search results
@@ -65,7 +66,9 @@ public class Controller {
         return namedPols;
     }
 
-    public List<Politician> searchPolByCounty(String county) {
+    @FXML TextField searchPolCounty;
+    public List<Politician> searchPolByCounty() {
+        String county = searchPolCounty.getText();
         // Hash = hash of search
         int hash = polCountyHashTable.hashFunction(county);
         // New list to return search results
@@ -84,7 +87,9 @@ public class Controller {
         return countyPols;
     }
 
-    public List<Politician> searchPolByParty(String party) {
+    @FXML TextField searchPolParty;
+    public List<Politician> searchPolByParty() {
+        String party = searchPolParty.getText();
         // Hash = hash of search
         int hash = polPartyHashTable.hashFunction(party);
         // New list to return search results
@@ -117,7 +122,7 @@ public class Controller {
                 currCandidate=candNameHashTable.getHash(hash, i);
                 namedCands.addNode(currCandidate);
             }
-            System.out.println("There was no politician by that name.");
+            System.out.println("There was no candidate by that name.");
             return null;
         }
         return namedCands;
