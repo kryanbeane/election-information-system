@@ -8,10 +8,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseButton;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
-import java.util.Hashtable;
+import java.io.FileNotFoundException;
 import java.util.Random;
 
 public class Controller {
@@ -180,7 +181,17 @@ public class Controller {
     @FXML
     TableColumn<Politician, String> sex;
     @FXML
-    TableColumn<Politician, String> currentPartyColumn, pNameColumn, pDOBColumn, pHomeCountyColumn, pPhotoURLColumn, pSelectionNameColumn;
+    TableColumn<Politician, String> currentPartyColumn;
+    @FXML
+    TableColumn<Politician, String> pNameColumn;
+    @FXML
+    TableColumn<Politician, String> pDOBColumn;
+    @FXML
+    TableColumn<Politician, String> pHomeCountyColumn;
+    @FXML
+    TableColumn<Politician, ImageView> pPhotoURLColumn;
+    @FXML
+    TableColumn<Politician, String> pSelectionNameColumn;
     @FXML
     TableColumn<Election, String> electionIDColumn, electionTypeColumn, electionLocationColumn, electionDateColumn, electionNumberOfWInnersColumn;
     @FXML
@@ -217,15 +228,17 @@ public class Controller {
     /**
      * Adds politician to list of politicians.
      */
-    public void addPolitician() {
+    public void addPolitician() throws FileNotFoundException {
         String currentParty = textCurrentParty.getText();
         String name = textPoliticianName.getText();
         String DOB = polDatePicker.getValue().toString();
         String homeCounty = textHomeCounty.getText();
-        String photoURL = textImageURL.getText();
+        ImageView photo = new ImageView(new Image("file:resources/" + textImageURL.getText()));
+        photo.setFitHeight(40);
+        photo.setFitWidth(40);
 
         // Creates a new politician with the above values.
-        Politician politician = (new Politician(generateID(), name, currentParty, DOB, homeCounty, photoURL));
+        Politician politician = (new Politician(generateID(), name, currentParty, DOB, homeCounty, photo));
         // Adds that politician to the politicianList.
         Main.politicianList.addNode(politician);
         updatePoliticiansTables();
@@ -266,14 +279,18 @@ public class Controller {
         pDOBColumn.setCellValueFactory(new PropertyValueFactory<Politician,String >("DOB"));
         pNameColumn.setCellValueFactory(new PropertyValueFactory<Politician,String >("name"));
         pHomeCountyColumn.setCellValueFactory(new PropertyValueFactory<Politician,String >("homeCounty"));
-        pPhotoURLColumn.setCellValueFactory(new PropertyValueFactory<Politician,String >("photoURL"));
+        pPhotoURLColumn.setCellValueFactory(new PropertyValueFactory<Politician, ImageView>("polImage"));
         currentPartyColumn.setCellValueFactory(new PropertyValueFactory<Politician,String >("currentParty"));
         pSelectionNameColumn.setCellValueFactory(new PropertyValueFactory<Politician,String >("name"));
 
+
         for(Politician pol: Main.politicianList){
             myPoliticianObsList.add(pol);
+
         }
+
         politicianTable.setItems(myPoliticianObsList);
+
         candidateSelectionTable.setItems(myPoliticianObsList);
     }
 
@@ -376,7 +393,7 @@ public class Controller {
     /**
      *
      */
-    public void addCandidate() {
+    public void addCandidate() throws FileNotFoundException {
         Politician pol = candidateSelectionTable.getSelectionModel().getSelectedItem();
         String name = pol.name;
         // Creates new candidate object from a selected politician.
@@ -385,7 +402,7 @@ public class Controller {
 
 
         if (currElection!=null) {
-            Candidate cand = new Candidate(pol.getId(), name, pol.currentParty, pol.DOB, pol.homeCounty, pol.photoURL);
+            Candidate cand = new Candidate(pol.getId(), name, pol.currentParty, pol.DOB, pol.homeCounty, pol.photo);
             currElection.electionCandidateList.addNode(cand);
             updateCandidatesTable();
             // Hashes candidates when it's added

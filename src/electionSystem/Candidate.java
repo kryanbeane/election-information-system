@@ -1,5 +1,9 @@
 package electionSystem;
 
+import javafx.scene.image.ImageView;
+
+import java.io.FileNotFoundException;
+
 public class Candidate extends Politician {
 
     String id;
@@ -7,10 +11,10 @@ public class Candidate extends Politician {
     String currentParty;
     String DOB;
     String homeCounty;
-    String photoURL;
+    ImageView photoURL;
 
-    public Candidate(String id,String name, String currentParty, String DOB, String homeCounty, String photoURL) {
-        super(id ,name, currentParty, DOB, homeCounty, photoURL);
+    public Candidate(String id,String name, String currentParty, String DOB, String homeCounty, ImageView photo) throws FileNotFoundException {
+        super(id ,name, currentParty, DOB, homeCounty, photo);
     }
 
     @Override
