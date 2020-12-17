@@ -191,7 +191,7 @@
                               </VBox>
                            </top>
                            <center>
-                              <TableView fx:id="candidateSelectionTable1" maxHeight="-Infinity" maxWidth="700.0" prefHeight="660.0" prefWidth="700.0" BorderPane.alignment="CENTER">
+                              <TableView fx:id="searchedPolsTable" maxHeight="-Infinity" maxWidth="700.0" prefHeight="660.0" prefWidth="700.0" BorderPane.alignment="CENTER">
                                  <columns>
                                     <TableColumn fx:id="pIDColumn2" prefWidth="59.0" text="ID" />
                                     <TableColumn fx:id="pNameColumn2" prefWidth="163.0" style="color: red;" text="Name" />

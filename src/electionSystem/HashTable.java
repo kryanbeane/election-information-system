@@ -22,10 +22,10 @@ public class HashTable<T> {
      */
     public int hashFunction(String key) {
         // Value that will be mapped in the hash table.
-        int total=0;
+        int total=1;
         // Adds the key to the total
         for(int i=0; i<key.length(); i++) {
-            total += key.charAt(i);
+            total *= key.charAt(i);
         }
         System.out.println(total%hashTableList.length);
         return total%hashTableList.length;

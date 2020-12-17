@@ -132,6 +132,81 @@
                   </AnchorPane>
                </content>
             </Tab>
+            <Tab text="POLITICIAN SEARCH">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <BorderPane layoutX="-1.0" layoutY="-2.0" prefHeight="775.0" prefWidth="700.0">
+                           <top>
+                              <VBox prefHeight="144.0" prefWidth="700.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Label prefHeight="38.0" prefWidth="700.0" text="    Politician Search" />
+                                    <HBox prefHeight="46.0" prefWidth="700.0">
+                                       <children>
+                                          <VBox prefHeight="46.0" prefWidth="475.0">
+                                             <children>
+                                                <TextField fx:id="searchPolName">
+                                                   <VBox.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" />
+                                                   </VBox.margin>
+                                                </TextField>
+                                                <Button mnemonicParsing="false" onAction="#searchPolByName" prefHeight="25.0" prefWidth="268.0" text="SEARCH BY NAME">
+                                                   <VBox.margin>
+                                                      <Insets left="55.0" right="55.0" />
+                                                   </VBox.margin>
+                                                </Button>
+                                             </children>
+                                          </VBox>
+                                          <VBox prefHeight="46.0" prefWidth="483.0">
+                                             <children>
+                                                <TextField fx:id="searchPolCounty" onAction="#searchPolByCounty">
+                                                   <VBox.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" />
+                                                   </VBox.margin>
+                                                </TextField>
+                                                <Button mnemonicParsing="false" onAction="#searchPolByCounty" prefHeight="25.0" prefWidth="327.0" text="SEARCH BY COUNTY">
+                                                   <VBox.margin>
+                                                      <Insets left="55.0" right="55.0" />
+                                                   </VBox.margin>
+                                                </Button>
+                                             </children>
+                                          </VBox>
+                                          <VBox prefHeight="46.0" prefWidth="474.0">
+                                             <children>
+                                                <TextField fx:id="searchPolParty" onAction="#searchPolByParty">
+                                                   <VBox.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" />
+                                                   </VBox.margin>
+                                                </TextField>
+                                                <Button mnemonicParsing="false" onAction="#searchPolByParty" prefHeight="25.0" prefWidth="318.0" text="SEARCH BY PARTY">
+                                                   <VBox.margin>
+                                                      <Insets left="55.0" right="55.0" />
+                                                   </VBox.margin>
+                                                </Button>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </top>
+                           <center>
+                              <TableView fx:id="searchedPolsTable" maxHeight="-Infinity" maxWidth="700.0" prefHeight="660.0" prefWidth="700.0" BorderPane.alignment="CENTER">
+                                 <columns>
+                                    <TableColumn fx:id="pIDColumn2" prefWidth="59.0" text="ID" />
+                                    <TableColumn fx:id="pNameColumn2" prefWidth="163.0" style="color: red;" text="Name" />
+                                    <TableColumn fx:id="pDOBColumn2" prefWidth="98.0" text="DOB" />
+                                    <TableColumn fx:id="currentPartyColumn2" prefWidth="79.0" text="Political Party" />
+                                    <TableColumn fx:id="pHomeCountyColumn2" prefWidth="117.0" text="Home County" />
+                                    <TableColumn fx:id="pPhotoURLColumn2" prefWidth="183.0" text="Image" />
+                                 </columns>
+                              </TableView>
+                           </center>
+                        </BorderPane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
             <Tab text="ELECTION">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="700.0">
@@ -225,6 +300,67 @@
                   </AnchorPane>
                </content>
             </Tab>
+            <Tab text="ELECTION SEARCH">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <BorderPane layoutX="-1.0" layoutY="-2.0" prefHeight="775.0" prefWidth="700.0">
+                           <top>
+                              <VBox prefHeight="144.0" prefWidth="700.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Label prefHeight="38.0" prefWidth="700.0" text="          Election Search" />
+                                    <HBox prefHeight="46.0" prefWidth="700.0">
+                                       <children>
+                                          <VBox prefHeight="46.0" prefWidth="475.0">
+                                             <children>
+                                                <TextField>
+                                                   <VBox.margin>
+                                                      <Insets bottom="10.0" left="30.0" right="30.0" />
+                                                   </VBox.margin>
+                                                </TextField>
+                                                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="268.0" text="SEARCH BY LOCATION">
+                                                   <VBox.margin>
+                                                      <Insets left="100.0" right="100.0" />
+                                                   </VBox.margin>
+                                                </Button>
+                                             </children>
+                                          </VBox>
+                                          <VBox prefHeight="46.0" prefWidth="483.0">
+                                             <children>
+                                                <TextField>
+                                                   <VBox.margin>
+                                                      <Insets bottom="10.0" left="30.0" right="30.0" />
+                                                   </VBox.margin>
+                                                </TextField>
+                                                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="327.0" text="SEARCH BY TYPE">
+                                                   <VBox.margin>
+                                                      <Insets left="100.0" right="100.0" />
+                                                   </VBox.margin>
+                                                </Button>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </top>
+                           <center>
+                              <TableView fx:id="candidateSelectionTable11" maxHeight="-Infinity" maxWidth="700.0" prefHeight="660.0" prefWidth="700.0" BorderPane.alignment="CENTER">
+                                 <columns>
+                                    <TableColumn fx:id="pIDColumn21" prefWidth="59.0" text="ID" />
+                                    <TableColumn fx:id="pNameColumn21" prefWidth="163.0" style="color: red;" text="Name" />
+                                    <TableColumn fx:id="pDOBColumn21" prefWidth="98.0" text="DOB" />
+                                    <TableColumn fx:id="currentPartyColumn21" prefWidth="79.0" text="Political Party" />
+                                    <TableColumn fx:id="pHomeCountyColumn21" prefWidth="117.0" text="Home County" />
+                                    <TableColumn fx:id="pPhotoURLColumn21" prefWidth="183.0" text="Image" />
+                                 </columns>
+                              </TableView>
+                           </center>
+                        </BorderPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
             <Tab text="CANDIDATES">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="700.0">
@@ -311,6 +447,81 @@
                                  </children>
                               </VBox>
                            </top>
+                        </BorderPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="CANDIDATE SEARCH">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <BorderPane layoutX="-1.0" layoutY="-2.0" prefHeight="775.0" prefWidth="700.0">
+                           <top>
+                              <VBox prefHeight="144.0" prefWidth="700.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Label prefHeight="38.0" prefWidth="700.0" text="    Candidate Search" />
+                                    <HBox prefHeight="46.0" prefWidth="700.0">
+                                       <children>
+                                          <VBox prefHeight="46.0" prefWidth="475.0">
+                                             <children>
+                                                <TextField fx:id="searchPolName1">
+                                                   <VBox.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" />
+                                                   </VBox.margin>
+                                                </TextField>
+                                                <Button mnemonicParsing="false" onAction="#searchPolByName" prefHeight="25.0" prefWidth="268.0" text="SEARCH BY NAME">
+                                                   <VBox.margin>
+                                                      <Insets left="55.0" right="55.0" />
+                                                   </VBox.margin>
+                                                </Button>
+                                             </children>
+                                          </VBox>
+                                          <VBox prefHeight="46.0" prefWidth="483.0">
+                                             <children>
+                                                <TextField fx:id="searchPolCounty1" onAction="#searchPolByCounty">
+                                                   <VBox.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" />
+                                                   </VBox.margin>
+                                                </TextField>
+                                                <Button mnemonicParsing="false" onAction="#searchPolByCounty" prefHeight="25.0" prefWidth="327.0" text="SEARCH BY COUNTY">
+                                                   <VBox.margin>
+                                                      <Insets left="55.0" right="55.0" />
+                                                   </VBox.margin>
+                                                </Button>
+                                             </children>
+                                          </VBox>
+                                          <VBox prefHeight="46.0" prefWidth="474.0">
+                                             <children>
+                                                <TextField fx:id="searchPolParty1" onAction="#searchPolByParty">
+                                                   <VBox.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" />
+                                                   </VBox.margin>
+                                                </TextField>
+                                                <Button mnemonicParsing="false" onAction="#searchPolByParty" prefHeight="25.0" prefWidth="318.0" text="SEARCH BY PARTY">
+                                                   <VBox.margin>
+                                                      <Insets left="55.0" right="55.0" />
+                                                   </VBox.margin>
+                                                </Button>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </top>
+                           <center>
+                              <TableView fx:id="candidateSelectionTable12" maxHeight="-Infinity" maxWidth="700.0" prefHeight="660.0" prefWidth="700.0" BorderPane.alignment="CENTER">
+                                 <columns>
+                                    <TableColumn fx:id="pIDColumn22" prefWidth="59.0" text="ID" />
+                                    <TableColumn fx:id="pNameColumn22" prefWidth="163.0" style="color: red;" text="Name" />
+                                    <TableColumn fx:id="pDOBColumn22" prefWidth="98.0" text="DOB" />
+                                    <TableColumn fx:id="currentPartyColumn22" prefWidth="79.0" text="Political Party" />
+                                    <TableColumn fx:id="pHomeCountyColumn22" prefWidth="117.0" text="Home County" />
+                                    <TableColumn fx:id="pPhotoURLColumn22" prefWidth="183.0" text="Image" />
+                                 </columns>
+                              </TableView>
+                           </center>
                         </BorderPane>
                      </children>
                   </AnchorPane>

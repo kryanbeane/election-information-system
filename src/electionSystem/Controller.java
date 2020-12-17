@@ -15,28 +15,9 @@ import java.util.Random;
 public class Controller {
 
     // Searching //
-    /**
-     * Method to find the index of the hashed object user is looking for.
-     * @param key - String field of object being searched for.
-     * @return - The index that object is hashed to.
-     */
-    public int getListIndex(String key) {
-        int index=0;
-        int hash=polNameHashTable.hashFunction(key);
-        int x=polNameHashTable.hashTableList[hash].length();
-        Node temp=polNameHashTable.hashTableList[hash].head;
-
-        for(int i=0; i<=x; i++) {
-            if(temp.getContents().equals(key)) {
-                index=i;
-            }
-            temp=temp.next;
-        }
-        return index;
-    }
 
     // Size and hash tables //
-    int size=800;
+    int size = 800;
     HashTable<Politician> polNameHashTable = new HashTable<Politician>(size);
     HashTable<Politician> polCountyHashTable = new HashTable<Politician>(size);
     HashTable<Politician> polPartyHashTable = new HashTable<Politician>(size);
@@ -44,7 +25,9 @@ public class Controller {
     HashTable<Candidate> candCountyHashTable = new HashTable<Candidate>(size);
     HashTable<Candidate> candPartyHashTable = new HashTable<Candidate>(size);
 
-    @FXML TextField searchPolName;
+    @FXML
+    TextField searchPolName;
+
     // Search Politician Methods //
     public List<Politician> searchPolByName() {
         String name = searchPolName.getText();
@@ -53,18 +36,32 @@ public class Controller {
         // New list to return search results
         List<Politician> namedPols = new List<>();
 
+        for (int i = 0; i < polPartyHashTable.hashTableList.length; i++) {
+            polPartyHashTable.getHash(hash, i);
+        }
 
-        for(int i = 0; i < polNameHashTable.hashSize(hash); i++){
-            if(name.equals(currPolitician.name)) {
-                // Add each politician to namedPols list and return the list to a table in GUI?
-                currPolitician=polNameHashTable.getHash(hash, i);
-                namedPols.addNode(currPolitician);
+
+        for (int i = 0; i < polNameHashTable.hashSize(hash); i++) {
+            for (int listI = 0; listI < polPartyHashTable.hashTableList.length; listI++) {
+                Politician tempPol = polNameHashTable.getHash(hash, i);
+                if (name.equals(tempPol.name)) {
+                    // Add each politician to namedPols list and return the list to a table in GUI?
+                    currPolitician = polNameHashTable.getHash(hash, i);
+                    namedPols.addNode(currPolitician);
+                } else {
+                    System.out.println("There was no politician by that name.");
+                    return null;
+                }
             }
-            System.out.println("There was no politician by that name.");
-            return null;
+            for (Politician pol : namedPols) {
+                searchedPolsObsList.add(pol);
+            }
+
         }
         return namedPols;
     }
+
+
 
     @FXML TextField searchPolCounty;
     public List<Politician> searchPolByCounty() {
@@ -167,7 +164,7 @@ public class Controller {
     }
 
 
-
+    ObservableList<Politician> searchedPolsObsList = FXCollections.observableArrayList();
     ObservableList<Politician> myPoliticianObsList = FXCollections.observableArrayList();
     ObservableList<Election> myElectionObsList = FXCollections.observableArrayList();
     ObservableList<Candidate> myCandidateObsList = FXCollections.observableArrayList();
@@ -199,7 +196,7 @@ public class Controller {
     @FXML
     TableColumn<Candidate, String> candidateNameColumn;
     @FXML
-    TableView<Politician> politicianTable, candidateSelectionTable;
+    TableView<Politician> politicianTable, candidateSelectionTable, searchedPolsTable;
     @FXML
     TableView<Election> electionTable, electionTable2;
     @FXML
@@ -233,7 +230,7 @@ public class Controller {
         String name = textPoliticianName.getText();
         String DOB = polDatePicker.getValue().toString();
         String homeCounty = textHomeCounty.getText();
-        Image image = new Image("file:resources/" + textImageURL.getText());
+        Image image = new Image( textImageURL.getText());
 
 
         // Creates a new politician with the above values.
