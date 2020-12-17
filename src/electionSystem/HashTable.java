@@ -8,9 +8,13 @@ public class HashTable<T> {
      * Constructor.
      * @param size - takes in ths size of the hashtable.
      */
+    @SuppressWarnings("unchecked")
     public HashTable(int size) {
+        //May be a problem with large hash tables
+        // Creates a new array of lists.
         hashTableList= new List[size];
-        for(int i=0; i<hashTableList.length; i++) {
+        for(int i=0; i<hashTableList.length; i++) { // Loopy Loop.
+            // Adds a list for each index of hashtable array.
             hashTableList[i] = new List<>();
         }
     }
@@ -25,7 +29,7 @@ public class HashTable<T> {
         int total=0;
         // Adds the key to the total
         for(int i=0; i<key.length(); i++) {
-            total += key.charAt(i);
+            total += key.charAt(i);                 //This line gets ASCII integer value and adds to total.
         }
         System.out.println(total%hashTableList.length);
         return total%hashTableList.length;
@@ -36,8 +40,10 @@ public class HashTable<T> {
      * @param key -
      * @param person -
      */
-    public void insertHash(String key, T person) {                 // Insert the hashed person into the hash table.
+    public void insertHash(String key, T person) {
+        // Insert the hashed person into the hash table.
         hashTableList[hashFunction(key)].addNode(person);
+        // Inserts person at Index produced by hash function. ._.
     }
 
     /**
@@ -46,10 +52,13 @@ public class HashTable<T> {
      * @param person - Object of selected person to remove.
      */
     public void removeHash(String key, T person) {
-        int node = hashFunction(key);
-        for(int i = 0; i < hashTableList[node].length(); i++) {
-            if(hashTableList[node].accessAtIndex(i).getContents() == person) {
-                hashTableList[node].removeNode(i);
+        int arraySlot = hashFunction(key);
+        for(int i = 0; i < hashTableList[arraySlot].length(); i++) {
+            if(hashTableList[arraySlot].accessAtIndex(i).getContents() == person) {
+                hashTableList[arraySlot].removeNode(i);
+            }
+            else {
+                System.out.println("That person is not at ");
             }
         }
     }
@@ -62,6 +71,7 @@ public class HashTable<T> {
      * @param newPerson - Object of new person to hash.
      */
     public void edit(String  oldKey, T oldPerson, String newKey, T newPerson) {
+        //Have to have old and new Keys, as name of person may change.
         removeHash(oldKey, oldPerson);
         insertHash(newKey, newPerson);
     }

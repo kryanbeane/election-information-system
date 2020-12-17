@@ -166,8 +166,6 @@ public class Controller {
         return partyCands;
     }
 
-
-
     ObservableList<Politician> myPoliticianObsList = FXCollections.observableArrayList();
     ObservableList<Election> myElectionObsList = FXCollections.observableArrayList();
     ObservableList<Candidate> myCandidateObsList = FXCollections.observableArrayList();
@@ -221,8 +219,6 @@ public class Controller {
         String alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         char charPart = alpha.charAt(stringIndex);
         return String.valueOf(charPart) + intPart;
-
-
     }
 
     /**
@@ -401,9 +397,6 @@ public class Controller {
         String name = pol.name;
         // Creates new candidate object from a selected politician.
 
-
-
-
         if (currElection2!=null) {
             Candidate cand = new Candidate(pol.getId(), name, pol.currentParty, pol.DOB, pol.homeCounty, pol.photo);
             currElection2.electionCandidateList.addNode(cand);
@@ -512,12 +505,13 @@ public class Controller {
             }
 
         }
-    }*/
+    } */
 
-    public int findLargestCandidatePos(List<Candidate> candList, int length){
+    // Selection sort :>
+    public int findLargestCandidatePos(List<Candidate> candList, int innerLooplength){
         int largestPos = 0;
-        for(int i = 1; i<length;i++){
-            if(candList.accessAtIndex(i).getContents().getName().compareTo(candList.accessAtIndex(largestPos).getContents().getName())>0){
+        for(int i = 1; i<innerLooplength;i++){
+            if(candList.accessAtIndex(i).getContents().getName().compareTo(candList.accessAtIndex(largestPos).getContents().getName()) > 0) {
                 largestPos = i;
             }
         }
@@ -541,7 +535,7 @@ public class Controller {
     public int findLargestPoliticianPos(List<Politician> polList, int length){
         int largestPos = 0;
         for(int i = 1; i<length;i++){
-            if(polList.accessAtIndex(i).getContents().getName().compareTo(polList.accessAtIndex(largestPos).getContents().getName())>0){
+            if(polList.accessAtIndex(i).getContents().getName().compareToIgnoreCase(polList.accessAtIndex(largestPos).getContents().getName())>0){
                 largestPos = i;
             }
         }
