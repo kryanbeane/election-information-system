@@ -8,7 +8,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-
 import java.io.FileNotFoundException;
 import java.util.Random;
 
@@ -36,11 +35,12 @@ public class Controller {
         // New list to return search results
         List<Politician> namedPols = new List<>();
 
+
         for (int i = 0; i < polPartyHashTable.hashTableList.length; i++) {
             polPartyHashTable.getHash(hash, i);
         }
 
-
+        // Loops through length of list at hash position
         for (int i = 0; i < polNameHashTable.hashSize(hash); i++) {
             for (int listI = 0; listI < polPartyHashTable.hashTableList.length; listI++) {
                 Politician tempPol = polNameHashTable.getHash(hash, i);
@@ -60,8 +60,6 @@ public class Controller {
         }
         return namedPols;
     }
-
-
 
     @FXML TextField searchPolCounty;
     public List<Politician> searchPolByCounty() {
