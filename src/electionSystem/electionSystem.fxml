@@ -159,7 +159,7 @@
                                           </VBox>
                                           <VBox prefHeight="46.0" prefWidth="483.0">
                                              <children>
-                                                <TextField fx:id="searchPolCounty" onAction="#searchPolByCounty">
+                                                <TextField fx:id="searchPolCounty">
                                                    <VBox.margin>
                                                       <Insets bottom="10.0" left="10.0" right="10.0" />
                                                    </VBox.margin>
@@ -173,7 +173,7 @@
                                           </VBox>
                                           <VBox prefHeight="46.0" prefWidth="474.0">
                                              <children>
-                                                <TextField fx:id="searchPolParty" onAction="#searchPolByParty">
+                                                <TextField fx:id="searchPolParty">
                                                    <VBox.margin>
                                                       <Insets bottom="10.0" left="10.0" right="10.0" />
                                                    </VBox.margin>
@@ -313,12 +313,12 @@
                                        <children>
                                           <VBox prefHeight="46.0" prefWidth="475.0">
                                              <children>
-                                                <TextField>
+                                                <TextField fx:id="searchElecLocation">
                                                    <VBox.margin>
                                                       <Insets bottom="10.0" left="30.0" right="30.0" />
                                                    </VBox.margin>
                                                 </TextField>
-                                                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="268.0" text="SEARCH BY LOCATION">
+                                                <Button mnemonicParsing="false" onAction="#searchElectionByLocation" prefHeight="25.0" prefWidth="268.0" text="SEARCH BY LOCATION">
                                                    <VBox.margin>
                                                       <Insets left="100.0" right="100.0" />
                                                    </VBox.margin>
@@ -327,12 +327,12 @@
                                           </VBox>
                                           <VBox prefHeight="46.0" prefWidth="483.0">
                                              <children>
-                                                <TextField>
+                                                <TextField fx:id="searchElecType">
                                                    <VBox.margin>
                                                       <Insets bottom="10.0" left="30.0" right="30.0" />
                                                    </VBox.margin>
                                                 </TextField>
-                                                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="327.0" text="SEARCH BY TYPE">
+                                                <Button mnemonicParsing="false" onAction="#searchElectionByType" prefHeight="25.0" prefWidth="327.0" text="SEARCH BY TYPE">
                                                    <VBox.margin>
                                                       <Insets left="100.0" right="100.0" />
                                                    </VBox.margin>
@@ -465,12 +465,12 @@
                                        <children>
                                           <VBox prefHeight="46.0" prefWidth="475.0">
                                              <children>
-                                                <TextField fx:id="searchPolName1">
+                                                <TextField fx:id="searchCandName">
                                                    <VBox.margin>
                                                       <Insets bottom="10.0" left="10.0" right="10.0" />
                                                    </VBox.margin>
                                                 </TextField>
-                                                <Button mnemonicParsing="false" onAction="#searchPolByName" prefHeight="25.0" prefWidth="268.0" text="SEARCH BY NAME">
+                                                <Button mnemonicParsing="false" onAction="#searchCandByName" prefHeight="25.0" prefWidth="268.0" text="SEARCH BY NAME">
                                                    <VBox.margin>
                                                       <Insets left="55.0" right="55.0" />
                                                    </VBox.margin>
@@ -479,12 +479,12 @@
                                           </VBox>
                                           <VBox prefHeight="46.0" prefWidth="483.0">
                                              <children>
-                                                <TextField fx:id="searchPolCounty1" onAction="#searchPolByCounty">
+                                                <TextField fx:id="searchCandCounty" onAction="#searchPolByCounty">
                                                    <VBox.margin>
                                                       <Insets bottom="10.0" left="10.0" right="10.0" />
                                                    </VBox.margin>
                                                 </TextField>
-                                                <Button mnemonicParsing="false" onAction="#searchPolByCounty" prefHeight="25.0" prefWidth="327.0" text="SEARCH BY COUNTY">
+                                                <Button mnemonicParsing="false" onAction="#searchCandByCounty" prefHeight="25.0" prefWidth="327.0" text="SEARCH BY COUNTY">
                                                    <VBox.margin>
                                                       <Insets left="55.0" right="55.0" />
                                                    </VBox.margin>
@@ -493,12 +493,12 @@
                                           </VBox>
                                           <VBox prefHeight="46.0" prefWidth="474.0">
                                              <children>
-                                                <TextField fx:id="searchPolParty1" onAction="#searchPolByParty">
+                                                <TextField fx:id="searchCandParty" onAction="#searchPolByParty">
                                                    <VBox.margin>
                                                       <Insets bottom="10.0" left="10.0" right="10.0" />
                                                    </VBox.margin>
                                                 </TextField>
-                                                <Button mnemonicParsing="false" onAction="#searchPolByParty" prefHeight="25.0" prefWidth="318.0" text="SEARCH BY PARTY">
+                                                <Button mnemonicParsing="false" onAction="#searchCandByParty" prefHeight="25.0" prefWidth="318.0" text="SEARCH BY PARTY">
                                                    <VBox.margin>
                                                       <Insets left="55.0" right="55.0" />
                                                    </VBox.margin>

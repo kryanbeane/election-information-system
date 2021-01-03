@@ -23,22 +23,18 @@ public class Controller {
     HashTable<Candidate> candNameHashTable = new HashTable<Candidate>(size);
     HashTable<Candidate> candCountyHashTable = new HashTable<Candidate>(size);
     HashTable<Candidate> candPartyHashTable = new HashTable<Candidate>(size);
+    HashTable<Election> elecLocationHashTable = new HashTable<Election>(size);
+    HashTable<Election> elecTypeHashTable = new HashTable<Election>(size);
 
-    @FXML
-    TextField searchPolName;
 
     // Search Politician Methods //
+    @FXML TextField searchPolName;
     public List<Politician> searchPolByName() {
         String name = searchPolName.getText();
         // Hash = hash of search
         int hash = polNameHashTable.hashFunction(name);
         // New list to return search results
         List<Politician> namedPols = new List<>();
-
-
-        for (int i = 0; i < polPartyHashTable.hashTableList.length; i++) {
-            polPartyHashTable.getHash(hash, i);
-        }
 
         // Loops through length of list at hash position
         for (int i = 0; i < polNameHashTable.hashSize(hash); i++) {
@@ -50,13 +46,8 @@ public class Controller {
                     namedPols.addNode(currPolitician);
                 } else {
                     System.out.println("There was no politician by that name.");
-                    return null;
                 }
             }
-            for (Politician pol : namedPols) {
-                searchedPolsObsList.add(pol);
-            }
-
         }
         return namedPols;
     }
@@ -69,15 +60,18 @@ public class Controller {
         // New list to return search results
         List<Politician> countyPols = new List<>();
 
-
-        for(int i = 0; i < polCountyHashTable.hashSize(hash); i++){
-            if(county.equals(currPolitician.homeCounty)) {
-                // Add each politician to countyPols list and return the list to a table in GUI?
-                currPolitician=polCountyHashTable.getHash(hash, i);
-                countyPols.addNode(currPolitician);
+        // Loops through length of list at hash position
+        for (int i = 0; i < polCountyHashTable.hashSize(hash); i++) {
+            for (int listI = 0; listI < polCountyHashTable.hashTableList.length; listI++) {
+                Politician tempPol = polNameHashTable.getHash(hash, i);
+                if (county.equals(tempPol.homeCounty)) {
+                    // Add each politician to countyPols list and return the list to a table in GUI?
+                    currPolitician = polCountyHashTable.getHash(hash, i);
+                    countyPols.addNode(currPolitician);
+                } else {
+                    System.out.println("There were no politicians in that county.");
+                }
             }
-            System.out.println("There are no politicians in that county.");
-            return null;
         }
         return countyPols;
     }
@@ -90,75 +84,148 @@ public class Controller {
         // New list to return search results
         List<Politician> partyPols = new List<>();
 
-
-        for(int i = 0; i < polPartyHashTable.hashSize(hash); i++){
-            if(party.equals(currPolitician.currentParty)) {
-                // Add each politician to partyPols list and return the list to a table in GUI?
-                currPolitician=polPartyHashTable.getHash(hash, i);
-                partyPols.addNode(currPolitician);
+        // Loops through length of list at hash position
+        for (int i = 0; i < polPartyHashTable.hashSize(hash); i++) {
+            for (int listI = 0; listI < polPartyHashTable.hashTableList.length; listI++) {
+                Politician tempPol = polPartyHashTable.getHash(hash, i);
+                if (party.equals(tempPol.currentParty)) {
+                    // Add each politician to namedPols list and return the list to a table in GUI?
+                    currPolitician = polPartyHashTable.getHash(hash, i);
+                    partyPols.addNode(currPolitician);
+                } else {
+                    System.out.println("There were no politicians in that party.");
+                }
             }
-            System.out.println("There are no politicians in that party.");
-            return null;
         }
         return partyPols;
     }
 
-    // Search Candidate Methods //
-    public List<Candidate> searchCandByName(String name) {
+    @FXML TextField searchCandName;
+    public List<Candidate> searchCandByName() {
+        String name = searchCandName.getText();
         // Hash = hash of search
         int hash = candNameHashTable.hashFunction(name);
         // New list to return search results
         List<Candidate> namedCands = new List<>();
 
-
-        for(int i = 0; i < candNameHashTable.hashSize(hash); i++){
-            if(name.equals(currCandidate.name)) {
-                // Add each politician to namedPols list and return the list to a table in GUI?
-                currCandidate=candNameHashTable.getHash(hash, i);
-                namedCands.addNode(currCandidate);
+        // Loops through length of list at hash position
+        for (int i = 0; i < candNameHashTable.hashSize(hash); i++) {
+            for (int listI = 0; listI < candNameHashTable.hashTableList.length; listI++) {
+                Candidate tempCand = candNameHashTable.getHash(hash, i);
+                if (name.equals(tempCand.name)) {
+                    // Add each candidate to namedCands list and return the list to a table in GUI?
+                    currCandidate = candNameHashTable.getHash(hash, i);
+                    namedCands.addNode(currCandidate);
+                } else {
+                    System.out.println("There were no candidates by that name.");
+                }
             }
-            System.out.println("There was no candidate by that name.");
-            return null;
         }
         return namedCands;
     }
 
-    public List<Candidate> searchCandByCounty(String county) {
+    @FXML TextField searchCandCounty;
+    public List<Candidate> searchCandByCounty() {
+        String county = searchCandCounty.getText();
         // Hash = hash of search
         int hash = candCountyHashTable.hashFunction(county);
         // New list to return search results
         List<Candidate> countyCands = new List<>();
 
-
-        for(int i = 0; i < candCountyHashTable.hashSize(hash); i++){
-            if(county.equals(currCandidate.homeCounty)) {
-                // Add each politician to countyPols list and return the list to a table in GUI?
-                currCandidate=candCountyHashTable.getHash(hash, i);
-                countyCands.addNode(currCandidate);
+        // Loops through length of list at hash position
+        for (int i = 0; i < candCountyHashTable.hashSize(hash); i++) {
+            for (int listI = 0; listI < candCountyHashTable.hashTableList.length; listI++) {
+                Candidate tempCand = candCountyHashTable.getHash(hash, i);
+                if (county.equals(tempCand.homeCounty)) {
+                    // Add each candidate to countyCands list and return the list to a table in GUI?
+                    currCandidate = candCountyHashTable.getHash(hash, i);
+                    countyCands.addNode(currCandidate);
+                } else {
+                    System.out.println("There was no politician by that name.");
+                }
             }
-            System.out.println("There are no candidates in that county.");
-            return null;
         }
         return countyCands;
     }
 
-    public List<Candidate> searchCandByParty(String party) {
+    @FXML TextField searchCandParty;
+    public List<Candidate> searchCandByParty() {
+
+        String party = searchCandParty.getText();
         // Hash = hash of search
         int hash = candPartyHashTable.hashFunction(party);
         // New list to return search results
         List<Candidate> partyCands = new List<>();
 
-
-        for(int i = 0; i < candPartyHashTable.hashSize(hash); i++){
-            if(party.equals(currCandidate.currentParty)) {
-                // Add each politician to partyCands list and return the list to a table in GUI?
-                currCandidate=candPartyHashTable.getHash(hash, i);
-                partyCands.addNode(currCandidate);
+        // Loops through length of list at hash position
+        for (int i = 0; i < candPartyHashTable.hashSize(hash); i++) {
+            for (int listI = 0; listI < candPartyHashTable.hashTableList.length; listI++) {
+                Candidate tempCand = candPartyHashTable.getHash(hash, i);
+                if (party.equals(tempCand.currentParty)) {
+                    // Add each candidate to partyCands list and return the list to a table in GUI?
+                    currCandidate = candCountyHashTable.getHash(hash, i);
+                    partyCands.addNode(currCandidate);
+                } else {
+                    System.out.println("There were no candidate in that party.");
+                }
             }
-            System.out.println("There are no candidates in that party.");
-            return null;
+
         }
         return partyCands;
+    }
+
+    @FXML TextField searchElecLocation;
+    public List<Election> searchElectionByLocation() {
+        String location = searchElecLocation.getText();
+        // Hash = hash of search
+        int hash = elecLocationHashTable.hashFunction(location);
+        // New list to return search results
+        List<Election> locationElec = new List<>();
+
+        // Loops through length of list at hash position
+        for (int i = 0; i < elecLocationHashTable.hashSize(hash); i++) {
+
+            for (int listI = 0; listI < elecLocationHashTable.hashTableList.length; listI++) {
+                Election tempElec = elecLocationHashTable.getHash(hash, i);
+                if (location.equals(tempElec.location)) {
+                    // Add each candidate to partyCands list and return the list to a table in GUI?
+                    currElection = elecLocationHashTable.getHash(hash, i);
+                    locationElec.addNode(currElection);
+                } else {
+                    System.out.println("There were no candidate in that party.");
+                }
+            }
+
+        }
+        return locationElec;
+    }
+
+    @FXML TextField searchElecType;
+    public List<Election> searchElectionByType() {
+        String type = searchElecType.getText();
+        // Hash = hash of search
+        int hash = elecTypeHashTable.hashFunction(type);
+        // New list to return search results
+        List<Election> typeElec = new List<>();
+
+        // Loops through length of list at hash position
+        for (int i = 0; i < elecTypeHashTable.hashSize(hash); i++) {
+
+            for (int listI = 0; listI < elecTypeHashTable.hashTableList.length; listI++) {
+                Election tempElec = elecTypeHashTable.getHash(hash, i);
+
+                if (type.equals(tempElec.electionType)) {
+                    // Add each candidate to partyCands list and return the list to a table in GUI?
+                    currElection = elecTypeHashTable.getHash(hash, i);
+                    typeElec.addNode(currElection);
+                } else {
+                    System.out.println("There were no candidate in that party.");
+                }
+
+            }
+
+        }
+        return typeElec;
     }
 
 
