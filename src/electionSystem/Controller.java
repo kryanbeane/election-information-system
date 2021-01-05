@@ -16,22 +16,22 @@ import java.util.Random;
 
 public class Controller {
 
-    // Searching //
 
     // Size and hash tables //
     int size = 800;
-    HashTable<Politician> polNameHashTable = new HashTable<Politician>(size);
-    HashTable<Politician> polCountyHashTable = new HashTable<Politician>(size);
-    HashTable<Politician> polPartyHashTable = new HashTable<Politician>(size);
-    HashTable<Candidate> candNameHashTable = new HashTable<Candidate>(size);
-    HashTable<Candidate> candCountyHashTable = new HashTable<Candidate>(size);
-    HashTable<Candidate> candPartyHashTable = new HashTable<Candidate>(size);
-    HashTable<Election> elecLocationHashTable = new HashTable<Election>(size);
-    HashTable<Election> elecTypeHashTable = new HashTable<Election>(size);
+    electionSystem.HashTable<Politician> polNameHashTable = new electionSystem.HashTable<Politician>(size);
+    electionSystem.HashTable<Politician> polCountyHashTable = new electionSystem.HashTable<Politician>(size);
+    electionSystem.HashTable<Politician> polPartyHashTable = new electionSystem.HashTable<Politician>(size);
+    electionSystem.HashTable<Candidate> candNameHashTable = new electionSystem.HashTable<Candidate>(size);
+    electionSystem.HashTable<Candidate> candCountyHashTable = new electionSystem.HashTable<Candidate>(size);
+    electionSystem.HashTable<Candidate> candPartyHashTable = new electionSystem.HashTable<Candidate>(size);
+    electionSystem.HashTable<Election> elecLocationHashTable = new electionSystem.HashTable<Election>(size);
+    electionSystem.HashTable<Election> elecTypeHashTable = new electionSystem.HashTable<Election>(size);
 
 
     // Search Politician Methods //
-    @FXML TextField searchPolName;
+    @FXML
+    TextField searchPolName;
     public List<Politician> searchPolByName() {
         String name = searchPolName.getText();
         // Hash = hash of search
@@ -230,7 +230,6 @@ public class Controller {
         }
         return typeElec;
     }
-
 
     ObservableList<Politician> searchedPolsObsList = FXCollections.observableArrayList();
     ObservableList<Politician> myPoliticianObsList = FXCollections.observableArrayList();
