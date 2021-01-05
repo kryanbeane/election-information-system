@@ -8,6 +8,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+
 import java.io.FileNotFoundException;
 import java.util.Random;
 
@@ -239,7 +242,7 @@ public class Controller {
     Election currElection, currElection2;
     Candidate currCandidate;
     @FXML
-    TextField textCurrentParty, textPoliticianName, textDateOfBirth, textHomeCounty, textImageURL;
+    TextField textCurrentParty, textPoliticianName, textDateOfBirth, textHomeCounty, textImageURL, polID;
     @FXML
     TextField textElectionType, textElectionLocation, textElectionNumberOfWinners;
     @FXML
@@ -269,6 +272,12 @@ public class Controller {
     @FXML
     DatePicker polDatePicker, textElectionDatePicker;
 
+    @FXML
+    TextArea polTextArea;
+
+    @FXML
+    VBox polVBox;
+    Image currPolImage;
     /**
      * Generates ID to be assigned to Politicians, Candidates and Elections.
      *
@@ -295,20 +304,23 @@ public class Controller {
         String name = textPoliticianName.getText();
         String DOB = polDatePicker.getValue().toString();
         String homeCounty = textHomeCounty.getText();
-        Image image = new Image( textImageURL.getText());
+        String image = textImageURL.getText();
 
 
         // Creates a new politician with the above values.
         Politician politician = (new Politician(generateID(), name, currentParty, DOB, homeCounty, image));
         // Adds that politician to the politicianList.
         Main.politicianList.addNode(politician);
-        updatePoliticiansTables();
+        //THIS NEEDS TO BE REPLACED WITH UPDATE POLITICIAN TEXT.
+        updatePoliticianVBox();
+
+
         System.out.println(Main.politicianList.printList());
 
         //hash politician values when it's added.
-        polNameHashTable.insertHash(politician.name, politician);
-        polCountyHashTable.insertHash(politician.homeCounty, politician);
-        polPartyHashTable.insertHash(politician.currentParty, politician);
+//        polNameHashTable.insertHash(politician.name, politician);
+//        polCountyHashTable.insertHash(politician.homeCounty, politician);
+//        polPartyHashTable.insertHash(politician.currentParty, politician);
 
         // Need to figure out Image URL
         textCurrentParty.clear();
@@ -316,6 +328,20 @@ public class Controller {
         polDatePicker.getEditor().clear();
         textHomeCounty.clear();
         textImageURL.clear();
+    }
+
+    public void updatePoliticianVBox(){
+        polVBox.getChildren().clear();
+        polVBox.getChildren().add(new Text("Politicians in Database:"));
+        for(Politician pol: Main.politicianList){
+            String polString = pol.toString();
+            Text polText = new Text();
+            polText.setText(polString);
+            ImageView polImageView = pol.getPolImage();
+            polVBox.getChildren().add(polImageView);
+            polVBox.getChildren().add(polText);
+
+        }
     }
 
     public void editPolitician() {
@@ -364,20 +390,19 @@ public class Controller {
      */
     public void deletePolitician() {
         try {
-            currPolitician = politicianTable.getSelectionModel().getSelectedItem();
             List<Politician> polList = Main.politicianList;
 
             for (int i = 0; i < polList.length(); i++) {
-                if (polList.accessAtIndex(i).getContents().getId().equals(currPolitician.id)) {
+                if (polList.accessAtIndex(i).getContents().getId().equals(polID.getText())) {
                     Main.politicianList.removeNode(i);
                     System.out.println("Removed Politician at index" + i);
-                    updatePoliticiansTables();
-                    System.out.println("Removed Aisle at index" + i);
+                    updatePoliticianVBox();
+
 
                 }
             }
         } catch (Exception e) {
-            System.out.println("You have not chosen a Politician!");
+            System.out.println("You have not entered a valid ID!");
         }
     }
 
@@ -467,7 +492,7 @@ public class Controller {
 
 
         if (currElection2!=null) {
-            Candidate cand = new Candidate(pol.getId(), name, pol.currentParty, pol.DOB, pol.homeCounty, pol.photo);
+            Candidate cand = new Candidate(pol.getId(), name, pol.currentParty, pol.DOB, pol.homeCounty, pol.photoUrl);
             currElection2.electionCandidateList.addNode(cand);
             updateCandidatesTable();
 

@@ -13,15 +13,17 @@ public class Politician {
     String name;
     String DOB; //go back and divide into day, month, year, and make returnDOBString method.
     String homeCounty;
+    String photoUrl;
     Image photo;
 
-    public Politician(String id, String name, String currentParty, String DOB, String homeCounty, Image photo) throws FileNotFoundException {
+    public Politician(String id, String name, String currentParty, String DOB, String homeCounty,String photoUrl) throws FileNotFoundException {
         this.id = id;
         this.name = name;
         this.currentParty = currentParty;
         this.DOB = DOB;
         this.homeCounty = homeCounty;;
-        this.photo = photo;
+        this.photoUrl=photoUrl;
+        this.photo = new Image(photoUrl, 100, 100, true, false);
     }
 
     public String getId() { return id; }
@@ -50,13 +52,10 @@ public class Politician {
 
     @Override
     public String toString() {
-        return "Politician{" +
-                "id='" + id + '\'' +
-                ", currentParty='" + currentParty + '\'' +
-                ", name='" + name + '\'' +
-                ", DOB='" + DOB + '\'' +
-                ", homeCounty='" + homeCounty + '\'' +
-                ", photo='" + photo + '\'' +
-                '}';
+        return  "ID: " + id + "      " +
+                "Current Party: " + currentParty + "      " +
+                "Name: " + name + "      " +
+                "DOB: " + DOB + "      " +
+                "Home County: " + homeCounty;
     }
 }

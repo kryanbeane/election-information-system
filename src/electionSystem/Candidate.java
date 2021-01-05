@@ -12,9 +12,9 @@ public class Candidate extends Politician {
     String currentParty;
     String DOB;
     String homeCounty;
-    Image photoURL;
+    String photo;
 
-    public Candidate(String id,String name, String currentParty, String DOB, String homeCounty, Image photo) throws FileNotFoundException {
+    public Candidate(String id,String name, String currentParty, String DOB, String homeCounty, String photo) throws FileNotFoundException {
         super(id ,name, currentParty, DOB, homeCounty, photo);
     }
 
@@ -26,7 +26,7 @@ public class Candidate extends Politician {
                 ", currentParty='" + currentParty + '\'' +
                 ", DOB='" + DOB + '\'' +
                 ", homeCounty='" + homeCounty + '\'' +
-                ", photoURL='" + photoURL + '\'' +
+                ", photoURL='" + photo + '\'' +
                 '}';
     }
 }
