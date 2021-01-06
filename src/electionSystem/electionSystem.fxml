@@ -47,6 +47,9 @@
                                           <Insets bottom="5.0" left="20.0" top="120.0" />
                                        </VBox.margin>
                                     </Button>
+                                    <Button mnemonicParsing="false" onAction="#save" text="Save" />
+                                    <Button mnemonicParsing="false" onAction="#load" text="Load" />
+                                    <Button mnemonicParsing="false" onAction="#reset" text="Reset" />
                                  </children>
                               </VBox>
                            </left>

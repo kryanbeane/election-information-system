@@ -78,9 +78,6 @@ public class Controller {
         }
     }
 
-
-
-
     @FXML TextField searchPolCounty;
     public List<Politician> searchPolByCounty() {
         String county = searchPolCounty.getText();
@@ -708,6 +705,9 @@ public class Controller {
         Main.candidatesList = (List<Candidate>) is.readObject();
         Main.electionsList = (List<Election>) is.readObject();
         is.close();
+
+        updatePoliticianVBox();
+
     }
 
     public void reset() {
