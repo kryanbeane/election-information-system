@@ -33,6 +33,8 @@ public class HashTable<T> {
         for(int i=0; i<key.length(); i++) {
             total *= key.charAt(i);
         }
+        total = Math.abs(total);
+        System.out.println(total);
         System.out.println(total%hashTableList.length);
         return total%hashTableList.length;
     }
@@ -59,6 +61,7 @@ public class HashTable<T> {
             }
         }
     }
+
 
     /**
      * Edits an old hash and replaces it with a new hashed person.

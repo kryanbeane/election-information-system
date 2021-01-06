@@ -32,28 +32,50 @@ public class Controller {
     // Search Politician Methods //
     @FXML
     TextField searchPolName;
-    public List<Politician> searchPolByName() {
+    public void searchPolByName() {
         String name = searchPolName.getText();
         // Hash = hash of search
         int hash = polNameHashTable.hashFunction(name);
         // New list to return search results
-        List<Politician> namedPols = new List<>();
+        List<Politician> namedPols = new List<>(); //List of Politicians, anything that matches name added to this.
 
         // Loops through length of list at hash position
         for (int i = 0; i < polNameHashTable.hashSize(hash); i++) {
             for (int listI = 0; listI < polPartyHashTable.hashTableList.length; listI++) {
                 Politician tempPol = polNameHashTable.getHash(hash, i);
+                System.out.println(tempPol.toString());
                 if (name.equals(tempPol.name)) {
                     // Add each politician to namedPols list and return the list to a table in GUI?
-                    currPolitician = polNameHashTable.getHash(hash, i);
+                    currPolitician = polNameHashTable.getHash(hash, listI);
                     namedPols.addNode(currPolitician);
                 } else {
                     System.out.println("There was no politician by that name.");
                 }
             }
         }
-        return namedPols;
+
+        //Little check to see if namedPols is empty
+        if (namedPols.isEmpty()){
+            System.out.println("namedPols is empty");
+        }
+
+        //Adds a politician to display in the VBox.
+        polSearchVBox.getChildren().clear();
+        polSearchVBox.getChildren().add(new Text("Politicians Return in Search:"));
+
+        for (Politician pol: namedPols){
+            System.out.println(pol.toString());
+            String polString = pol.toString()+"\n";
+            Text polText = new Text();
+            polText.setText(polString);
+            ImageView polImageView = pol.getPolImage();
+            polSearchVBox.getChildren().add(polImageView);
+            polSearchVBox.getChildren().add(polText);
+        }
     }
+
+
+
 
     @FXML TextField searchPolCounty;
     public List<Politician> searchPolByCounty() {
@@ -243,7 +265,7 @@ public class Controller {
     @FXML
     TextField textCurrentParty, textPoliticianName, textDateOfBirth, textHomeCounty, textImageURL, polID;
     @FXML
-    TextField textElectionType, textElectionLocation, textElectionNumberOfWinners;
+    TextField textElectionType, textElectionLocation, textElectionNumberOfWinners, electionID;
     @FXML
     TableColumn<Politician, String> pIDColumn, pIDColumn1;
     @FXML
@@ -275,7 +297,7 @@ public class Controller {
     TextArea polTextArea;
 
     @FXML
-    VBox polVBox;
+    VBox polVBox, elVBox, polSearchVBox;
     Image currPolImage;
     /**
      * Generates ID to be assigned to Politicians, Candidates and Elections.
@@ -317,9 +339,9 @@ public class Controller {
         System.out.println(Main.politicianList.printList());
 
         //hash politician values when it's added.
-//        polNameHashTable.insertHash(politician.name, politician);
-//        polCountyHashTable.insertHash(politician.homeCounty, politician);
-//        polPartyHashTable.insertHash(politician.currentParty, politician);
+        polNameHashTable.insertHash(politician.name, politician);
+        polCountyHashTable.insertHash(politician.homeCounty, politician);
+        polPartyHashTable.insertHash(politician.currentParty, politician);
 
         // Need to figure out Image URL
         textCurrentParty.clear();
@@ -333,7 +355,7 @@ public class Controller {
         polVBox.getChildren().clear();
         polVBox.getChildren().add(new Text("Politicians in Database:"));
         for(Politician pol: Main.politicianList){
-            String polString = pol.toString();
+            String polString = pol.toString()+"\n";
             Text polText = new Text();
             polText.setText(polString);
             ImageView polImageView = pol.getPolImage();
@@ -423,7 +445,7 @@ public class Controller {
         int electionNumberOfWinners = Integer.parseInt(textElectionNumberOfWinners.getText());
 
         Main.electionsList.addNode(new Election(generateID(), electionType, electionLocation, electionDate, electionNumberOfWinners));
-        updateElectionTable();
+        updateElectionVBox();
 
 
 
@@ -436,6 +458,18 @@ public class Controller {
     /**
      * Updates election table with recently added elections.
      */
+    public void updateElectionVBox(){
+        elVBox.getChildren().clear();
+        elVBox.getChildren().add(new Text("Elections in Database:"));
+        for(Election el: Main.electionsList){
+            String elString = el.toString() + "\n";
+            Text elText = new Text();
+            elText.setText(elString);
+            elVBox.getChildren().add(elText);
+
+        }
+    }
+
     public void updateElectionTable() {
         myElectionObsList.clear();
         electionIDColumn.setCellValueFactory(new PropertyValueFactory<Election, String >("id"));
@@ -463,21 +497,22 @@ public class Controller {
      */
     public void deleteElection() {
         try {
-            currElection = electionTable.getSelectionModel().getSelectedItem();
             List<Election> electionList = Main.electionsList;
 
             for (int i = 0; i < electionList.length(); i++) {
-                if (electionList.accessAtIndex(i).getContents().getId().equals(currElection.getId())) {
+                if (electionList.accessAtIndex(i).getContents().getId().equals(electionID.getText())) {
                     Main.electionsList.removeNode(i);
-                    System.out.println("Removed Politician at index" + i);
-                    updateElectionTable();
-                    System.out.println("Removed Aisle at index" + i);
+                    System.out.println("Removed Election at index" + i);
+                    updateElectionVBox();
+
                 }
             }
         } catch (Exception e) {
-            System.out.println("You have not chosen a Politician!");
+            System.out.println("You have not chosen a Election!");
         }
     }
+
+
 
     /**
      *

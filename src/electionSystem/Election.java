@@ -39,11 +39,10 @@ public class Election {
 
     @Override
     public String toString() {
-        return "Election{" +
-                "electionType='" + electionType + '\'' +
-                ", location='" + location + '\'' +
-                ", date='" + date + '\'' +
-                ", numberOfWinners=" + numberOfWinners +
-                '}';
+        return  "ID: " + Id + "      " +
+                "Election Type: " + electionType + "      " +
+                "Location: " + location + "      " +
+                "Date " + date + "      " +
+                "Number Of Winners: " + numberOfWinners;
     }
 }
