@@ -1,12 +1,5 @@
 package electionSystem;
-
-import javafx.fxml.FXML;
-import javafx.scene.control.TextField;
-
 public class HashTable<T> {
-
-
-
 
     List<T>[] hashTableList;
 
@@ -31,12 +24,12 @@ public class HashTable<T> {
         int total=1;
         // Adds the key to the total
         for(int i=0; i<key.length(); i++) {
-            total *= key.charAt(i);
+            total += key.charAt(i);
         }
         total = Math.abs(total);
         System.out.println(total);
         System.out.println(total%hashTableList.length);
-        return total%hashTableList.length;
+        return total/5;
     }
 
     /**
@@ -75,6 +68,9 @@ public class HashTable<T> {
         insertHash(newKey, newPerson);
     }
 
+    /**
+     * Gets a node in a list in a given hash from the hashtable
+     **/
     public T getHash(int hash, int index) {
         return hashTableList[hash].accessAtIndex(index).getContents();
     }

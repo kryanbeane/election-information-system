@@ -20,7 +20,6 @@ import java.util.Random;
 
 public class Controller {
 
-
     // Size and hash tables //
     int size = 800;
     electionSystem.HashTable<Politician> polNameHashTable = new electionSystem.HashTable<Politician>(size);
@@ -32,34 +31,25 @@ public class Controller {
     electionSystem.HashTable<Election> elecLocationHashTable = new electionSystem.HashTable<Election>(size);
     electionSystem.HashTable<Election> elecTypeHashTable = new electionSystem.HashTable<Election>(size);
 
-
     // Search Politician Methods //
     @FXML
     TextField searchPolName;
     public void searchPolByName() {
         String name = searchPolName.getText();
-        // Hash = hash of search
         int hash = polNameHashTable.hashFunction(name);
-        // New list to return search results
-        List<Politician> namedPols = new List<>(); //List of Politicians, anything that matches name added to this.
+        List<Politician> namedPols = new List<>();
 
-        // Loops through length of list at hash position
-        for (int i = 0; i < polNameHashTable.hashSize(hash); i++) {
-            for (int listI = 0; listI < polPartyHashTable.hashTableList.length; listI++) {
-                Politician tempPol = polNameHashTable.getHash(hash, i);
-                System.out.println(tempPol.toString());
-                if (name.equals(tempPol.name)) {
-                    // Add each politician to namedPols list and return the list to a table in GUI?
-                    currPolitician = polNameHashTable.getHash(hash, i);
-                    namedPols.addNode(currPolitician);
-                } else {
-                    System.out.println("There was no politician by that name.");
-                }
+        for(int i=0; i<size; i++) {
+            Politician tempPol = polNameHashTable.getHash(hash, i);
+            if (name.equals(tempPol.name)) {
+                namedPols.addNode(tempPol);
+            } else {
+                System.out.println("There are no politicians by that name.");
             }
         }
 
         //Little check to see if namedPols is empty
-        if (namedPols.isEmpty()){
+        if (namedPols.isEmpty()) {
             System.out.println("namedPols is empty");
         }
 
@@ -67,14 +57,15 @@ public class Controller {
         polSearchVBox.getChildren().clear();
         polSearchVBox.getChildren().add(new Text("Politicians Return in Search:"));
 
-        for (Politician pol: namedPols){
+        for (Politician pol: namedPols) {
             System.out.println(pol.toString());
-            String polString = pol.toString()+"\n";
+            String polString = pol.toString() + "\n";
             Text polText = new Text();
             polText.setText(polString);
             ImageView polImageView = pol.getPolImage();
             polSearchVBox.getChildren().add(polImageView);
             polSearchVBox.getChildren().add(polText);
+            return;
         }
     }
 
@@ -335,7 +326,6 @@ public class Controller {
         Main.politicianList.addNode(politician);
         //THIS NEEDS TO BE REPLACED WITH UPDATE POLITICIAN TEXT.
         updatePoliticianVBox();
-
 
         System.out.println(Main.politicianList.printList());
 
