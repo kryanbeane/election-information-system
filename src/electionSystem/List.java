@@ -224,7 +224,9 @@ public class List<F> implements Iterable<F>{
             else if (index > 0 && index <countOfContents){
                 temp=head;
 
-                for(int i=1;i<index;i++) temp=temp.next;    //makes temp the one BEFORE the item to be deleted.('<index')
+                for(int i=1;i<index;i++) {
+                    temp=temp.next;                         //makes temp the one BEFORE the item to be deleted.('<index')
+                }
                 temp.next = temp.next.next;                 //the one after temp is now equal to the one after that.
                 countOfContents--;                          //then the last node is equal to the one before the one to be deleted.
                 //(thus deleting the desired node)

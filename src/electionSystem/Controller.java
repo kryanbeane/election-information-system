@@ -1,5 +1,6 @@
 package electionSystem;
-
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -10,8 +11,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-
-import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.Random;
 
 public class Controller {
@@ -683,7 +687,34 @@ public class Controller {
         updatePoliticiansTables();
     }
 
+    /////////////////////////////////////////////////////////////////
+    ////////////////////   Save Load and Reset   ////////////////////
+    /////////////////////////////////////////////////////////////////
 
+    public void save() throws Exception {
+        XStream xstream = new XStream(new DomDriver());
+        ObjectOutputStream out = xstream.createObjectOutputStream(new FileWriter("ElectionInformationSystem.xml"));
+        out.writeObject(Main.politicianList);
+        out.writeObject(Main.candidatesList);
+        out.writeObject(Main.electionsList);
+        out.close();
+    }
+
+    @SuppressWarnings("unchecked")
+    public void load() throws Exception {
+        XStream xstream = new XStream(new DomDriver());
+        ObjectInputStream is = xstream.createObjectInputStream(new FileReader("ElectionInformationSystem.xml"));
+        Main.politicianList = (List<Politician>) is.readObject();
+        Main.candidatesList = (List<Candidate>) is.readObject();
+        Main.electionsList = (List<Election>) is.readObject();
+        is.close();
+    }
+
+    public void reset() {
+        Main.politicianList.emptyList();
+        Main.candidatesList.emptyList();
+        Main.electionsList.emptyList();
+    }
 
 
 
