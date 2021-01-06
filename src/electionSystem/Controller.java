@@ -46,7 +46,7 @@ public class Controller {
                 System.out.println(tempPol.toString());
                 if (name.equals(tempPol.name)) {
                     // Add each politician to namedPols list and return the list to a table in GUI?
-                    currPolitician = polNameHashTable.getHash(hash, listI);
+                    currPolitician = polNameHashTable.getHash(hash, i);
                     namedPols.addNode(currPolitician);
                 } else {
                     System.out.println("There was no politician by that name.");
