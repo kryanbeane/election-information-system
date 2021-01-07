@@ -37,6 +37,7 @@ public class Controller {
     public void searchPolByName() {
         String name = searchPolName.getText();
         int hash = polNameHashTable.hashFunction(name);
+
         List<Politician> namedPols = new List<>();
         List<Politician> tempList =  polNameHashTable.hashTableList[hash];
 
@@ -57,8 +58,6 @@ public class Controller {
         //Adds a politician to display in the VBox.
         polSearchVBox.getChildren().clear();
         polSearchVBox.getChildren().add(new Text("Politicians Return in Search:"));
-
-        sortPoliticianList(namedPols);
 
         for (Politician pol: namedPols) {
             System.out.println(pol.toString());
@@ -671,9 +670,9 @@ public class Controller {
         return polList;
     }
 
-    public void sortPoliticianList(List<Politician> polList){
-        polList = politicianSelectionSort(polList);
-
+    public void sortPoliticianList(){
+        Main.politicianList = politicianSelectionSort(Main.politicianList);
+        updatePoliticiansTables();
     }
 
     /////////////////////////////////////////////////////////////////
