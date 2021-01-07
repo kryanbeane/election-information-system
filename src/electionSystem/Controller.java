@@ -74,6 +74,7 @@ public class Controller {
         int hash = polNameHashTable.hashFunction(name);
         List<Politician> tempList =  polNameHashTable.hashTableList[hash];
 
+        namedPols.clear();
         for(int i=0; i<tempList.length(); i++) {
             Politician tempPol = tempList.accessAtIndex(i).getContents();
             if (name.equals(tempPol.name)) {
@@ -85,24 +86,15 @@ public class Controller {
 
         //Little check to see if namedPols is empty
         if (namedPols.isEmpty()) {
+            sortSearchedPoliticians();
+        }else{
             System.out.println("namedPols is empty");
         }
 
-        //Adds a politician to display in the VBox.
-        polSearchVBox.getChildren().clear();
-        polSearchVBox.getChildren().add(new Text("Politicians Return in Search:"));
 
-        sortSearchedPoliticians();
 
-        for (Politician pol: namedPols) {
-            System.out.println(pol.toString());
-            String polString = pol.toString() + "\n";
-            Text polText = new Text();
-            polText.setText(polString);
-            ImageView polImageView = pol.getPolImage();
-            polSearchVBox.getChildren().add(polImageView);
-            polSearchVBox.getChildren().add(polText);
-        }
+
+        updatePoliticianSearchVBox();
     }
 
     @FXML TextField searchPolCounty;
@@ -480,6 +472,20 @@ public class Controller {
         }
     }
 
+    public void updatePoliticianSearchVBox(){
+        polSearchVBox.getChildren().clear();
+        polSearchVBox.getChildren().add(new Text("Politicians in Database:"));
+        for(Politician pol: namedPols){
+            String polString = pol.toString()+"\n";
+            Text polText = new Text();
+            polText.setText(polString);
+            ImageView polImageView = pol.getPolImage();
+            polSearchVBox.getChildren().add(polImageView);
+            polSearchVBox.getChildren().add(polText);
+
+        }
+    }
+
     /**
      * Updates election VBox with recently added elections.
      */
@@ -564,7 +570,7 @@ public class Controller {
      */
     public void sortPoliticianList(){
         Main.politicianList = politicianSelectionSort(Main.politicianList);
-        updatePoliticiansTables();
+        //updatePoliticiansTables();
     }
 
     /**
@@ -572,7 +578,7 @@ public class Controller {
      */
     public void sortSearchedPoliticians(){
         namedPols = politicianPartySelectionSort(namedPols);
-        updatePoliticianVBox();
+
     }
 
     /////////////////////////////////////////////////////////////////
