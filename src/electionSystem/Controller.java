@@ -38,9 +38,10 @@ public class Controller {
         String name = searchPolName.getText();
         int hash = polNameHashTable.hashFunction(name);
         List<Politician> namedPols = new List<>();
+        List<Politician> tempList =  polNameHashTable.hashTableList[hash];
 
-        for(int i=0; i<size; i++) {
-            Politician tempPol = polNameHashTable.getHash(hash, i);
+        for(int i=0; i<tempList.length(); i++) {
+            Politician tempPol = tempList.accessAtIndex(i).getContents();
             if (name.equals(tempPol.name)) {
                 namedPols.addNode(tempPol);
             } else {
@@ -57,6 +58,8 @@ public class Controller {
         polSearchVBox.getChildren().clear();
         polSearchVBox.getChildren().add(new Text("Politicians Return in Search:"));
 
+        sortPoliticianList(namedPols);
+
         for (Politician pol: namedPols) {
             System.out.println(pol.toString());
             String polString = pol.toString() + "\n";
@@ -65,7 +68,6 @@ public class Controller {
             ImageView polImageView = pol.getPolImage();
             polSearchVBox.getChildren().add(polImageView);
             polSearchVBox.getChildren().add(polText);
-            return;
         }
     }
 
@@ -669,9 +671,9 @@ public class Controller {
         return polList;
     }
 
-    public void sortPoliticianList(){
-        Main.politicianList = politicianSelectionSort(Main.politicianList);
-        updatePoliticiansTables();
+    public void sortPoliticianList(List<Politician> polList){
+        polList = politicianSelectionSort(polList);
+
     }
 
     /////////////////////////////////////////////////////////////////
