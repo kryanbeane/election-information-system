@@ -260,8 +260,8 @@ public class Controller {
     public void searchElectionByType() {
         typeElec.clear();
         String type = searchElecType.getText();
-        int hash = elecLocationHashTable.hashFunction(type);
-        List<Election> tempList =  elecLocationHashTable.hashTableList[hash];
+        int hash = elecTypeHashTable.hashFunction(type);
+        List<Election> tempList =  elecTypeHashTable.hashTableList[hash];
 
         for(int i=0; i<tempList.length(); i++) {
             Election tempElec = tempList.accessAtIndex(i).getContents();
