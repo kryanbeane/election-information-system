@@ -1,0 +1,18 @@
+>>>>> MARKING SCHEME <<<<<
+
+1] Custom ADTs (10%) ✓
+2] Create/add facilities (10%) ✓
+3] Edit/update/delete facilities (10%) ✓
+4] Search and listing facilities (10%) ✓
+5] Sorting of search results/listings (15%)
+6] Hashing for individual search (10%) ✓
+7] Save and Load (10%) ✓
+8] JavaFX (10%)
+9] JUnit testing (5%)
+10] General comments, style, logic approach and completeness (10%) ✓
+
+>>>>> STUFF LEFT TO DO <<<<<
+1] Fix GUI
+2] Fix Sorting of search results bug
+3] Add relevant tests
+4]
