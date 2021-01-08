@@ -156,17 +156,14 @@ public class List<F> implements Iterable<F>{
         ithNode.next = jNext;
     }*/
 
-
-
     public void swapContents(int index1, int index2){
         Node<F> node1 = this.accessAtIndex(index1);
         Node<F> node2 = this.accessAtIndex(index2);
         // New node to store one of nodes being swapped otherwise it'll be deleted in the swapping process.
-        Node<F> temp = new Node<F>();
+        Node<F> temp = new Node<>();
         temp.setContents(node1.getContents());
         node1.setContents(node2.getContents());
         node2.setContents(temp.getContents());
-
     }
 
     public void addNode(F e) {
@@ -263,6 +260,7 @@ public class List<F> implements Iterable<F>{
 
     public void clear() { //Empty list
         head=tail=null;
+        this.countOfContents=0;
     }
 
     public  String printList() {
@@ -295,6 +293,7 @@ public class List<F> implements Iterable<F>{
 
     public void emptyList(){
         head=tail=null;
+        this.countOfContents=0;
     }
 
 }

@@ -70,10 +70,11 @@ public class Controller {
     List<Politician> namedPols = new List<>();
     @FXML TextField searchPolName;
     public void searchPolByName() {
+        namedPols.clear();
+
         String name = searchPolName.getText();
         int hash = polNameHashTable.hashFunction(name);
         List<Politician> tempList =  polNameHashTable.hashTableList[hash];
-
 
         for(int i=0; i<tempList.length(); i++) {
             Politician tempPol = tempList.accessAtIndex(i).getContents();
@@ -98,7 +99,6 @@ public class Controller {
     List<Politician> countyPols = new List<>();
     @FXML TextField searchPolCounty;
     public void searchPolByCounty() {
-        countyPols.clear();
         String county = searchPolCounty.getText();
         int hash = polCountyHashTable.hashFunction(county);
         List<Politician> tempList =  polCountyHashTable.hashTableList[hash];
@@ -119,6 +119,7 @@ public class Controller {
             System.out.println("countyPols is empty");
         }
         updatePoliticianSearchVBox();
+        countyPols.clear();
     }
 
     List<Politician> partyPols = new List<>();
@@ -583,7 +584,7 @@ public class Controller {
     public int findLargestPoliticianPartyPos(List<Politician> polList, int length){
         int largestPos = 0;
         for(int i = 1; i<length;i++){
-            if(polList.accessAtIndex(i).getContents().getCurrentParty().compareTo(polList.accessAtIndex(largestPos).getContents().getCurrentParty())>0) {
+            if(polList.accessAtIndex(i).getContents().getCurrentParty().compareTo(polList.accessAtIndex(largestPos).getContents().getCurrentParty()) > 0) {
                 largestPos = i;
             }
         }
@@ -596,10 +597,11 @@ public class Controller {
      * @return -
      */
     public List<Politician> polAlphabeticalSelectionSort(List<Politician> polList) {
+        // Loops through entire length of polList
         for (int i = polList.length(); i > 0; i--) {
             int posLargest = findLargestPoliticianPartyPos(polList, i);
             polList.swapContents(posLargest, i - 1);
-            System.out.println(polList);
+            System.out.println(polList.accessAtIndex(i));
         }
         return polList;
     }
@@ -629,7 +631,7 @@ public class Controller {
     /**
      *
      */
-    public void sortSearchedPoliticians(){
+    public void sortSearchedPoliticians() {
         namedPols = polAlphabeticalSelectionSort(namedPols);
     }
 
