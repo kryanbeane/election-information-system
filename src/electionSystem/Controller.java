@@ -70,7 +70,6 @@ public class Controller {
     List<Politician> namedPols = new List<>();
     @FXML TextField searchPolName;
     public void searchPolByName() {
-        namedPols.clear();
         String name = searchPolName.getText();
         int hash = polNameHashTable.hashFunction(name);
         List<Politician> tempList =  polNameHashTable.hashTableList[hash];
@@ -93,6 +92,7 @@ public class Controller {
         }
 
         updatePoliticianSearchVBox();
+        namedPols.clear();
     }
 
     List<Politician> countyPols = new List<>();
@@ -477,7 +477,6 @@ public class Controller {
             ImageView polImageView = pol.getPolImage();
             polVBox.getChildren().add(polImageView);
             polVBox.getChildren().add(polText);
-
         }
     }
 
@@ -485,6 +484,7 @@ public class Controller {
      * Updates candidate VBox with recently added candidates.
      */
     public void updateCandidateVBox() {
+
     }
 
     /**
@@ -583,7 +583,7 @@ public class Controller {
     public int findLargestPoliticianPartyPos(List<Politician> polList, int length){
         int largestPos = 0;
         for(int i = 1; i<length;i++){
-            if(polList.accessAtIndex(i).getContents().getCurrentParty().compareTo(polList.accessAtIndex(largestPos).getContents().getCurrentParty())>0){
+            if(polList.accessAtIndex(i).getContents().getCurrentParty().compareTo(polList.accessAtIndex(largestPos).getContents().getCurrentParty())>0) {
                 largestPos = i;
             }
         }
@@ -595,7 +595,7 @@ public class Controller {
      * @param polList -
      * @return -
      */
-    public List<Politician> politicianPartySelectionSort(List<Politician> polList) {
+    public List<Politician> polAlphabeticalSelectionSort(List<Politician> polList) {
         for (int i = polList.length(); i > 0; i--) {
             int posLargest = findLargestPoliticianPartyPos(polList, i);
             polList.swapContents(posLargest, i - 1);
@@ -630,7 +630,7 @@ public class Controller {
      *
      */
     public void sortSearchedPoliticians(){
-        namedPols = politicianPartySelectionSort(namedPols);
+        namedPols = polAlphabeticalSelectionSort(namedPols);
     }
 
     /**

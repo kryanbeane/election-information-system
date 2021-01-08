@@ -170,25 +170,27 @@ public class List<F> implements Iterable<F>{
     }
 
     public void addNode(F e) {
-        //We want to add it in at the end, not the start. Not FIFO
-        //Create a new node
+        // Creates a new node.
         Node<F> newNode = new Node<>();
+        // Sets the contents of the new node to the input e.
         newNode.setContents(e);
 
-        //If the head equals null then the list is empty
+        // If the head equals null then the list is empty and:
         if(head == null) {
-            head = tail = newNode;          //both head and tail are the newNode; The first, last, and only item
-            head.previous = null;           //Now head and tail will be linked to null from previous and next.
-            tail.next = null;
+            // Both head and tail are the newNode.
+            head = tail = newNode;
+            // Sets previous and next values both to null.
+            head.next = null;
+            tail.previous = null;
         }
+        // If the head isn't null:
         else {
-
-
-            head.previous=newNode;      //newnode is the head's previous
-            newNode.next = head;        //the next after newNode is current head node, two are now linked.
-            head=newNode;               //we can now move the head to newnode.
-            head.previous=null;         //the one before head is null, as it is the head of the list.(Line may not be needed);
+            tail.next=newNode;
+            newNode.previous=tail;
+            tail=newNode;
+            tail.next=null;
         }
+        // Adds one to the number of contents as one new node now exists
         countOfContents++;
     }
 
@@ -260,7 +262,7 @@ public class List<F> implements Iterable<F>{
     }
 
     public void clear() { //Empty list
-        head=null;
+        head=tail=null;
     }
 
     public  String printList() {
@@ -292,7 +294,7 @@ public class List<F> implements Iterable<F>{
     }
 
     public void emptyList(){
-        head=null;
+        head=tail=null;
     }
 
 }
