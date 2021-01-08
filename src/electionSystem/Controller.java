@@ -47,6 +47,7 @@ public class Controller {
     @FXML TextArea polTextArea;
     @FXML VBox polVBox, elVBox, polSearchVBox;
 
+
     /////////////////////////////////////////////////////////////////
     ///////////////////////    HashTables   /////////////////////////
     /////////////////////////////////////////////////////////////////
@@ -313,6 +314,7 @@ public class Controller {
      * Adds politician to list of politicians.
      */
     public void addPolitician() throws FileNotFoundException {
+        polVBox.setMaxHeight(Double.MAX_VALUE);
         String currentParty = textCurrentParty.getText();
         String name = textPoliticianName.getText();
         String DOB = polDatePicker.getValue().toString();
