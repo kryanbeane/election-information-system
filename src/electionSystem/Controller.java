@@ -197,7 +197,7 @@ public class Controller {
 
         //Little check to see if countyCands is empty
         if (!countyCands.isEmpty()) {
-            sortSearchedCandidates();
+            countyCands = polAlphabeticalNameSelectionSort(countyCands);
         } else {
             System.out.println("countyCands is empty");
         }
@@ -362,10 +362,12 @@ public class Controller {
         String electionDate = textElectionDatePicker.getValue().toString();
         int electionNumberOfWinners = Integer.parseInt(textElectionNumberOfWinners.getText());
 
-        Main.electionsList.addNode(new Election(generateID(), electionType, electionLocation, electionDate, electionNumberOfWinners));
+        Election election = new Election(generateID(), electionType, electionLocation, electionDate, electionNumberOfWinners);
+        Main.electionsList.addNode(election);
         updateElectionVBox();
 
-
+        elecTypeHashTable.insertHash(election.electionType, election);
+        elecLocationHashTable.insertHash(election.location, election);
 
         textElectionType.clear();
         textElectionLocation.clear();
@@ -380,11 +382,8 @@ public class Controller {
     public void addCandidate() throws FileNotFoundException {
         Politician pol = candidateSelectionTable.getSelectionModel().getSelectedItem();
         String name = pol.name;
+
         // Creates new candidate object from a selected politician.
-
-
-
-
         if (currElection2!=null) {
             Candidate cand = new Candidate(pol.getId(), name, pol.currentParty, pol.DOB, pol.homeCounty, pol.photoUrl);
             currElection2.electionCandidateList.addNode(cand);
@@ -392,8 +391,8 @@ public class Controller {
 
             // Hashes candidates when it's added
             candNameHashTable.insertHash(cand.name, cand);
-            polCountyHashTable.insertHash(cand.homeCounty, cand);
-            polPartyHashTable.insertHash(cand.currentParty, cand);
+            candCountyHashTable.insertHash(cand.homeCounty, cand);
+            candPartyHashTable.insertHash(cand.currentParty, cand);
         }
 
     }
@@ -410,8 +409,12 @@ public class Controller {
             List<Politician> polList = Main.politicianList;
 
             for (int i = 0; i < polList.length(); i++) {
-                if (polList.accessAtIndex(i).getContents().getId().equals(polID.getText())) {
+                Politician pol = polList.accessAtIndex(i).getContents();
+                if (pol.getId().equals(polID.getText())) {
                     Main.politicianList.removeNode(i);
+                    polNameHashTable.removeHash(pol.name, pol);
+                    polPartyHashTable.removeHash(pol.currentParty, pol);
+                    polCountyHashTable.removeHash(pol.homeCounty, pol);
                     System.out.println("Removed Politician at index" + i);
                     updatePoliticianVBox();
 
@@ -432,11 +435,14 @@ public class Controller {
             List<Candidate> canList = Main.candidatesList;
 
             for (int i = 0; i < canList.length(); i++) {
-                if (canList.accessAtIndex(i).getContents().getId().equals(currCandidate.getId())) {
+                Candidate cand = canList.accessAtIndex(i).getContents();
+                if (cand.getId().equals(currCandidate.getId())) {
                     Main.candidatesList.removeNode(i);
+                    candNameHashTable.removeHash(cand.name, cand);
+                    candPartyHashTable.removeHash(cand.currentParty, cand);
+                    candCountyHashTable.removeHash(cand.currentParty, cand);
                     System.out.println("Removed Politician at index" + i);
                     updateCandidatesTable();
-                    System.out.println("Removed Aisle at index" + i);
                 }
             }
         } catch (Exception e) {
@@ -452,8 +458,11 @@ public class Controller {
             List<Election> electionList = Main.electionsList;
 
             for (int i = 0; i < electionList.length(); i++) {
-                if (electionList.accessAtIndex(i).getContents().getId().equals(electionID.getText())) {
+                Election elec = electionList.accessAtIndex(i).getContents();
+                if (elec.getId().equals(electionID.getText())) {
                     Main.electionsList.removeNode(i);
+                    elecLocationHashTable.removeHash(elec.location, elec);
+                    elecTypeHashTable.removeHash(elec.electionType, elec);
                     System.out.println("Removed Election at index" + i);
                     updateElectionVBox();
 
@@ -627,7 +636,7 @@ public class Controller {
 
     /**
      *
-     * @param  -
+     * @param -
      * @return -
      */
     public List<Election> electionNumberOfWinnersSelectionSort(List<Election> electionList) {
@@ -686,11 +695,6 @@ public class Controller {
         Main.politicianList = politicianSelectionSort(Main.politicianList);
         //updatePoliticiansTables();
     }
-
-    /**
-     *
-     */
-
 
     /**
      *
