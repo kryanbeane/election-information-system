@@ -353,18 +353,13 @@
                                  </children>
                               </VBox>
                            </top>
-                           <center>
-                              <TableView fx:id="candidateSelectionTable11" maxHeight="-Infinity" maxWidth="700.0" prefHeight="660.0" prefWidth="700.0" BorderPane.alignment="CENTER">
-                                 <columns>
-                                    <TableColumn fx:id="pIDColumn21" prefWidth="59.0" text="ID" />
-                                    <TableColumn fx:id="pNameColumn21" prefWidth="163.0" style="color: red;" text="Name" />
-                                    <TableColumn fx:id="pDOBColumn21" prefWidth="98.0" text="DOB" />
-                                    <TableColumn fx:id="currentPartyColumn21" prefWidth="79.0" text="Political Party" />
-                                    <TableColumn fx:id="pHomeCountyColumn21" prefWidth="117.0" text="Home County" />
-                                    <TableColumn fx:id="pPhotoURLColumn21" prefWidth="183.0" text="Image" />
-                                 </columns>
-                              </TableView>
-                           </center>
+                           <bottom>
+                              <VBox fx:id="elSearchVBox" prefHeight="601.0" prefWidth="700.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Label fx:id="e1" style="-fx-font-size: 18;" text="Elections in Database:" />
+                                 </children>
+                              </VBox>
+                           </bottom>
                         </BorderPane>
                      </children>
                   </AnchorPane>

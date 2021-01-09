@@ -45,7 +45,7 @@ public class Controller {
     @FXML TableView<Candidate> candidateTable;
     @FXML DatePicker polDatePicker, textElectionDatePicker;
     @FXML TextArea polTextArea;
-    @FXML VBox polVBox, elVBox, polSearchVBox;
+    @FXML VBox polVBox, elVBox, polSearchVBox, elSearchVBox;
 
 
     /////////////////////////////////////////////////////////////////
@@ -88,12 +88,12 @@ public class Controller {
 
         //Little check to see if namedPols is empty
         if (!namedPols.isEmpty()) {
-            sortSearchedPoliticians();
+            namedPols = polAlphabeticalPoliticalPartySelectionSort(namedPols);
         } else {
             System.out.println("namedPols is empty");
         }
 
-        updatePoliticianSearchVBox();
+        updatePoliticianSearchVBox(namedPols);
         namedPols.clear();
     }
 
@@ -102,6 +102,7 @@ public class Controller {
     public void searchPolByCounty() {
         String county = searchPolCounty.getText();
         int hash = polCountyHashTable.hashFunction(county);
+        System.out.println("Running searchPolByCounty");
         List<Politician> tempList =  polCountyHashTable.hashTableList[hash];
 
         for(int i=0; i<tempList.length(); i++) {
@@ -114,12 +115,12 @@ public class Controller {
         }
 
         //Little check to see if countyPols is empty
-        if (!namedPols.isEmpty()) {
-            sortSearchedPoliticians();
+        if (!countyPols.isEmpty()) {
+            countyPols = polAlphabeticalNameSelectionSort(countyPols);
         } else {
             System.out.println("countyPols is empty");
         }
-        updatePoliticianSearchVBox();
+        updatePoliticianSearchVBox(countyPols);
         countyPols.clear();
     }
 
@@ -142,12 +143,12 @@ public class Controller {
 
         //Little check to see if partyPols is empty
         if (!partyPols.isEmpty()) {
-            sortSearchedPoliticians();
+            partyPols = polAlphabeticalNameSelectionSort(partyPols);
         } else {
             System.out.println("partyPols is empty");
         }
 
-        updatePoliticianSearchVBox();
+        updatePoliticianSearchVBox(partyPols);
     }
 
     List<Candidate> namedCands = new List<>();
@@ -254,7 +255,7 @@ public class Controller {
             System.out.println("locationElec is empty");
         }
 
-        updateElectionSearchVBox();
+        updateElectionSearchVBox(locationElec);
     }
 
     List<Election> typeElec = new List<>();
@@ -281,7 +282,7 @@ public class Controller {
             System.out.println("typeElec is empty");
         }
 
-        updateElectionSearchVBox();
+        updateElectionSearchVBox(typeElec);
     }
 
     /////////////////////////////////////////////////////////////////
@@ -508,10 +509,10 @@ public class Controller {
     /**
      *
      */
-    public void updatePoliticianSearchVBox(){
+    public void updatePoliticianSearchVBox(List<Politician> politicianList){
         polSearchVBox.getChildren().clear();
         polSearchVBox.getChildren().add(new Text("Politicians in Database:"));
-        for(Politician pol: namedPols){
+        for(Politician pol: politicianList){
             String polString = pol.toString()+"\n";
             Text polText = new Text();
             polText.setText(polString);
@@ -542,16 +543,16 @@ public class Controller {
     /**
      *
      */
-    public void updateElectionSearchVBox(){
-        polSearchVBox.getChildren().clear();
-        polSearchVBox.getChildren().add(new Text("Politicians in Database:"));
-        for(Politician pol: namedPols){
-            String polString = pol.toString()+"\n";
-            Text polText = new Text();
-            polText.setText(polString);
-            ImageView polImageView = pol.getPolImage();
-            polSearchVBox.getChildren().add(polImageView);
-            polSearchVBox.getChildren().add(polText);
+    public void updateElectionSearchVBox(List<Election> electionList){
+        elSearchVBox.getChildren().clear();
+        elSearchVBox.getChildren().add(new Text("Politicians in Database:"));
+        for(Election el: electionList){
+            String elString = el.toString()+"\n";
+            Text elText = new Text();
+            elText.setText(elString);
+
+
+            elSearchVBox.getChildren().add(elText);
 
         }
     }
@@ -596,12 +597,68 @@ public class Controller {
     /**
      *
      * @param polList -
+     * @param length -
      * @return -
      */
-    public List<Politician> polAlphabeticalSelectionSort(List<Politician> polList) {
+    public int findLargestPoliticianNamePos(List<Politician> polList, int length){
+        int largestPos = 0;
+        for(int i = 1; i<length;i++){
+            if(polList.accessAtIndex(i).getContents().getName().compareTo(polList.accessAtIndex(largestPos).getContents().getName())>0){
+                largestPos = i;
+            }
+        }
+        return largestPos;
+    }
+
+    /**
+     *
+     * @param polList -
+     * @return -
+     */
+    public List<Politician> polAlphabeticalPoliticalPartySelectionSort(List<Politician> polList) {
         // Loops through entire length of polList
         for (int i = polList.length(); i > 0; i--) {
             int posLargest = findLargestPoliticianPartyPos(polList, i);
+            polList.swapContents(posLargest, i - 1);
+            System.out.println(polList.accessAtIndex(i));
+        }
+        return polList;
+    }
+
+    /**
+     *
+     * @param  -
+     * @return -
+     */
+    public List<Election> electionNumberOfWinnersSelectionSort(List<Election> electionList) {
+        // Loops through entire length of polList
+        for (int i = electionList.length(); i > 0; i--) {
+            int posLargest = findLargestElectionWinners(electionList, i);
+            electionList.swapContents(posLargest, i - 1);
+            System.out.println(electionList.accessAtIndex(i));
+        }
+        return electionList;
+    }
+
+    public int findLargestElectionWinners(List<Election> electionList, int length){
+        int largestPos = 0;
+        for(int i = 1; i<length;i++){
+            if(electionList.accessAtIndex(i).getContents().getNumberOfWinners()>electionList.accessAtIndex(largestPos).getContents().getNumberOfWinners()){
+                largestPos = i;
+            }
+        }
+        return largestPos;
+    }
+
+    /**
+     *
+     * @param polList -
+     * @return -
+     */
+    public List<Politician> polAlphabeticalNameSelectionSort(List<Politician> polList) {
+        // Loops through entire length of polList
+        for (int i = polList.length(); i > 0; i--) {
+            int posLargest = findLargestPoliticianNamePos(polList, i);
             polList.swapContents(posLargest, i - 1);
             System.out.println(polList.accessAtIndex(i));
         }
@@ -633,9 +690,7 @@ public class Controller {
     /**
      *
      */
-    public void sortSearchedPoliticians() {
-        namedPols = polAlphabeticalSelectionSort(namedPols);
-    }
+
 
     /**
      *
