@@ -438,11 +438,15 @@
                               </VBox>
                            </center>
                            <bottom>
-                              <VBox fx:id="candidateVBox" prefHeight="559.0" prefWidth="700.0" BorderPane.alignment="CENTER">
-                                 <BorderPane.margin>
-                                    <Insets top="40.0" />
-                                 </BorderPane.margin>
-                              </VBox>
+                              <ScrollPane prefHeight="508.0" prefWidth="700.0" BorderPane.alignment="CENTER">
+                                <content>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="508.0" prefWidth="700.0">
+                                       <children>
+                                          <VBox fx:id="candidateVBox" layoutY="-3.0" prefHeight="511.0" prefWidth="700.0" />
+                                       </children>
+                                    </AnchorPane>
+                                </content>
+                              </ScrollPane>
                            </bottom>
                         </BorderPane>
                      </children>
