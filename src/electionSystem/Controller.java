@@ -197,7 +197,7 @@ public class Controller {
 
         //Little check to see if countyCands is empty
         if (!countyCands.isEmpty()) {
-            countyCands = candAlphabeticalPartySelectionSort(countyCands);
+            countyCands = candAlphabeticalNameSelectionSort(countyCands);
         } else {
             System.out.println("countyCands is empty");
         }
@@ -223,7 +223,7 @@ public class Controller {
 
         //Little check to see if partyCands is empty
         if (!partyCands.isEmpty()) {
-            partyCands = candAlphabeticalNameSelectionSort(partyCands);
+            partyCands = candAlphabeticalCountySelectionSort(partyCands);
         } else {
             System.out.println("partyCands is empty");
         }
@@ -375,6 +375,9 @@ public class Controller {
         textElectionNumberOfWinners.clear();
     }
 
+
+    Election elec;
+    Candidate cand;
     /**
      * Adds candidate to list of candidates.
      * @throws FileNotFoundException -
@@ -382,35 +385,48 @@ public class Controller {
     public void addCandidate() throws FileNotFoundException {
         String polID = polAddChooser.getText();
         String elID = elAddChooser.getText();
-        Politician pol2;
-        Election election;
-        Candidate cand;
-        if(polExists(polID)){
-            if(elExists((elID))){
+
+        if(politicianExists(polID)){
+            if(electionExists((elID))){
                 for (Election el: Main.electionsList){
                     if(elID.equals(el.getId())){
-                        election = el;
+                        elec = new Election(el.Id, el.electionType, el.location, el.date, el.numberOfWinners);
                     }
                 }
                 for (Politician pol: Main.politicianList){
                     if(polID.equals(pol.getId())){
-                        pol2 = pol;
+                        if(!elec.electionCandidateList.isEmpty()) {
+                            for(Candidate candidate: elec.electionCandidateList) {
+                                if(candidate.id.equals(polID)) {
+                                    System.out.println("This Candidate is already in this election");
+                                    return;
+                                }
+                            }
+                        }
+                        cand = new Candidate(pol.id, pol.name, pol.currentParty, pol.DOB, pol.homeCounty, pol.photoUrl);
                     }
                 }
             }else{
                 System.out.println("That election does not Exist!");
                 return;
             }
-        }else{
+        } else {
             System.out.println("That Politician Does not Exist!");
             return;
         }
 
-        cand = new Candidate(pol2.getId(), pol2.getName(),pol2.getCurrentParty(), pol2.getDOB(), pol2.getHomeCounty(), pol2.photoUrl);
-        election.electionCandidateList.addNode(cand);
-        candNameHashTable.insertHash(cand.getName(), cand);
-        candCountyHashTable.insertHash(cand.getHomeCounty(), cand);
-        candPartyHashTable.insertHash(cand.getCurrentParty(), cand);
+        elec.electionCandidateList.addNode(cand);
+        candNameHashTable.insertHash(cand.name, cand);
+        candCountyHashTable.insertHash(cand.homeCounty, cand);
+        candPartyHashTable.insertHash(cand.currentParty, cand);
+
+        candidateVBox.getChildren().clear();
+        String candString = cand.toString()+"\n";
+        Text candText = new Text();
+        candText.setText(candString);
+        ImageView candImageView = cand.getCandImage();
+        candidateVBox.getChildren().add(candImageView);
+        candidateVBox.getChildren().add(candText);
 
 
         // Creates new candidate object from a selected politician.
@@ -421,7 +437,7 @@ public class Controller {
 
     }
 
-    public Boolean polExists(String polID){
+    public Boolean politicianExists(String polID){
         for(Politician pol: Main.politicianList){
             if (polID.equals(pol.getId())){
                 System.out.println("That Politician Exists!");
@@ -431,7 +447,7 @@ public class Controller {
         return false;
     }
 
-    public Boolean elExists(String elID){
+    public Boolean electionExists(String elID){
         for(Election el: Main.electionsList){
             if (elID.equals(el.getId())){
                 System.out.println("That Election Exists!");
@@ -480,7 +496,7 @@ public class Controller {
 
             for (int i = 0; i < canList.length(); i++) {
                 Candidate cand = canList.accessAtIndex(i).getContents();
-                if (cand.getId().equals(currCandidate.getId())) {
+                if (cand.getCandId().equals(currCandidate.getCandId())) {
                     Main.candidatesList.removeNode(i);
                     candNameHashTable.removeHash(cand.name, cand);
                     candPartyHashTable.removeHash(cand.currentParty, cand);
@@ -536,9 +552,6 @@ public class Controller {
             ImageView polImageView = pol.getPolImage();
             polVBox.getChildren().add(polImageView);
             polVBox.getChildren().add(polText);
-
-
-
         }
     }
 
@@ -555,32 +568,35 @@ public class Controller {
         }
     }
 
+    Election currentElection;
     public void viewCandidates() {
         candidateVBox.getChildren().clear();
         candidateVBox.getChildren().add(new Text("Candidates for the Chosen Election:"));
-        Election currentElection = null;
+
         String chosenElectionID = electionChooser.getText();
 
         for (Election el : Main.electionsList) {
             if (chosenElectionID.equals(el.getId())) {
                 currentElection = el;
-            }
-        }
-        if (currentElection != null){
-            for (Candidate cand : currentElection.electionCandidateList) {
-                String candString = cand.toString() + "\n";
-                Text candText = new Text();
-                candText.setText(candString);
-                ImageView candImageView = cand.getPolImage();
-                candidateVBox.getChildren().add(candImageView);
-                candidateVBox.getChildren().add(candText);
+                for (Candidate cand : currentElection.electionCandidateList) {
+                    String candString = cand.toString() + "\n";
+                    Text candText = new Text();
+                    candText.setText(candString);
+                    ImageView candImageView = cand.getCandImage();
+                    candidateVBox.getChildren().add(candImageView);
+                    candidateVBox.getChildren().add(candText);
+                }
+            } else {
+                currentElection = null;
+                System.out.println("That election does not exist");
+                return;
             }
         }
     }
 
     public void viewElections(){
         candidateVBox.getChildren().clear();
-        candidateVBox.getChildren().add(new Text("Elections in Database:"));
+        candidateVBox.getChildren().add(new Text("Elections in Database:" + "\n"));
         for(Election el: Main.electionsList){
             String elString = el.toString()+"\n";
             Text elText = new Text();
@@ -862,7 +878,7 @@ public class Controller {
     public int findLargestCandidateNamePos(List<Candidate> candList, int length){
         int largestPos = 0;
         for(int i = 1; i<length;i++){
-            if(candList.accessAtIndex(i).getContents().getName().compareTo(candList.accessAtIndex(largestPos).getContents().getName())>0){
+            if(candList.accessAtIndex(i).getContents().getCandName().compareTo(candList.accessAtIndex(largestPos).getContents().getCandName())>0){
                 largestPos = i;
             }
         }
@@ -878,7 +894,7 @@ public class Controller {
     public int findLargestCandidatePartyPos(List<Candidate> candList, int length){
         int largestPos = 0;
         for(int i = 1; i<length;i++){
-            if(candList.accessAtIndex(i).getContents().getCurrentParty().compareTo(candList.accessAtIndex(largestPos).getContents().getCurrentParty()) > 0) {
+            if(candList.accessAtIndex(i).getContents().getCandCurrentParty().compareTo(candList.accessAtIndex(largestPos).getContents().getCandCurrentParty()) > 0) {
                 largestPos = i;
             }
         }
@@ -894,7 +910,7 @@ public class Controller {
     public int findLargestCandidateCountyPos(List<Candidate> candList, int length){
         int largestPos = 0;
         for(int i = 1; i<length;i++){
-            if(candList.accessAtIndex(i).getContents().getHomeCounty().compareTo(candList.accessAtIndex(largestPos).getContents().getHomeCounty()) > 0) {
+            if(candList.accessAtIndex(i).getContents().getCandHomeCounty().compareTo(candList.accessAtIndex(largestPos).getContents().getCandHomeCounty()) > 0) {
                 largestPos = i;
             }
         }
@@ -914,7 +930,7 @@ public class Controller {
     public int findLargestCandidatePos(List<Candidate> candList, int length){
         int largestPos = 0;
         for(int i = 1; i<length;i++){
-            if(candList.accessAtIndex(i).getContents().getName().compareTo(candList.accessAtIndex(largestPos).getContents().getName())>0){
+            if(candList.accessAtIndex(i).getContents().getCandName().compareTo(candList.accessAtIndex(largestPos).getContents().getCandName())>0){
                 largestPos = i;
             }
         }

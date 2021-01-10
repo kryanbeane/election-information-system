@@ -2,7 +2,6 @@ package electionSystem;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
@@ -11,7 +10,7 @@ public class Politician {
     String id;
     String currentParty;
     String name;
-    String DOB; //go back and divide into day, month, year, and make returnDOBString method.
+    String DOB;
     String homeCounty;
     String photoUrl;
     Image photo;

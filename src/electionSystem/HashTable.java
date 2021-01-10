@@ -27,7 +27,7 @@ public class HashTable<T> {
             total += key.charAt(i);
         }
         total = Math.abs(total);
-        System.out.println(total);
+        System.out.println(total/5);
         System.out.println(total%hashTableList.length);
         return total/5;
     }
@@ -79,9 +79,5 @@ public class HashTable<T> {
     public int hashSize(int hash){
         return hashTableList[hash].length();
     }
-
-
-
-
 
 }

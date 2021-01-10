@@ -293,7 +293,9 @@ public class List<F> implements Iterable<F>{
 
     public void emptyList(){
         head=tail=null;
-        this.countOfContents=0;
+        Main.electionsList.countOfContents=0;
+        Main.politicianList.countOfContents=0;
+        Main.candidatesList.countOfContents=0;
     }
 
 

@@ -21,7 +21,7 @@ class HashTableTest {
     void setUp() {
         try {
             testTable=new HashTable<>(size);
-            pol=new Politician("1A", "bob", "ff", "19/01/2000", "Waterford", "https://images-ext-2.discordapp.net/external/27CvotwlaWxCbzNn1djU5bNwwXptQ-pZG2ygDszI8PE/https/pbs.twimg.com/profile_images/1109183335845298177/jFYfPL6k_400x400.jpg%22);
+            pol=new Politician("1A", "bob", "ff", "19/01/2000", "Waterford", "https://images-ext-2.discordapp.net/external/27CvotwlaWxCbzNn1djU5bNwwXptQ-pZG2ygDszI8PE/https/pbs.twimg.com/profile_images/1109183335845298177/jFYfPL6k_400x400.jpg%22");
         } catch (Exception ignore) {}
     }
 
@@ -41,7 +41,7 @@ class HashTableTest {
     void removeHash() {
         int hash = testTable.hashFunction("bob");
         testTable.removeHash("bob", pol);
-        assertEquals(null, (testTable.getHash(hash, 0)));
+        assertNull((testTable.getHash(hash, 0)));
     }
 
     @Test
