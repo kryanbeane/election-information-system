@@ -854,68 +854,6 @@ public class Controller {
 
     /**
      *
-     * @param elecList -
-     * @return -
-     */
-    public List<Election> elecAlphabeticalTypeSelectionSort(List<Election> elecList) {
-        // Loops through entire length of polList
-        for (int i = elecList.length(); i > 0; i--) {
-            int posLargest = findLargestElectionTypePos(elecList, i);
-            elecList.swapContents(posLargest, i - 1);
-            System.out.println(elecList.accessAtIndex(i));
-        }
-        return elecList;
-    }
-
-    /**
-     *
-     * @param elecList -
-     * @return -
-     */
-    public List<Election> elecAlphabeticalLocationSelectionSort(List<Election> elecList) {
-        // Loops through entire length of polList
-        for (int i = elecList.length(); i > 0; i--) {
-            int posLargest = findLargestElectionLocationPos(elecList, i);
-            elecList.swapContents(posLargest, i - 1);
-            System.out.println(elecList.accessAtIndex(i));
-        }
-        return elecList;
-    }
-
-    /**
-     *
-     * @param elecList -
-     * @param length -
-     * @return -
-     */
-    public int findLargestElectionTypePos(List<Election> elecList, int length){
-        int largestPos = 0;
-        for(int i = 1; i<length;i++){
-            if(elecList.accessAtIndex(i).getContents().getElectionType().compareTo(elecList.accessAtIndex(largestPos).getContents().getElectionType())>0){
-                largestPos = i;
-            }
-        }
-        return largestPos;
-    }
-
-    /**
-     *
-     * @param elecList -
-     * @param length -
-     * @return -
-     */
-    public int findLargestElectionLocationPos(List<Election> elecList, int length){
-        int largestPos = 0;
-        for(int i = 1; i<length;i++){
-            if(elecList.accessAtIndex(i).getContents().getLocation().compareTo(elecList.accessAtIndex(largestPos).getContents().getLocation()) > 0) {
-                largestPos = i;
-            }
-        }
-        return largestPos;
-    }
-
-    /**
-     *
      * @param electionList -
      * @return -
      */
