@@ -15,7 +15,7 @@ public class Candidate {
     String photoUrl;
     Image photo;
 
-    public Candidate(String id, String name, String currentParty, String DOB, String homeCounty,String photoUrl) throws FileNotFoundException {
+    public Candidate(String id, String name, String currentParty, String DOB, String homeCounty, String photoUrl) {
         this.id = id;
         this.name = name;
         this.currentParty = currentParty;

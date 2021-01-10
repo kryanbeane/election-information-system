@@ -192,7 +192,7 @@ public class List<F> implements Iterable<F>{
     }
 
     public boolean isEmpty() {
-        return head==null;
+        return head == null;
     }
 
     public int length() {
