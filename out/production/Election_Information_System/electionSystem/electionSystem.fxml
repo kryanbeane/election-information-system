@@ -324,7 +324,7 @@
                      <children>
                         <BorderPane layoutX="-1.0" layoutY="-2.0" prefHeight="775.0" prefWidth="700.0">
                            <top>
-                              <VBox prefHeight="144.0" prefWidth="700.0" BorderPane.alignment="CENTER">
+                              <VBox prefHeight="175.0" prefWidth="700.0" style="-fx-background-color: aliceblue;" BorderPane.alignment="CENTER">
                                  <children>
                                     <Label prefHeight="38.0" prefWidth="700.0" text="          Election Search" />
                                     <HBox prefHeight="46.0" prefWidth="700.0">
@@ -381,88 +381,69 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="700.0">
                      <children>
-                        <BorderPane prefHeight="285.0" prefWidth="700.0">
-                           <center>
-                              <VBox minHeight="250.0" minWidth="600.0" prefHeight="200.0" prefWidth="384.0" style="-fx-background-color: aliceblue;" BorderPane.alignment="CENTER">
+                        <BorderPane prefHeight="247.0" prefWidth="700.0">
+                           <top>
+                              <Label text="Add Candidate to Election by choosing election ID, then Politician ID" BorderPane.alignment="TOP_LEFT">
+                                 <BorderPane.margin>
+                                    <Insets left="10.0" top="10.0" />
+                                 </BorderPane.margin>
+                              </Label>
+                           </top>
+                           <left>
+                              <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <Label fx:id="warningLabel311" prefHeight="17.0" prefWidth="546.0" />
-                                    <VBox prefHeight="368.0" prefWidth="700.0">
-                                       <children>
-                                          <Label text="Politicians in Database">
-                                             <padding>
-                                                <Insets left="10.0" />
-                                             </padding>
-                                          </Label>
-                                          <TableView fx:id="candidateSelectionTable" maxHeight="-Infinity" maxWidth="700.0" prefHeight="219.0" prefWidth="700.0">
-                                             <columns>
-                                                <TableColumn fx:id="pIDColumn1" prefWidth="59.0" text="ID" />
-                                                <TableColumn fx:id="pNameColumn1" prefWidth="163.0" style="color: red;" text="Name" />
-                                                <TableColumn fx:id="pDOBColumn1" prefWidth="98.0" text="DOB" />
-                                                <TableColumn fx:id="currentPartyColumn1" prefWidth="79.0" text="Political Party" />
-                                                <TableColumn fx:id="pHomeCountyColumn1" prefWidth="117.0" text="Home County" />
-                                                <TableColumn fx:id="pPhotoURLColumn1" prefWidth="183.0" text="Image" />
-                                             </columns>
-                                          </TableView>
-                                          <HBox prefHeight="41.0" prefWidth="700.0">
-                                             <children>
-                                                <Button mnemonicParsing="false" onAction="#addCandidate" text="Add">
-                                                   <HBox.margin>
-                                                      <Insets left="260.0" />
-                                                   </HBox.margin>
-                                                </Button>
-                                                <Button mnemonicParsing="false" onAction="#deleteCandidate" text="Delete">
-                                                   <HBox.margin>
-                                                      <Insets left="20.0" />
-                                                   </HBox.margin>
-                                                </Button>
-                                                <Button mnemonicParsing="false" onAction="#sortCandidateList" text="Sort Below">
-                                                   <HBox.margin>
-                                                      <Insets left="20.0" />
-                                                   </HBox.margin>
-                                                </Button>
-                                             </children>
-                                          </HBox>
-                                       </children>
-                                    </VBox>
+                                    <Button mnemonicParsing="false" onAction="#viewCandidates" text="View Candidates">
+                                       <VBox.margin>
+                                          <Insets top="20.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onAction="#viewPoliticians" text="View Politicians">
+                                       <VBox.margin>
+                                          <Insets top="40.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onAction="#viewElections" text="View Elections">
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onAction="#addCandidate" text="Add Candidate">
+                                       <VBox.margin>
+                                          <Insets top="30.0" />
+                                       </VBox.margin>
+                                    </Button>
                                  </children>
+                                 <padding>
+                                    <Insets left="10.0" right="10.0" />
+                                 </padding>
+                              </VBox>
+                           </left>
+                           <center>
+                              <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Label text="Select an Election ID to View Candidates" />
+                                    <TextField fx:id="electionChooser" />
+                                    <Label text="Select a Politician ID to add">
+                                       <VBox.margin>
+                                          <Insets top="100.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <TextField fx:id="polAddChooser" />
+                                    <Label text="Select an Election ID to add to" />
+                                    <TextField fx:id="elAddChooser" />
+                                 </children>
+                                 <padding>
+                                    <Insets left="10.0" right="10.0" top="10.0" />
+                                 </padding>
                               </VBox>
                            </center>
                            <bottom>
-                              <VBox prefHeight="368.0" prefWidth="700.0" BorderPane.alignment="CENTER">
-                                 <children>
-                                    <Label text="Candidates in Selected Election">
-                                       <padding>
-                                          <Insets left="10.0" top="10.0" />
-                                       </padding>
-                                    </Label>
-                                    <TableView fx:id="candidateTable" maxHeight="-Infinity" maxWidth="700.0" prefHeight="290.0" prefWidth="700.0">
-                                       <columns>
-                                          <TableColumn fx:id="candidateNameColumn" prefWidth="699.0" style="color: red;" text="Name" />
-                                       </columns>
-                                    </TableView>
-                                 </children>
+                              <VBox fx:id="candidateVBox" prefHeight="559.0" prefWidth="700.0" BorderPane.alignment="CENTER">
+                                 <BorderPane.margin>
+                                    <Insets top="40.0" />
+                                 </BorderPane.margin>
                               </VBox>
                            </bottom>
-                           <top>
-                              <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-                                 <children>
-                                    <Label text="Elections">
-                                       <padding>
-                                          <Insets left="10.0" top="10.0" />
-                                       </padding>
-                                    </Label>
-                                    <TableView fx:id="electionTable2" maxHeight="490.0" maxWidth="700.0" minHeight="179.0" onMouseClicked="#clickItem" prefHeight="199.0" prefWidth="700.0">
-                                       <columns>
-                                          <TableColumn fx:id="electionIDColumn1" prefWidth="59.0" text="ID" />
-                                          <TableColumn fx:id="electionTypeColumn1" prefWidth="204.0" style="color: red;" text="Type" />
-                                          <TableColumn fx:id="electionLocationColumn1" prefWidth="162.0" text="Location" />
-                                          <TableColumn fx:id="electionDateColumn1" prefWidth="113.0" text="Date" />
-                                          <TableColumn fx:id="electionNumberOfWInnersColumn1" prefWidth="150.0" text="Number of Winners" />
-                                       </columns>
-                                    </TableView>
-                                 </children>
-                              </VBox>
-                           </top>
                         </BorderPane>
                      </children>
                   </AnchorPane>

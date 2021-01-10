@@ -296,6 +296,8 @@ public class List<F> implements Iterable<F>{
         this.countOfContents=0;
     }
 
+
+
 }
 
 

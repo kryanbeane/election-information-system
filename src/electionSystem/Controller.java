@@ -30,7 +30,7 @@ public class Controller {
     Election currElection, currElection2;
     Candidate currCandidate;
     @FXML TextField textCurrentParty, textPoliticianName, textDateOfBirth, textHomeCounty, textImageURL, polID;
-    @FXML TextField textElectionType, textElectionLocation, textElectionNumberOfWinners, electionID;
+    @FXML TextField textElectionType, textElectionLocation, textElectionNumberOfWinners, electionID, electionChooser, polAddChooser, elAddChooser;
     @FXML TableColumn<Politician, String> pIDColumn, pIDColumn1;
     @FXML TableColumn<Politician, String> currentPartyColumn, currentPartyColumn1;
     @FXML TableColumn<Politician, String> pNameColumn, pNameColumn1;
@@ -45,7 +45,7 @@ public class Controller {
     @FXML TableView<Candidate> candidateTable;
     @FXML DatePicker polDatePicker, textElectionDatePicker;
     @FXML TextArea polTextArea;
-    @FXML VBox polVBox, elVBox, polSearchVBox, elSearchVBox;
+    @FXML VBox polVBox, polVBox1, elVBox, polSearchVBox, elSearchVBox, candidateVBox;
 
 
     /////////////////////////////////////////////////////////////////
@@ -315,6 +315,7 @@ public class Controller {
      */
     public void addPolitician() throws FileNotFoundException {
         polVBox.setMaxHeight(Double.MAX_VALUE);
+        candidateVBox.setMaxHeight(Double.MAX_VALUE);
         String currentParty = textCurrentParty.getText();
         String name = textPoliticianName.getText();
         String DOB = polDatePicker.getValue().toString();
@@ -379,21 +380,65 @@ public class Controller {
      * @throws FileNotFoundException -
      */
     public void addCandidate() throws FileNotFoundException {
-        Politician pol = candidateSelectionTable.getSelectionModel().getSelectedItem();
-        String name = pol.name;
-
-        // Creates new candidate object from a selected politician.
-        if (currElection2!=null) {
-            Candidate cand = new Candidate(pol.getId(), name, pol.currentParty, pol.DOB, pol.homeCounty, pol.photoUrl);
-            currElection2.electionCandidateList.addNode(cand);
-            updateCandidatesTable();
-
-            // Hashes candidates when it's added
-            candNameHashTable.insertHash(cand.name, cand);
-            candCountyHashTable.insertHash(cand.homeCounty, cand);
-            candPartyHashTable.insertHash(cand.currentParty, cand);
+        String polID = polAddChooser.getText();
+        String elID = elAddChooser.getText();
+        Politician pol2;
+        Election election;
+        Candidate cand;
+        if(polExists(polID)){
+            if(elExists((elID))){
+                for (Election el: Main.electionsList){
+                    if(elID.equals(el.getId())){
+                        election = el;
+                    }
+                }
+                for (Politician pol: Main.politicianList){
+                    if(polID.equals(pol.getId())){
+                        pol2 = pol;
+                    }
+                }
+            }else{
+                System.out.println("That election does not Exist!");
+                return;
+            }
+        }else{
+            System.out.println("That Politician Does not Exist!");
+            return;
         }
 
+        cand = new Candidate(pol2.getId(), pol2.getName(),pol2.getCurrentParty(), pol2.getDOB(), pol2.getHomeCounty(), pol2.photoUrl);
+        election.electionCandidateList.addNode(cand);
+        candNameHashTable.insertHash(cand.getName(), cand);
+        candCountyHashTable.insertHash(cand.getHomeCounty(), cand);
+        candPartyHashTable.insertHash(cand.getCurrentParty(), cand);
+
+
+        // Creates new candidate object from a selected politician.
+
+
+            // Hashes candidates when it's added
+
+
+    }
+
+    public Boolean polExists(String polID){
+        for(Politician pol: Main.politicianList){
+            if (polID.equals(pol.getId())){
+                System.out.println("That Politician Exists!");
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Boolean elExists(String elID){
+        for(Election el: Main.electionsList){
+            if (elID.equals(el.getId())){
+                System.out.println("That Election Exists!");
+                return true;
+            }
+        }
+        return false;
     }
 
     /////////////////////////////////////////////////////////////////
@@ -483,6 +528,7 @@ public class Controller {
     public void updatePoliticianVBox(){
         polVBox.getChildren().clear();
         polVBox.getChildren().add(new Text("Politicians in Database:"));
+
         for(Politician pol: Main.politicianList){
             String polString = pol.toString()+"\n";
             Text polText = new Text();
@@ -490,6 +536,56 @@ public class Controller {
             ImageView polImageView = pol.getPolImage();
             polVBox.getChildren().add(polImageView);
             polVBox.getChildren().add(polText);
+
+
+
+        }
+    }
+
+    public void viewPoliticians(){
+        candidateVBox.getChildren().clear();
+        candidateVBox.getChildren().add(new Text("Politicians in Database:"));
+        for(Politician pol: Main.politicianList){
+            String polString = pol.toString()+"\n";
+            Text polText = new Text();
+            polText.setText(polString);
+            ImageView polImageView = pol.getPolImage();
+            candidateVBox.getChildren().add(polImageView);
+            candidateVBox.getChildren().add(polText);
+        }
+    }
+
+    public void viewCandidates() {
+        candidateVBox.getChildren().clear();
+        candidateVBox.getChildren().add(new Text("Candidates for the Chosen Election:"));
+        Election currentElection = null;
+        String chosenElectionID = electionChooser.getText();
+
+        for (Election el : Main.electionsList) {
+            if (chosenElectionID.equals(el.getId())) {
+                currentElection = el;
+            }
+        }
+        if (currentElection != null){
+            for (Candidate cand : currentElection.electionCandidateList) {
+                String candString = cand.toString() + "\n";
+                Text candText = new Text();
+                candText.setText(candString);
+                ImageView candImageView = cand.getPolImage();
+                candidateVBox.getChildren().add(candImageView);
+                candidateVBox.getChildren().add(candText);
+            }
+        }
+    }
+
+    public void viewElections(){
+        candidateVBox.getChildren().clear();
+        candidateVBox.getChildren().add(new Text("Elections in Database:"));
+        for(Election el: Main.electionsList){
+            String elString = el.toString()+"\n";
+            Text elText = new Text();
+            elText.setText(elString);
+            candidateVBox.getChildren().add(elText);
         }
     }
 
