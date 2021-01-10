@@ -548,7 +548,7 @@ public class Controller {
     }
 
     /**
-     *  Deletes candidate from the candidate list.
+     * Deletes candidate from the candidate list.
      */
     public void deleteCandidate() {
         try {
