@@ -88,7 +88,7 @@ public class Controller {
 
         //Little check to see if namedPols is empty
         if (!namedPols.isEmpty()) {
-            namedPols = polAlphabeticalPoliticalPartySelectionSort(namedPols);
+            namedPols = polAlphabeticalPartySelectionSort(namedPols);
         } else {
             System.out.println("namedPols is empty");
         }
@@ -116,7 +116,7 @@ public class Controller {
 
         //Little check to see if countyPols is empty
         if (!countyPols.isEmpty()) {
-            countyPols = polAlphabeticalNameSelectionSort(countyPols);
+            countyPols = polAlphabeticalPartySelectionSort(countyPols);
         } else {
             System.out.println("countyPols is empty");
         }
@@ -170,7 +170,7 @@ public class Controller {
 
         //Little check to see if namedCands is empty
         if (!namedCands.isEmpty()) {
-            sortSearchedCandidates();
+            namedCands = candAlphabeticalPartySelectionSort(namedCands);
         } else {
             System.out.println("namedCands is empty");
         }
@@ -197,7 +197,7 @@ public class Controller {
 
         //Little check to see if countyCands is empty
         if (!countyCands.isEmpty()) {
-            countyCands = polAlphabeticalNameSelectionSort(countyCands);
+            countyCands = candAlphabeticalPartySelectionSort(countyCands);
         } else {
             System.out.println("countyCands is empty");
         }
@@ -223,7 +223,7 @@ public class Controller {
 
         //Little check to see if partyCands is empty
         if (!partyCands.isEmpty()) {
-            sortSearchedCandidates();
+            partyCands = candAlphabeticalNameSelectionSort(partyCands);
         } else {
             System.out.println("partyCands is empty");
         }
@@ -250,7 +250,7 @@ public class Controller {
 
         //Little check to see if locationElec is empty
         if (!locationElec.isEmpty()) {
-            sortSearchedElections();
+            locationElec = electionNumberOfWinnersSelectionSort(locationElec);
         } else {
             System.out.println("locationElec is empty");
         }
@@ -277,7 +277,7 @@ public class Controller {
 
         //Little check to see if typeElec is empty
         if (!typeElec.isEmpty()) {
-            sortSearchedElections();
+            typeElec = electionNumberOfWinnersSelectionSort(typeElec);
         } else {
             System.out.println("typeElec is empty");
         }
@@ -291,7 +291,6 @@ public class Controller {
 
     /**
      * Generates ID to be assigned to Politicians, Candidates and Elections.
-     *
      * @return - Randomly generated ID.
      */
     public String generateID() {
@@ -417,7 +416,7 @@ public class Controller {
                     polCountyHashTable.removeHash(pol.homeCounty, pol);
                     System.out.println("Removed Politician at index" + i);
                     updatePoliticianVBox();
-
+                    polID.clear();
 
                 }
             }
@@ -443,6 +442,7 @@ public class Controller {
                     candCountyHashTable.removeHash(cand.currentParty, cand);
                     System.out.println("Removed Politician at index" + i);
                     updateCandidatesTable();
+
                 }
             }
         } catch (Exception e) {
@@ -465,7 +465,7 @@ public class Controller {
                     elecTypeHashTable.removeHash(elec.electionType, elec);
                     System.out.println("Removed Election at index" + i);
                     updateElectionVBox();
-
+                    electionID.clear();
                 }
             }
         } catch (Exception e) {
@@ -568,8 +568,53 @@ public class Controller {
 
 
     /////////////////////////////////////////////////////////////////
-    //////////////////  Sort Politician Methods  ////////////////////
+    //////////////  Sort Searched Politician Methods  ///////////////
     /////////////////////////////////////////////////////////////////
+
+    /**
+     *
+     * @param polList -
+     * @return -
+     */
+    public List<Politician> polAlphabeticalNameSelectionSort(List<Politician> polList) {
+        // Loops through entire length of polList
+        for (int i = polList.length(); i > 0; i--) {
+            int posLargest = findLargestPoliticianNamePos(polList, i);
+            polList.swapContents(posLargest, i - 1);
+            System.out.println(polList.accessAtIndex(i));
+        }
+        return polList;
+    }
+
+    /**
+     *
+     * @param polList -
+     * @return -
+     */
+    public List<Politician> polAlphabeticalPartySelectionSort(List<Politician> polList) {
+        // Loops through entire length of polList
+        for (int i = polList.length(); i > 0; i--) {
+            int posLargest = findLargestPoliticianPartyPos(polList, i);
+            polList.swapContents(posLargest, i - 1);
+            System.out.println(polList.accessAtIndex(i));
+        }
+        return polList;
+    }
+
+    /**
+     *
+     * @param polList -
+     * @return -
+     */
+    public List<Politician> polAlphabeticalCountySelectionSort(List<Politician> polList) {
+        // Loops through entire length of polList
+        for (int i = polList.length(); i > 0; i--) {
+            int posLargest = findLargestPoliticianCountyPos(polList, i);
+            polList.swapContents(posLargest, i - 1);
+            System.out.println(polList.accessAtIndex(i));
+        }
+        return polList;
+    }
 
     /**
      *
@@ -577,7 +622,7 @@ public class Controller {
      * @param length -
      * @return -
      */
-    public int findLargestPoliticianPos(List<Politician> polList, int length){
+    public int findLargestPoliticianNamePos(List<Politician> polList, int length){
         int largestPos = 0;
         for(int i = 1; i<length;i++){
             if(polList.accessAtIndex(i).getContents().getName().compareTo(polList.accessAtIndex(largestPos).getContents().getName())>0){
@@ -609,7 +654,28 @@ public class Controller {
      * @param length -
      * @return -
      */
-    public int findLargestPoliticianNamePos(List<Politician> polList, int length){
+    public int findLargestPoliticianCountyPos(List<Politician> polList, int length){
+        int largestPos = 0;
+        for(int i = 1; i<length;i++){
+            if(polList.accessAtIndex(i).getContents().getHomeCounty().compareTo(polList.accessAtIndex(largestPos).getContents().getHomeCounty()) > 0) {
+                largestPos = i;
+            }
+        }
+        return largestPos;
+    }
+
+
+    /////////////////////////////////////////////////////////////////
+    ///////////////  Politician SORT Button Methods  ////////////////
+    /////////////////////////////////////////////////////////////////
+
+    /**
+     *
+     * @param polList -
+     * @param length -
+     * @return -
+     */
+    public int findLargestPoliticianPos(List<Politician> polList, int length){
         int largestPos = 0;
         for(int i = 1; i<length;i++){
             if(polList.accessAtIndex(i).getContents().getName().compareTo(polList.accessAtIndex(largestPos).getContents().getName())>0){
@@ -617,61 +683,6 @@ public class Controller {
             }
         }
         return largestPos;
-    }
-
-    /**
-     *
-     * @param polList -
-     * @return -
-     */
-    public List<Politician> polAlphabeticalPoliticalPartySelectionSort(List<Politician> polList) {
-        // Loops through entire length of polList
-        for (int i = polList.length(); i > 0; i--) {
-            int posLargest = findLargestPoliticianPartyPos(polList, i);
-            polList.swapContents(posLargest, i - 1);
-            System.out.println(polList.accessAtIndex(i));
-        }
-        return polList;
-    }
-
-    /**
-     *
-     * @param -
-     * @return -
-     */
-    public List<Election> electionNumberOfWinnersSelectionSort(List<Election> electionList) {
-        // Loops through entire length of polList
-        for (int i = electionList.length(); i > 0; i--) {
-            int posLargest = findLargestElectionWinners(electionList, i);
-            electionList.swapContents(posLargest, i - 1);
-            System.out.println(electionList.accessAtIndex(i));
-        }
-        return electionList;
-    }
-
-    public int findLargestElectionWinners(List<Election> electionList, int length){
-        int largestPos = 0;
-        for(int i = 1; i<length;i++){
-            if(electionList.accessAtIndex(i).getContents().getNumberOfWinners()>electionList.accessAtIndex(largestPos).getContents().getNumberOfWinners()){
-                largestPos = i;
-            }
-        }
-        return largestPos;
-    }
-
-    /**
-     *
-     * @param polList -
-     * @return -
-     */
-    public List<Politician> polAlphabeticalNameSelectionSort(List<Politician> polList) {
-        // Loops through entire length of polList
-        for (int i = polList.length(); i > 0; i--) {
-            int posLargest = findLargestPoliticianNamePos(polList, i);
-            polList.swapContents(posLargest, i - 1);
-            System.out.println(polList.accessAtIndex(i));
-        }
-        return polList;
     }
 
     /**
@@ -693,26 +704,109 @@ public class Controller {
      */
     public void sortPoliticianList(){
         Main.politicianList = politicianSelectionSort(Main.politicianList);
-        //updatePoliticiansTables();
-    }
-
-    /**
-     *
-     */
-    public void sortSearchedCandidates() {
-
-    }
-
-    /**
-     *
-     */
-    public void sortSearchedElections() {
-
+        updatePoliticianVBox();
     }
 
 
     /////////////////////////////////////////////////////////////////
-    ///////////////////  Sort Candidate Methods  ////////////////////
+    //////////////  Sort Searched Candidates Methods  ///////////////
+    /////////////////////////////////////////////////////////////////
+
+    /**
+     *
+     * @param candList -
+     * @return -
+     */
+    public List<Candidate> candAlphabeticalNameSelectionSort(List<Candidate> candList) {
+        // Loops through entire length of polList
+        for (int i = candList.length(); i > 0; i--) {
+            int posLargest = findLargestCandidateNamePos(candList, i);
+            candList.swapContents(posLargest, i - 1);
+            System.out.println(candList.accessAtIndex(i));
+        }
+        return candList;
+    }
+
+    /**
+     *
+     * @param candList -
+     * @return -
+     */
+    public List<Candidate> candAlphabeticalPartySelectionSort(List<Candidate> candList) {
+        // Loops through entire length of polList
+        for (int i = candList.length(); i > 0; i--) {
+            int posLargest = findLargestCandidatePartyPos(candList, i);
+            candList.swapContents(posLargest, i - 1);
+            System.out.println(candList.accessAtIndex(i));
+        }
+        return candList;
+    }
+
+    /**
+     *
+     * @param candList -
+     * @return -
+     */
+    public List<Candidate> candAlphabeticalCountySelectionSort(List<Candidate> candList) {
+        // Loops through entire length of polList
+        for (int i = candList.length(); i > 0; i--) {
+            int posLargest = findLargestCandidateCountyPos(candList, i);
+            candList.swapContents(posLargest, i - 1);
+            System.out.println(candList.accessAtIndex(i));
+        }
+        return candList;
+    }
+
+    /**
+     *
+     * @param candList -
+     * @param length -
+     * @return -
+     */
+    public int findLargestCandidateNamePos(List<Candidate> candList, int length){
+        int largestPos = 0;
+        for(int i = 1; i<length;i++){
+            if(candList.accessAtIndex(i).getContents().getName().compareTo(candList.accessAtIndex(largestPos).getContents().getName())>0){
+                largestPos = i;
+            }
+        }
+        return largestPos;
+    }
+
+    /**
+     *
+     * @param candList -
+     * @param length -
+     * @return -
+     */
+    public int findLargestCandidatePartyPos(List<Candidate> candList, int length){
+        int largestPos = 0;
+        for(int i = 1; i<length;i++){
+            if(candList.accessAtIndex(i).getContents().getCurrentParty().compareTo(candList.accessAtIndex(largestPos).getContents().getCurrentParty()) > 0) {
+                largestPos = i;
+            }
+        }
+        return largestPos;
+    }
+
+    /**
+     *
+     * @param candList -
+     * @param length -
+     * @return -
+     */
+    public int findLargestCandidateCountyPos(List<Candidate> candList, int length){
+        int largestPos = 0;
+        for(int i = 1; i<length;i++){
+            if(candList.accessAtIndex(i).getContents().getHomeCounty().compareTo(candList.accessAtIndex(largestPos).getContents().getHomeCounty()) > 0) {
+                largestPos = i;
+            }
+        }
+        return largestPos;
+    }
+
+    /////////////////////////////////////////////////////////////////
+    ///////////////  Candidate SORT Button Methods  /////////////////
     /////////////////////////////////////////////////////////////////
 
     /**
@@ -755,7 +849,105 @@ public class Controller {
 
 
     /////////////////////////////////////////////////////////////////
-    ///////////////////  Sort Election Methods  /////////////////////
+    //////////////  Sort Searched Elections Methods  ////////////////
+    /////////////////////////////////////////////////////////////////
+
+    /**
+     *
+     * @param elecList -
+     * @return -
+     */
+    public List<Election> elecAlphabeticalTypeSelectionSort(List<Election> elecList) {
+        // Loops through entire length of polList
+        for (int i = elecList.length(); i > 0; i--) {
+            int posLargest = findLargestElectionTypePos(elecList, i);
+            elecList.swapContents(posLargest, i - 1);
+            System.out.println(elecList.accessAtIndex(i));
+        }
+        return elecList;
+    }
+
+    /**
+     *
+     * @param elecList -
+     * @return -
+     */
+    public List<Election> elecAlphabeticalLocationSelectionSort(List<Election> elecList) {
+        // Loops through entire length of polList
+        for (int i = elecList.length(); i > 0; i--) {
+            int posLargest = findLargestElectionLocationPos(elecList, i);
+            elecList.swapContents(posLargest, i - 1);
+            System.out.println(elecList.accessAtIndex(i));
+        }
+        return elecList;
+    }
+
+    /**
+     *
+     * @param elecList -
+     * @param length -
+     * @return -
+     */
+    public int findLargestElectionTypePos(List<Election> elecList, int length){
+        int largestPos = 0;
+        for(int i = 1; i<length;i++){
+            if(elecList.accessAtIndex(i).getContents().getElectionType().compareTo(elecList.accessAtIndex(largestPos).getContents().getElectionType())>0){
+                largestPos = i;
+            }
+        }
+        return largestPos;
+    }
+
+    /**
+     *
+     * @param elecList -
+     * @param length -
+     * @return -
+     */
+    public int findLargestElectionLocationPos(List<Election> elecList, int length){
+        int largestPos = 0;
+        for(int i = 1; i<length;i++){
+            if(elecList.accessAtIndex(i).getContents().getLocation().compareTo(elecList.accessAtIndex(largestPos).getContents().getLocation()) > 0) {
+                largestPos = i;
+            }
+        }
+        return largestPos;
+    }
+
+    /**
+     *
+     * @param electionList -
+     * @return -
+     */
+    public List<Election> electionNumberOfWinnersSelectionSort(List<Election> electionList) {
+        // Loops through entire length of polList
+        for (int i = electionList.length(); i > 0; i--) {
+            int posLargest = findLargestElectionWinners(electionList, i);
+            electionList.swapContents(posLargest, i - 1);
+            System.out.println(electionList.accessAtIndex(i));
+        }
+        return electionList;
+    }
+
+    /**
+     *
+     * @param electionList -
+     * @param length -
+     * @return -
+     */
+    public int findLargestElectionWinners(List<Election> electionList, int length){
+        int largestPos = 0;
+        for(int i = 1; i<length;i++){
+            if(electionList.accessAtIndex(i).getContents().getNumberOfWinners()>electionList.accessAtIndex(largestPos).getContents().getNumberOfWinners()){
+                largestPos = i;
+            }
+        }
+        return largestPos;
+    }
+
+
+    /////////////////////////////////////////////////////////////////
+    ///////////////  Election SORT Button Methods  //////////////////
     /////////////////////////////////////////////////////////////////
 
 

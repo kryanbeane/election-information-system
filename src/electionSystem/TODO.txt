@@ -4,7 +4,7 @@
 2] Create/add facilities (10%) ✓
 3] Edit/update/delete facilities (10%) ✓
 4] Search and listing facilities (10%) ✓
-5] Sorting of search results/listings (15%)
+5] Sorting of search results/listings (15%) (LISTING)
 6] Hashing for individual search (10%) ✓
 7] Save and Load (10%) ✓
 8] JavaFX (10%)
@@ -13,6 +13,5 @@
 
 >>>>> STUFF LEFT TO DO <<<<<
 1] Fix GUI
-2] Fix Sorting of search results bug
+2] Fix Sorting of search results bug ✓
 3] Add relevant tests
-4]
