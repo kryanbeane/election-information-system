@@ -375,68 +375,6 @@ public class Controller {
         textElectionNumberOfWinners.clear();
     }
 
-
-//    Election elec;
-//    Candidate cand;
-//    /**
-//     * Adds candidate to list of candidates.
-//     * @throws FileNotFoundException -
-//     */
-//    public void addCandidate() throws FileNotFoundException {
-//        String polID = polAddChooser.getText();
-//        String elID = elAddChooser.getText();
-//
-//        if(politicianExists(polID)){
-//            if(electionExists((elID))){
-//                for (Election el: Main.electionsList){
-//                    if(elID.equals(el.getId())){
-//                        elec = new Election(el.Id, el.electionType, el.location, el.date, el.numberOfWinners);
-//                    }
-//                }
-//                for (Politician pol: Main.politicianList) {
-//                    if(polID.equals(pol.getId())){
-//                        if(!elec.electionCandidateList.isEmpty()) {
-//                            for(Candidate candidate: elec.electionCandidateList) {
-//                                if(candidate.id.equals(polID)) {
-//                                    System.out.println("This Candidate is already in this election");
-//                                    return;
-//                                }
-//                            }
-//                            cand = new Candidate(pol.id, pol.name, pol.currentParty, pol.DOB, pol.homeCounty, pol.photoUrl);
-//                            elec.electionCandidateList.addNode(cand);
-//                            candNameHashTable.insertHash(cand.name, cand);
-//                            candCountyHashTable.insertHash(cand.homeCounty, cand);
-//                            candPartyHashTable.insertHash(cand.currentParty, cand);
-//                            break;
-//                        }
-//                        cand = new Candidate(pol.id, pol.name, pol.currentParty, pol.DOB, pol.homeCounty, pol.photoUrl);
-//                        elec.electionCandidateList.addNode(cand);
-//                        candNameHashTable.insertHash(cand.name, cand);
-//                        candCountyHashTable.insertHash(cand.homeCounty, cand);
-//                        candPartyHashTable.insertHash(cand.currentParty, cand);
-//                    }
-//                }
-//            }else{
-//                System.out.println("That election does not Exist!");
-//                return;
-//            }
-//        } else {
-//            System.out.println("That Politician Does not Exist!");
-//            return;
-//        }
-//
-//        candidateVBox.getChildren().clear();
-//        for(Candidate candidate: elec.electionCandidateList) {
-//            String candString = candidate.toString()+"\n";
-//            Text candText = new Text();
-//            candText.setText(candString);
-//            ImageView candImageView = candidate.getCandImage();
-//            candidateVBox.getChildren().add(candImageView);
-//            candidateVBox.getChildren().add(candText);
-//        }
-//
-//
-//    }
     Politician tempPol;
     Election tempElec;
     Candidate candidate;
@@ -1195,7 +1133,6 @@ public class Controller {
         Main.candidatesList = (List<Candidate>) is.readObject();
         Main.electionsList = (List<Election>) is.readObject();
         is.close();
-
         updatePoliticianVBox();
 
     }
