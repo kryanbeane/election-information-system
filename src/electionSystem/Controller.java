@@ -16,6 +16,12 @@ import java.io.FileWriter;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Random;
 
 public class Controller {
@@ -175,7 +181,7 @@ public class Controller {
             System.out.println("namedCands is empty");
         }
 
-        updateCandidateSearchVBox();
+        updateCandidateSearchVBox(namedCands);
     }
 
     List<Candidate> countyCands = new List<>();
@@ -201,12 +207,14 @@ public class Controller {
         } else {
             System.out.println("countyCands is empty");
         }
-        updateCandidateSearchVBox();
+        updateCandidateSearchVBox(countyCands);
     }
 
     List<Candidate> partyCands = new List<>();
     @FXML TextField searchCandParty;
     public void searchCandByParty() {
+        System.out.println("Search cand by party called");
+
         partyCands.clear();
         String party = searchCandParty.getText();
         int hash = candPartyHashTable.hashFunction(party);
@@ -228,7 +236,7 @@ public class Controller {
             System.out.println("partyCands is empty");
         }
 
-        updateCandidateSearchVBox();
+        updateCandidateSearchVBox(partyCands);
     }
 
     List<Election> locationElec = new List<>();
@@ -533,6 +541,33 @@ public class Controller {
         }
     }
 
+    /**
+     *
+     */
+    Politician updatePol;
+    public void populatePolitician() throws ParseException {
+        String soughtID=polID.getText();
+
+        for(Politician pol: Main.politicianList) {
+            if(soughtID.equals(pol.id)) {
+                updatePol=pol;
+            } else {
+                System.out.println("That Politician doesn't exist!");
+                return;
+            }
+        }
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-mm-dd");
+        LocalDate localDate = LocalDate.parse(updatePol.DOB, formatter);
+
+        textPoliticianName.setText(updatePol.name);
+        polDatePicker.setValue(localDate);
+        textCurrentParty.setText(updatePol.currentParty);
+        textHomeCounty.setText(updatePol.homeCounty);
+        textImageURL.setText(updatePol.photoUrl);
+        polID.clear();
+    }
+
     /////////////////////////////////////////////////////////////////
     /////////////////////  Update VBox Methods  /////////////////////
     /////////////////////////////////////////////////////////////////
@@ -553,6 +588,88 @@ public class Controller {
             polVBox.getChildren().add(polText);
         }
     }
+
+    /**
+     * Updates candidate VBox with recently added candidates.
+     */
+    public void updateCandidateVBox(Election election) {
+        candidateVBox.getChildren().clear();
+        for(Candidate candidate: election.electionCandidateList) {
+            String candString = candidate.toString()+"\n";
+            Text candText = new Text();
+            candText.setText(candString);
+            ImageView candImageView = candidate.getCandImage();
+            candidateVBox.getChildren().add(candImageView);
+            candidateVBox.getChildren().add(candText);
+        }
+    }
+
+    /**
+     * Updates election VBox with recently added elections.
+     */
+    public void updateElectionVBox(){
+        elVBox.getChildren().clear();
+        elVBox.getChildren().add(new Text("Elections in Database:"));
+        for(Election el: Main.electionsList){
+            String elString = el.toString() + "\n";
+            Text elText = new Text();
+            elText.setText(elString);
+            elVBox.getChildren().add(elText);
+
+        }
+    }
+
+    /**
+     *
+     */
+    public void updatePoliticianSearchVBox(List<Politician> politicianList){
+        polSearchVBox.getChildren().clear();
+        polSearchVBox.getChildren().add(new Text("Politicians in Database:"));
+        for(Politician pol: politicianList){
+            String polString = pol.toString()+"\n";
+            Text polText = new Text();
+            polText.setText(polString);
+            ImageView polImageView = pol.getPolImage();
+            polSearchVBox.getChildren().add(polImageView);
+            polSearchVBox.getChildren().add(polText);
+
+        }
+    }
+
+    @FXML VBox candSearchVBox;
+    /**
+     *
+     */
+    public void updateCandidateSearchVBox(List<Candidate> candidateList){
+        candSearchVBox.getChildren().clear();
+        candSearchVBox.getChildren().add(new Text("Candidates in Database:"));
+        for(Candidate cand: candidateList) {
+            String candString = cand.toString()+"\n";
+            Text candText = new Text();
+            candText.setText(candString);
+            ImageView candImageView = cand.getCandImage();
+            candSearchVBox.getChildren().add(candImageView);
+            candSearchVBox.getChildren().add(candText);
+        }
+    }
+
+    /**
+     *
+     */
+    public void updateElectionSearchVBox(List<Election> electionList){
+        elSearchVBox.getChildren().clear();
+        elSearchVBox.getChildren().add(new Text("Politicians in Database:"));
+        for(Election el: electionList){
+            String elString = el.toString()+"\n";
+            Text elText = new Text();
+            elText.setText(elString);
+
+
+            elSearchVBox.getChildren().add(elText);
+
+        }
+    }
+
 
     public void viewPoliticians(){
         candidateVBox.getChildren().clear();
@@ -605,87 +722,16 @@ public class Controller {
         }
     }
 
-    /**
-     * Updates candidate VBox with recently added candidates.
-     */
-    public void updateCandidateVBox(Election election) {
-        candidateVBox.getChildren().clear();
-        for(Candidate candidate: election.electionCandidateList) {
-            String candString = candidate.toString()+"\n";
-            Text candText = new Text();
-            candText.setText(candString);
-            ImageView candImageView = candidate.getCandImage();
-            candidateVBox.getChildren().add(candImageView);
-            candidateVBox.getChildren().add(candText);
-        }
-    }
-
-    /**
-     * Updates election VBox with recently added elections.
-     */
-    public void updateElectionVBox(){
+    public void viewJustElections() {
         elVBox.getChildren().clear();
-        elVBox.getChildren().add(new Text("Elections in Database:"));
-        for(Election el: Main.electionsList){
+        elVBox.getChildren().add(new Text(" Elections in Database:" + "\n"));
+        for (Election el : Main.electionsList) {
             String elString = el.toString() + "\n";
             Text elText = new Text();
             elText.setText(elString);
             elVBox.getChildren().add(elText);
-
         }
     }
-
-    /**
-     *
-     */
-    public void updatePoliticianSearchVBox(List<Politician> politicianList){
-        polSearchVBox.getChildren().clear();
-        polSearchVBox.getChildren().add(new Text("Politicians in Database:"));
-        for(Politician pol: politicianList){
-            String polString = pol.toString()+"\n";
-            Text polText = new Text();
-            polText.setText(polString);
-            ImageView polImageView = pol.getPolImage();
-            polSearchVBox.getChildren().add(polImageView);
-            polSearchVBox.getChildren().add(polText);
-
-        }
-    }
-
-    /**
-     *
-     */
-    public void updateCandidateSearchVBox(){
-        polSearchVBox.getChildren().clear();
-        polSearchVBox.getChildren().add(new Text("Politicians in Database:"));
-        for(Politician pol: namedPols){
-            String polString = pol.toString()+"\n";
-            Text polText = new Text();
-            polText.setText(polString);
-            ImageView polImageView = pol.getPolImage();
-            polSearchVBox.getChildren().add(polImageView);
-            polSearchVBox.getChildren().add(polText);
-
-        }
-    }
-
-    /**
-     *
-     */
-    public void updateElectionSearchVBox(List<Election> electionList){
-        elSearchVBox.getChildren().clear();
-        elSearchVBox.getChildren().add(new Text("Politicians in Database:"));
-        for(Election el: electionList){
-            String elString = el.toString()+"\n";
-            Text elText = new Text();
-            elText.setText(elString);
-
-
-            elSearchVBox.getChildren().add(elText);
-
-        }
-    }
-
 
     /////////////////////////////////////////////////////////////////
     //////////////  Sort Searched Politician Methods  ///////////////
