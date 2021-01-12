@@ -295,7 +295,6 @@ public class List<F> implements Iterable<F>{
         head=tail=null;
         Main.electionsList.countOfContents=0;
         Main.politicianList.countOfContents=0;
-        Main.candidatesList.countOfContents=0;
     }
 
 

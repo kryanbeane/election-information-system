@@ -1,5 +1,4 @@
 package electionSystem;
-
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import javafx.collections.FXCollections;
@@ -16,43 +15,24 @@ import java.io.FileWriter;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.Random;
 
 public class Controller {
 
-    ObservableList<Politician> searchedPolsObsList = FXCollections.observableArrayList();
-    ObservableList<Politician> myPoliticianObsList = FXCollections.observableArrayList();
-    ObservableList<Election> myElectionObsList = FXCollections.observableArrayList();
-    ObservableList<Candidate> myCandidateObsList = FXCollections.observableArrayList();
-    ObservableList<Candidate> myCandidateObsList2 = FXCollections.observableArrayList();
-    Politician currPolitician;
-    Politician currPolitician2Candidate;
-    Election currElection, currElection2;
-    Candidate currCandidate;
-    @FXML TextField textCurrentParty, textPoliticianName, textDateOfBirth, textHomeCounty, textImageURL, polID;
+    @FXML TextField textCurrentParty, textPoliticianName, textHomeCounty, textImageURL, polID, textDateOfBirth;
     @FXML TextField textElectionType, textElectionLocation, textElectionNumberOfWinners, electionID, electionChooser, polAddChooser, elAddChooser;
-    @FXML TableColumn<Politician, String> pIDColumn, pIDColumn1;
-    @FXML TableColumn<Politician, String> currentPartyColumn, currentPartyColumn1;
-    @FXML TableColumn<Politician, String> pNameColumn, pNameColumn1;
-    @FXML TableColumn<Politician, String> pDOBColumn, pDOBColumn1;
-    @FXML TableColumn<Politician, String> pHomeCountyColumn, pHomeCountyColumn1;
-    @FXML TableColumn<Politician, ImageView> pPhotoURLColumn, pPhotoURLColumn1;
-    @FXML TableColumn<Election, String> electionIDColumn, electionTypeColumn, electionLocationColumn, electionDateColumn, electionNumberOfWInnersColumn;
-    @FXML TableColumn<Election, String> electionIDColumn1, electionTypeColumn1, electionLocationColumn1, electionDateColumn1, electionNumberOfWInnersColumn1;
-    @FXML TableColumn<Candidate, String> candidateNameColumn;
-    @FXML TableView<Politician> politicianTable, candidateSelectionTable, searchedPolsTable;
-    @FXML TableView<Election> electionTable, electionTable2;
-    @FXML TableView<Candidate> candidateTable;
+    @FXML TextField candID;
+    @FXML TextField searchPolName, searchPolCounty, searchPolParty;
+    @FXML TextField searchCandName, searchCandCounty, searchCandParty;
+    @FXML TextField searchElecLocation, searchElecType;
     @FXML DatePicker polDatePicker, textElectionDatePicker;
-    @FXML TextArea polTextArea;
-    @FXML VBox polVBox, polVBox1, elVBox, polSearchVBox, elSearchVBox, candidateVBox;
-
+    @FXML VBox polVBox, elVBox, polSearchVBox, elSearchVBox, candidateVBox, candSearchVBox, polVBox1;
+    Politician tempPol, updatePol;
+    Election tempElec, currentElection;
+    Candidate candidate;
+    List<Politician> namedPols, countyPols, partyPols = new List<>();
+    List<Candidate> namedCands, countyCands, partyCands = new List<>();
+    List<Election> locationElec, typeElec = new List<>();
 
     /////////////////////////////////////////////////////////////////
     ///////////////////////    HashTables   /////////////////////////
@@ -73,9 +53,6 @@ public class Controller {
     ///////////////////////  Search Methods  ////////////////////////
     /////////////////////////////////////////////////////////////////
 
-    // Search Politician Methods //
-    List<Politician> namedPols = new List<>();
-    @FXML TextField searchPolName;
     public void searchPolByName() {
         namedPols.clear();
 
@@ -103,8 +80,6 @@ public class Controller {
         namedPols.clear();
     }
 
-    List<Politician> countyPols = new List<>();
-    @FXML TextField searchPolCounty;
     public void searchPolByCounty() {
         String county = searchPolCounty.getText();
         int hash = polCountyHashTable.hashFunction(county);
@@ -130,8 +105,6 @@ public class Controller {
         countyPols.clear();
     }
 
-    List<Politician> partyPols = new List<>();
-    @FXML TextField searchPolParty;
     public void searchPolByParty() {
         partyPols.clear();
         String party = searchPolParty.getText();
@@ -157,8 +130,6 @@ public class Controller {
         updatePoliticianSearchVBox(partyPols);
     }
 
-    List<Candidate> namedCands = new List<>();
-    @FXML TextField searchCandName;
     public void searchCandByName() {
         namedCands.clear();
         String name = searchCandName.getText();
@@ -184,8 +155,6 @@ public class Controller {
         updateCandidateSearchVBox(namedCands);
     }
 
-    List<Candidate> countyCands = new List<>();
-    @FXML TextField searchCandCounty;
     public void searchCandByCounty() {
         countyCands.clear();
         String county = searchCandParty.getText();
@@ -210,8 +179,6 @@ public class Controller {
         updateCandidateSearchVBox(countyCands);
     }
 
-    List<Candidate> partyCands = new List<>();
-    @FXML TextField searchCandParty;
     public void searchCandByParty() {
         System.out.println("Search cand by party called");
 
@@ -239,8 +206,6 @@ public class Controller {
         updateCandidateSearchVBox(partyCands);
     }
 
-    List<Election> locationElec = new List<>();
-    @FXML TextField searchElecLocation;
     public void searchElectionByLocation() {
         locationElec.clear();
         String location = searchElecLocation.getText();
@@ -266,8 +231,6 @@ public class Controller {
         updateElectionSearchVBox(locationElec);
     }
 
-    List<Election> typeElec = new List<>();
-    @FXML TextField searchElecType;
     public void searchElectionByType() {
         typeElec.clear();
         String type = searchElecType.getText();
@@ -293,6 +256,7 @@ public class Controller {
         updateElectionSearchVBox(typeElec);
     }
 
+
     /////////////////////////////////////////////////////////////////
     /////////////////////// Generate Methods ////////////////////////
     /////////////////////////////////////////////////////////////////
@@ -313,6 +277,7 @@ public class Controller {
 
 
     }
+
 
     /////////////////////////////////////////////////////////////////
     ///////////////////////    Add Methods   ////////////////////////
@@ -364,7 +329,6 @@ public class Controller {
             }
         }
 
-
         String electionType = textElectionType.getText();
         String electionLocation = textElectionLocation.getText();
         String electionDate = textElectionDatePicker.getValue().toString();
@@ -383,9 +347,9 @@ public class Controller {
         textElectionNumberOfWinners.clear();
     }
 
-    Politician tempPol;
-    Election tempElec;
-    Candidate candidate;
+    /**
+     * Adds candidate to an election's list of candidates.
+     */
     public void addCandidate() {
 
         String polID = polAddChooser.getText();
@@ -413,9 +377,20 @@ public class Controller {
         }
 
         updateCandidateVBox(tempElec);
+        polAddChooser.clear();
 
     }
 
+
+    /////////////////////////////////////////////////////////////////
+    /////////////////  GetNode & ifExists Methods  //////////////////
+    /////////////////////////////////////////////////////////////////
+
+    /**
+     *  Retrieves a sought election.
+     * @param electionID - ID of sought election.
+     * @return - Election if exists, otherwise error and null.
+     */
     public Election getElection(String electionID) {
         if(Main.electionsList.isEmpty()) {
             return null;
@@ -429,6 +404,11 @@ public class Controller {
         return null;
     }
 
+    /**
+     * Retrieves a sought politician.
+     * @param politicianID - ID of sought politician.
+     * @return - Politician if exists, otherwise error and null.
+     */
     public Politician getPolitician(String politicianID) {
 
         if(Main.politicianList.isEmpty()) {
@@ -446,6 +426,11 @@ public class Controller {
 
     }
 
+    /**
+     * Checks if a sought politician exists.
+     * @param polID - ID of sought politician.
+     * @return - True if exists, otherwise false.
+     */
     public Boolean politicianExists(String polID){
         for(Politician pol: Main.politicianList){
             if (polID.equals(pol.getId())){
@@ -456,6 +441,11 @@ public class Controller {
         return false;
     }
 
+    /**
+     * Checks if a sought election exists.
+     * @param elID - ID of sought election.
+     * @return - True if exists, otherwise false.
+     */
     public Boolean electionExists(String elID){
         for(Election el: Main.electionsList){
             if (elID.equals(el.getId())){
@@ -466,8 +456,9 @@ public class Controller {
         return false;
     }
 
+
     /////////////////////////////////////////////////////////////////
-    ///////////////////////  Delete Methods  ////////////////////////
+    ///////////////////  Update & Delete Methods  ///////////////////
     /////////////////////////////////////////////////////////////////
 
     /**
@@ -500,23 +491,22 @@ public class Controller {
      */
     public void deleteCandidate() {
         try {
-            currCandidate = candidateTable.getSelectionModel().getSelectedItem();
-            List<Candidate> canList = Main.candidatesList;
-
-            for (int i = 0; i < canList.length(); i++) {
-                Candidate cand = canList.accessAtIndex(i).getContents();
-                if (cand.getCandId().equals(currCandidate.getCandId())) {
-                    Main.candidatesList.removeNode(i);
-                    candNameHashTable.removeHash(cand.name, cand);
-                    candPartyHashTable.removeHash(cand.currentParty, cand);
-                    candCountyHashTable.removeHash(cand.currentParty, cand);
-                    System.out.println("Removed Politician at index" + i);
-                    updateCandidatesTable();
-
+            for(Election elec: Main.electionsList) {
+                for (int i = 0; i < elec.electionCandidateList.length(); i++) {
+                    Candidate cand = elec.electionCandidateList.accessAtIndex(i).getContents();
+                    if (cand.id.equals(candID.getText())) {
+                        elec.electionCandidateList.removeNode(i);
+                        candNameHashTable.removeHash(cand.name, cand);
+                        candPartyHashTable.removeHash(cand.currentParty, cand);
+                        candCountyHashTable.removeHash(cand.currentParty, cand);
+                        System.out.println("Removed Candidate at index" + i);
+                        updateCandidateVBox(elec);
+                        candID.clear();
+                    }
                 }
             }
         } catch (Exception e) {
-            System.out.println("You have not chosen a Politician!");
+            System.out.println("You have not chosen a Candidate!");
         }
     }
 
@@ -544,18 +534,14 @@ public class Controller {
     }
 
     /**
-     *
+     * Populates the politician tab's text fields.
      */
-    Politician updatePol;
-    public void populatePolitician() throws ParseException {
+    public void populatePolitician() {
         String soughtID=polID.getText();
 
         for(Politician pol: Main.politicianList) {
             if(soughtID.equals(pol.id)) {
                 updatePol=pol;
-            } else {
-                System.out.println("That Politician doesn't exist!");
-                return;
             }
         }
 
@@ -567,8 +553,10 @@ public class Controller {
 
     }
 
+    /**
+     * Edits the attributes of a politician node to new values.
+     */
     public void updatePol(){
-
         for(Politician pol: Main.politicianList) {
             if(pol.id.equalsIgnoreCase(polID.getText())) {
                 pol.setName(textPoliticianName.getText());
@@ -607,6 +595,7 @@ public class Controller {
         updatePoliticianVBox();
     }
 
+
     /////////////////////////////////////////////////////////////////
     /////////////////////  Update VBox Methods  /////////////////////
     /////////////////////////////////////////////////////////////////
@@ -630,6 +619,7 @@ public class Controller {
 
     /**
      * Updates candidate VBox with recently added candidates.
+     * @param election - Election to display.
      */
     public void updateCandidateVBox(Election election) {
         candidateVBox.getChildren().clear();
@@ -659,7 +649,8 @@ public class Controller {
     }
 
     /**
-     *
+     *  Updates politicians search tab's VBox with recently added politicians.
+     * @param politicianList - Politician list to display.
      */
     public void updatePoliticianSearchVBox(List<Politician> politicianList){
         polSearchVBox.getChildren().clear();
@@ -675,9 +666,9 @@ public class Controller {
         }
     }
 
-    @FXML VBox candSearchVBox;
     /**
-     *
+     * Updates politicians search tab's VBox with recently added politicians.
+     * @param candidateList - Candidate list to display.
      */
     public void updateCandidateSearchVBox(List<Candidate> candidateList){
         candSearchVBox.getChildren().clear();
@@ -693,7 +684,8 @@ public class Controller {
     }
 
     /**
-     *
+     * Updates elections search tab's VBox with recently added elections.
+     * @param electionList - Election list to display.
      */
     public void updateElectionSearchVBox(List<Election> electionList){
         elSearchVBox.getChildren().clear();
@@ -709,34 +701,9 @@ public class Controller {
         }
     }
 
-
-    public void viewPoliticians(){
-        candidateVBox.getChildren().clear();
-        candidateVBox.getChildren().add(new Text("Politicians in Database:"));
-        for(Politician pol: Main.politicianList){
-            String polString = pol.toString()+"\n";
-            Text polText = new Text();
-            polText.setText(polString);
-            ImageView polImageView = pol.getPolImage();
-            candidateVBox.getChildren().add(polImageView);
-            candidateVBox.getChildren().add(polText);
-        }
-    }
-
-    public void viewPoliticians2(){
-        polVBox.getChildren().clear();
-        polVBox.getChildren().add(new Text("Politicians in Database:"));
-        for(Politician pol: Main.politicianList){
-            String polString = pol.toString()+"\n";
-            Text polText = new Text();
-            polText.setText(polString);
-            ImageView polImageView = pol.getPolImage();
-            polVBox.getChildren().add(polImageView);
-            polVBox.getChildren().add(polText);
-        }
-    }
-
-    Election currentElection;
+    /**
+     * View Candidate method for button.
+     */
     public void viewCandidates() {
         candidateVBox.getChildren().clear();
 
@@ -763,6 +730,37 @@ public class Controller {
         }
     }
 
+    /**
+     * View Politician methods for buttons.
+     */
+    public void viewPoliticians(){
+        candidateVBox.getChildren().clear();
+        candidateVBox.getChildren().add(new Text("Politicians in Database:"));
+        for(Politician pol: Main.politicianList){
+            String polString = pol.toString()+"\n";
+            Text polText = new Text();
+            polText.setText(polString);
+            ImageView polImageView = pol.getPolImage();
+            candidateVBox.getChildren().add(polImageView);
+            candidateVBox.getChildren().add(polText);
+        }
+    }
+    public void viewPoliticians2(){
+        polVBox.getChildren().clear();
+        polVBox.getChildren().add(new Text("Politicians in Database:"));
+        for(Politician pol: Main.politicianList){
+            String polString = pol.toString()+"\n";
+            Text polText = new Text();
+            polText.setText(polString);
+            ImageView polImageView = pol.getPolImage();
+            polVBox.getChildren().add(polImageView);
+            polVBox.getChildren().add(polText);
+        }
+    }
+
+    /**
+     * View Election methods for buttons.
+     */
     public void viewElections(){
         candidateVBox.getChildren().clear();
         candidateVBox.getChildren().add(new Text(" Elections in Database:" + "\n"));
@@ -773,8 +771,7 @@ public class Controller {
             candidateVBox.getChildren().add(elText);
         }
     }
-
-    public void viewJustElections() {
+    public void viewElections2() {
         elVBox.getChildren().clear();
         elVBox.getChildren().add(new Text(" Elections in Database:" + "\n"));
         for (Election el : Main.electionsList) {
@@ -785,14 +782,15 @@ public class Controller {
         }
     }
 
+
     /////////////////////////////////////////////////////////////////
     //////////////  Sort Searched Politician Methods  ///////////////
     /////////////////////////////////////////////////////////////////
 
     /**
-     *
-     * @param polList -
-     * @return -
+     * Selection sort for sorting a list of politicians by name.
+     * @param polList - List of politicians to sort.
+     * @return - New sorted list.
      */
     public List<Politician> polAlphabeticalNameSelectionSort(List<Politician> polList) {
         // Loops through entire length of polList
@@ -805,9 +803,9 @@ public class Controller {
     }
 
     /**
-     *
-     * @param polList -
-     * @return -
+     * Selection sort for sorting a list of politicians by party.
+     * @param polList - List of politicians to sort.
+     * @return - New sorted list.
      */
     public List<Politician> polAlphabeticalPartySelectionSort(List<Politician> polList) {
         // Loops through entire length of polList
@@ -820,9 +818,9 @@ public class Controller {
     }
 
     /**
-     *
-     * @param polList -
-     * @return -
+     * Selection sort for sorting a list of politicians by county.
+     * @param polList - List of politicians to sort.
+     * @return - New sorted list.
      */
     public List<Politician> polAlphabeticalCountySelectionSort(List<Politician> polList) {
         // Loops through entire length of polList
@@ -835,10 +833,10 @@ public class Controller {
     }
 
     /**
-     *
-     * @param polList -
-     * @param length -
-     * @return -
+     * Gets the index of alphabetically next politician by name.
+     * @param polList - List to be sorted through.
+     * @param length - Length of list being sorted.
+     * @return - Alphabetically first politician's index.
      */
     public int findLargestPoliticianNamePos(List<Politician> polList, int length){
         int largestPos = 0;
@@ -851,10 +849,10 @@ public class Controller {
     }
 
     /**
-     *
-     * @param polList -
-     * @param length -
-     * @return -
+     * Gets the index of alphabetically next politician by party.
+     * @param polList - List to be sorted through.
+     * @param length - Length of list being sorted.
+     * @return - Alphabetically first politician's index.
      */
     public int findLargestPoliticianPartyPos(List<Politician> polList, int length){
         int largestPos = 0;
@@ -867,10 +865,10 @@ public class Controller {
     }
 
     /**
-     *
-     * @param polList -
-     * @param length -
-     * @return -
+     * Gets the index of alphabetically next politician by county.
+     * @param polList - List to be sorted through.
+     * @param length - Length of list being sorted.
+     * @return - Alphabetically first politician's index.
      */
     public int findLargestPoliticianCountyPos(List<Politician> polList, int length){
         int largestPos = 0;
@@ -888,10 +886,10 @@ public class Controller {
     /////////////////////////////////////////////////////////////////
 
     /**
-     *
-     * @param polList -
-     * @param length -
-     * @return -
+     * Gets the index of alphabetically next politician.
+     * @param polList - List to be sorted through.
+     * @param length - Length of list being sorted.
+     * @return - Alphabetically first politician's index.
      */
     public int findLargestPoliticianPos(List<Politician> polList, int length){
         int largestPos = 0;
@@ -904,9 +902,9 @@ public class Controller {
     }
 
     /**
-     *
-     * @param polList -
-     * @return -
+     * Selection sort for sorting a list of politicians.
+     * @param polList - List of politicians to sort.
+     * @return - New sorted list.
      */
     public List<Politician> politicianSelectionSort(List<Politician> polList) {
         for (int i = polList.length(); i > 0; i--) {
@@ -918,7 +916,7 @@ public class Controller {
     }
 
     /**
-     *
+     * Sort button for sorting list of Politicians.
      */
     public void sortPoliticianList(){
         Main.politicianList = politicianSelectionSort(Main.politicianList);
@@ -931,9 +929,9 @@ public class Controller {
     /////////////////////////////////////////////////////////////////
 
     /**
-     *
-     * @param candList -
-     * @return -
+     * Selection sort for sorting a list of candidates by name.
+     * @param candList - List of candidates to sort.
+     * @return - New sorted list.
      */
     public List<Candidate> candAlphabeticalNameSelectionSort(List<Candidate> candList) {
         // Loops through entire length of polList
@@ -946,9 +944,9 @@ public class Controller {
     }
 
     /**
-     *
-     * @param candList -
-     * @return -
+     * Selection sort for sorting a list of candidates by party.
+     * @param candList - List of candidates to sort.
+     * @return - New sorted list.
      */
     public List<Candidate> candAlphabeticalPartySelectionSort(List<Candidate> candList) {
         // Loops through entire length of polList
@@ -961,9 +959,9 @@ public class Controller {
     }
 
     /**
-     *
-     * @param candList -
-     * @return -
+     * Selection sort for sorting a list of candidates by county.
+     * @param candList - List of candidates to sort.
+     * @return - New sorted list.
      */
     public List<Candidate> candAlphabeticalCountySelectionSort(List<Candidate> candList) {
         // Loops through entire length of polList
@@ -976,10 +974,10 @@ public class Controller {
     }
 
     /**
-     *
-     * @param candList -
-     * @param length -
-     * @return -
+     * Gets the index of alphabetically next candidate by name.
+     * @param candList - List to be sorted through.
+     * @param length - Length of list being sorted.
+     * @return - Alphabetically first candidates's index.
      */
     public int findLargestCandidateNamePos(List<Candidate> candList, int length){
         int largestPos = 0;
@@ -992,10 +990,10 @@ public class Controller {
     }
 
     /**
-     *
-     * @param candList -
-     * @param length -
-     * @return -
+     * Gets the index of alphabetically next candidate by party.
+     * @param candList - List to be sorted through.
+     * @param length - Length of list being sorted.
+     * @return - Alphabetically first candidates's index.
      */
     public int findLargestCandidatePartyPos(List<Candidate> candList, int length){
         int largestPos = 0;
@@ -1008,10 +1006,10 @@ public class Controller {
     }
 
     /**
-     *
-     * @param candList -
-     * @param length -
-     * @return -
+     * Gets the index of alphabetically next candidate by county.
+     * @param candList - List to be sorted through.
+     * @param length - Length of list being sorted.
+     * @return - Alphabetically first candidates's index.
      */
     public int findLargestCandidateCountyPos(List<Candidate> candList, int length){
         int largestPos = 0;
@@ -1028,10 +1026,10 @@ public class Controller {
     /////////////////////////////////////////////////////////////////
 
     /**
-     *
-     * @param candList -
-     * @param length -
-     * @return -
+     * Gets the index of alphabetically next candidate.
+     * @param candList - List to be sorted through.
+     * @param length - Length of list being sorted.
+     * @return - Alphabetically first candidate's index.
      */
     public int findLargestCandidatePos(List<Candidate> candList, int length){
         int largestPos = 0;
@@ -1044,9 +1042,9 @@ public class Controller {
     }
 
     /**
-     *
-     * @param candList -
-     * @return -
+     * Selection sort for sorting a list of candidates.
+     * @param candList - List of candidates to sort.
+     * @return - New sorted list.
      */
     public List<Candidate> candidateSelectionSort(List<Candidate> candList) {
         for (int i = candList.length(); i > 0; i--) {
@@ -1057,23 +1055,15 @@ public class Controller {
         return candList;
     }
 
-    /**
-     *
-     */
-    public void sortCandidateList(){
-        Main.candidatesList = candidateSelectionSort(Main.candidatesList);
-        updateCandidatesTable();
-    }
-
 
     /////////////////////////////////////////////////////////////////
     //////////////  Sort Searched Elections Methods  ////////////////
     /////////////////////////////////////////////////////////////////
 
     /**
-     *
-     * @param electionList -
-     * @return -
+     * Selection sort for sorting a list of elections by number of winners, highest to lowest.
+     * @param electionList - List of elections to sort.
+     * @return - New sorted list.
      */
     public List<Election> electionNumberOfWinnersSelectionSort(List<Election> electionList) {
         // Loops through entire length of polList
@@ -1086,10 +1076,10 @@ public class Controller {
     }
 
     /**
-     *
-     * @param electionList -
-     * @param length -
-     * @return -
+     * Gets the index of next election with highest number of winners.
+     * @param electionList - List to be sorted through.
+     * @param length - Length of list being sorted.
+     * @return - Alphabetically first election's index.
      */
     public int findLargestElectionWinners(List<Election> electionList, int length){
         int largestPos = 0;
@@ -1108,106 +1098,10 @@ public class Controller {
 
 
 
-    /////////////////////////////////////////////////////////////////
-    ///////////////////     LEFTOVER Methods    /////////////////////
-    /////////////////////////////////////////////////////////////////
 
-    public void editPolitician() {
-        currPolitician = politicianTable.getSelectionModel().getSelectedItem();
-
-        textPoliticianName.setText(currPolitician.getName());
-        textDateOfBirth.setText(currPolitician.getDOB());
-        textHomeCounty.setText(currPolitician.getCurrentParty());
-        textImageURL.setText(currPolitician.getPolImage().getImage().toString());
-    }
-
-    public void updatePoliticiansTables(){
-        myPoliticianObsList.clear();
-        pIDColumn.setCellValueFactory(new PropertyValueFactory<Politician, String>("id"));
-        pDOBColumn.setCellValueFactory(new PropertyValueFactory<Politician,String >("DOB"));
-        pNameColumn.setCellValueFactory(new PropertyValueFactory<Politician,String >("name"));
-        pHomeCountyColumn.setCellValueFactory(new PropertyValueFactory<Politician,String >("homeCounty"));
-        pPhotoURLColumn.setCellValueFactory(new PropertyValueFactory<Politician, ImageView>("polImage"));
-        currentPartyColumn.setCellValueFactory(new PropertyValueFactory<Politician,String >("currentParty"));
-        pIDColumn1.setCellValueFactory(new PropertyValueFactory<Politician, String>("id"));
-        pDOBColumn1.setCellValueFactory(new PropertyValueFactory<Politician,String >("DOB"));
-        pNameColumn1.setCellValueFactory(new PropertyValueFactory<Politician,String >("name"));
-        pHomeCountyColumn1.setCellValueFactory(new PropertyValueFactory<Politician,String >("homeCounty"));
-        pPhotoURLColumn1.setCellValueFactory(new PropertyValueFactory<Politician, ImageView>("polImage"));
-        currentPartyColumn1.setCellValueFactory(new PropertyValueFactory<Politician,String >("currentParty"));
+    // >>>>>>>>>>>>>>>>>>>>>>> THIS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<//
 
 
-        for(Politician pol: Main.politicianList){
-            myPoliticianObsList.add(pol);
-
-        }
-
-        politicianTable.setItems(myPoliticianObsList);
-        candidateSelectionTable.setItems(myPoliticianObsList);
-    }
-
-    public void updateElectionTable() {
-        myElectionObsList.clear();
-        electionIDColumn.setCellValueFactory(new PropertyValueFactory<Election, String >("id"));
-        electionTypeColumn.setCellValueFactory(new PropertyValueFactory<Election,String >("electionType"));
-        electionDateColumn.setCellValueFactory(new PropertyValueFactory<Election,String >("date"));
-        electionLocationColumn.setCellValueFactory(new PropertyValueFactory<Election,String >("location"));
-        electionNumberOfWInnersColumn.setCellValueFactory(new PropertyValueFactory<Election,String >("numberOfWinners"));
-        electionIDColumn1.setCellValueFactory(new PropertyValueFactory<Election, String >("id"));
-        electionTypeColumn1.setCellValueFactory(new PropertyValueFactory<Election,String >("electionType"));
-        electionDateColumn1.setCellValueFactory(new PropertyValueFactory<Election,String >("date"));
-        electionLocationColumn1.setCellValueFactory(new PropertyValueFactory<Election,String >("location"));
-        electionNumberOfWInnersColumn1.setCellValueFactory(new PropertyValueFactory<Election,String >("numberOfWinners"));
-
-
-        for(Election election: Main.electionsList){
-            myElectionObsList.add(election);
-        }
-        electionTable.setItems(myElectionObsList);
-        electionTable2.setItems(myElectionObsList);
-    }
-
-    public void updateCandidatesTable() {
-        myCandidateObsList.clear();
-        myCandidateObsList2.clear();
-        candidateNameColumn.setCellValueFactory(new PropertyValueFactory<Candidate,String >("name"));
-        for(Candidate candidate: currElection2.electionCandidateList) {
-            myCandidateObsList.add(candidate);
-
-        }
-        candidateTable.setItems(myCandidateObsList);
-
-
-        if (currElection2 != null);
-        {
-            for (Candidate candidate : currElection2.electionCandidateList) {
-                myCandidateObsList2.add(candidate);
-
-            }
-        }
-        candidateTable.setItems(myCandidateObsList);
-
-    }
-
-    public void clickItem(MouseEvent event) {
-        if (event.getClickCount() == 1) //checking click
-        {
-            currElection2 = electionTable2.getSelectionModel().getSelectedItem();
-            System.out.println(currElection2);
-            updateCandidatesTable();
-
-        }
-
-    }
-
-    public void selectCandidate(){
-        currPolitician2Candidate = candidateSelectionTable.getSelectionModel().getSelectedItem();
-        System.out.println("Politician chosen is: " + currPolitician2Candidate);
-        /*updateAisleTable();
-        updateShelfTable();
-        updatePalletTable();*/
-        /*updateWarnings( "You have selected floor: " + currPolitician2Candidate.getName());*/
-    }
 
 
     /////////////////////////////////////////////////////////////////
@@ -1218,7 +1112,6 @@ public class Controller {
         XStream xstream = new XStream(new DomDriver());
         ObjectOutputStream out = xstream.createObjectOutputStream(new FileWriter("ElectionInformationSystem.xml"));
         out.writeObject(Main.politicianList);
-        out.writeObject(Main.candidatesList);
         out.writeObject(Main.electionsList);
         out.close();
     }
@@ -1228,17 +1121,24 @@ public class Controller {
         XStream xstream = new XStream(new DomDriver());
         ObjectInputStream is = xstream.createObjectInputStream(new FileReader("ElectionInformationSystem.xml"));
         Main.politicianList = (List<Politician>) is.readObject();
-        Main.candidatesList = (List<Candidate>) is.readObject();
         Main.electionsList = (List<Election>) is.readObject();
         is.close();
         updatePoliticianVBox();
+        updateElectionVBox();
 
     }
 
     public void reset() {
         Main.politicianList.emptyList();
-        Main.candidatesList.emptyList();
         Main.electionsList.emptyList();
+        updatePoliticianVBox();
+        updateElectionVBox();
+        polVBox.getChildren().clear();
+        polSearchVBox.getChildren().clear();
+        elVBox.getChildren().clear();
+        elSearchVBox.getChildren().clear();
+        candidateVBox.getChildren().clear();
+        candSearchVBox.getChildren().clear();
     }
 
 }

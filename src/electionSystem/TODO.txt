@@ -12,6 +12,6 @@
 10] General comments, style, logic approach and completeness (10%) ✓
 
 >>>>> STUFF LEFT TO DO <<<<<
-1] Fix GUI
-2] Fix Sorting of search results bug ✓
-3] Add relevant tests
+1] ELECTION SORT BUTTON
+2] TESTS
+3]
