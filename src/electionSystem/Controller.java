@@ -437,6 +437,8 @@ public class Controller {
             for(Politician politician: Main.politicianList) {
                 if(politician.getId().equals(politicianID)) {
                     return politician;
+                }else{
+                    System.out.println("No Politician matches that ID");
                 }
             }
         }
@@ -557,15 +559,52 @@ public class Controller {
             }
         }
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-mm-dd");
-        LocalDate localDate = LocalDate.parse(updatePol.DOB, formatter);
-
         textPoliticianName.setText(updatePol.name);
-        polDatePicker.setValue(localDate);
+        polDatePicker.getEditor().setText(updatePol.DOB);
         textCurrentParty.setText(updatePol.currentParty);
         textHomeCounty.setText(updatePol.homeCounty);
         textImageURL.setText(updatePol.photoUrl);
+
+    }
+
+    public void updatePol(){
+
+        for(Politician pol: Main.politicianList) {
+            if(pol.id.equalsIgnoreCase(polID.getText())) {
+                pol.setName(textPoliticianName.getText());
+                pol.setHomeCounty(textHomeCounty.getText());
+                pol.setCurrentParty(textCurrentParty.getText());
+                pol.setDOB(polDatePicker.getEditor().getText());
+                pol.setPhotoUrl(textImageURL.getText());
+
+            } else {
+                System.out.println("There is no politician by that ID");
+            }
+
+        }
+
+        for(Election el : Main.electionsList){
+            for(Candidate cand: el.electionCandidateList){
+                if(cand.id.equalsIgnoreCase(polID.getText())) {
+                    cand.setName(textPoliticianName.getText());
+                    cand.setHomeCounty(textHomeCounty.getText());
+                    cand.setCurrentParty(textCurrentParty.getText());
+                    cand.setDOB(polDatePicker.getEditor().getText());
+                    cand.setPhotoUrl(textImageURL.getText());
+
+                } else {
+                    System.out.println("There is no Candidate by that ID");
+                }
+            }
+        }
+
         polID.clear();
+        textPoliticianName.clear();
+        textHomeCounty.clear();
+        textCurrentParty.clear();
+        polDatePicker.getEditor().clear();
+        textImageURL.clear();
+        updatePoliticianVBox();
     }
 
     /////////////////////////////////////////////////////////////////
@@ -681,6 +720,19 @@ public class Controller {
             ImageView polImageView = pol.getPolImage();
             candidateVBox.getChildren().add(polImageView);
             candidateVBox.getChildren().add(polText);
+        }
+    }
+
+    public void viewPoliticians2(){
+        polVBox.getChildren().clear();
+        polVBox.getChildren().add(new Text("Politicians in Database:"));
+        for(Politician pol: Main.politicianList){
+            String polString = pol.toString()+"\n";
+            Text polText = new Text();
+            polText.setText(polString);
+            ImageView polImageView = pol.getPolImage();
+            polVBox.getChildren().add(polImageView);
+            polVBox.getChildren().add(polText);
         }
     }
 

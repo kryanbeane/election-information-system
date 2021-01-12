@@ -57,4 +57,32 @@ public class Politician {
                 "DOB: " + DOB + "      " +
                 "Home County: " + homeCounty;
     }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setCurrentParty(String currentParty) {
+        this.currentParty = currentParty;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDOB(String DOB) {
+        this.DOB = DOB;
+    }
+
+    public void setHomeCounty(String homeCounty) {
+        this.homeCounty = homeCounty;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
+    }
+
+    public void setPhoto(Image photo) {
+        this.photo = photo;
+    }
 }
