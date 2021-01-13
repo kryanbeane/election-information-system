@@ -54,8 +54,7 @@ public class HashTable<T> {
             }
         }
     }
-
-
+    
     /**
      * Edits an old hash and replaces it with a new hashed person.
      * @param oldKey - Name of old person.

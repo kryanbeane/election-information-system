@@ -7,11 +7,11 @@
 5] Sorting of search results/listings (15%) (LISTING)
 6] Hashing for individual search (10%) ✓
 7] Save and Load (10%) ✓
-8] JavaFX (10%)
+8] JavaFX (10%) 
 9] JUnit testing (5%)
 10] General comments, style, logic approach and completeness (10%) ✓
 
 >>>>> STUFF LEFT TO DO <<<<<
 1] ELECTION SORT BUTTON
 2] TESTS
-3]
+3] VIEW ALL
