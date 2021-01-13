@@ -1,9 +1,8 @@
 package test;
 
-import electionSystem.HashTable;
+import electionSystem.Controller;
 import electionSystem.List;
 import electionSystem.Politician;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,48 +10,39 @@ import java.io.FileNotFoundException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class HashTableTest {
+class ControllerTest {
 
-    int size=800;
-    HashTable<Politician> testTable;
-    Politician pol;
-
+    Politician pol1;
+    Politician pol2;
+    List<Politician> polList = new List<>();
     @BeforeEach
-    void setUp() {
-        try {
-            testTable=new HashTable<>(size);
-            pol=new Politician("1A", "bob", "ff", "19/01/2000", "Waterford", "https://images-ext-2.discordapp.net/external/27CvotwlaWxCbzNn1djU5bNwwXptQ-pZG2ygDszI8PE/https/pbs.twimg.com/profile_images/1109183335845298177/jFYfPL6k_400x400.jpg%22%22");
-        } catch (Exception ignore) {}
-    }
+    void setUp() throws FileNotFoundException {
 
-    @AfterEach
-    void tearDown() {
-        testTable.removeHash("bob", pol);
+        pol1 = new Politician("R6","Hugh Hefner", "Fine Gael", "2020-12-12", "Kilkenny","https://pbs.twimg.com/profile_images/1109183335845298177/jFYfPL6k_400x400.jpg" );
+        pol2 = new Politician("C9","Leo Varadkar", "Fine Fail", "2020-12-12", "Dublin","https://pbs.twimg.com/profile_images/1109183335845298177/jFYfPL6k_400x400.jpg" );
+        polList.addNode(pol1);
+        polList.addNode(pol2);
     }
 
     @Test
-    void insertHash() {
-        testTable.insertHash("bob", pol);
-        int hash = testTable.hashFunction("bob");
-        assertEquals(61, hash);
+    void testGenerateID() {
+
     }
 
     @Test
-    void removeHash() {
-        int hash = testTable.hashFunction("bob");
-        testTable.removeHash("bob", pol);
-        assertNull((testTable.getHash(hash, 0)));
+    void getElection() {
     }
 
     @Test
-    void edit() {
+    void getPolitician() {
+
     }
 
     @Test
-    void getHash() {
+    void politicianExists() {
     }
 
     @Test
-    void hashSize() {
+    void electionExists() {
     }
 }
