@@ -265,7 +265,7 @@
                                           <Insets left="20.0" />
                                        </VBox.margin>
                                     </Button>
-                                    <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="70.0" text="Sort">
+                                    <Button mnemonicParsing="false" onAction="#sortElectionList" prefHeight="27.0" prefWidth="70.0" text="Sort">
                                        <VBox.margin>
                                           <Insets left="20.0" top="5.0" />
                                        </VBox.margin>
@@ -433,11 +433,6 @@
                            <left>
                               <VBox prefHeight="236.0" prefWidth="126.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <Button mnemonicParsing="false" onAction="#viewCandidates" text="View Candidates">
-                                       <VBox.margin>
-                                          <Insets top="20.0" />
-                                       </VBox.margin>
-                                    </Button>
                                     <Button mnemonicParsing="false" onAction="#viewPoliticians" prefHeight="25.0" prefWidth="115.0" text="View Politicians">
                                        <VBox.margin>
                                           <Insets top="40.0" />
@@ -448,9 +443,19 @@
                                           <Insets top="10.0" />
                                        </VBox.margin>
                                     </Button>
+                                    <Button mnemonicParsing="false" onAction="#viewCandidates" text="View Candidates">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" top="20.0" />
+                                       </VBox.margin>
+                                    </Button>
                                     <Button mnemonicParsing="false" onAction="#addCandidate" prefHeight="25.0" prefWidth="131.0" text="Add Candidate">
                                        <VBox.margin>
-                                          <Insets top="30.0" />
+                                          <Insets bottom="5.0" top="5.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onAction="#sortCandidateList" prefHeight="25.0" prefWidth="131.0" text="Sort Candidates">
+                                       <VBox.margin>
+                                          <Insets top="5.0" />
                                        </VBox.margin>
                                     </Button>
                                     <Button mnemonicParsing="false" onAction="#deleteCandidate" prefHeight="25.0" prefWidth="131.0" text="Delete">
@@ -583,6 +588,38 @@
                                 </content>
                               </ScrollPane>
                            </bottom>
+                        </BorderPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="VIEW ALL">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="674.0" prefWidth="700.0">
+                     <children>
+                        <BorderPane prefHeight="771.0" prefWidth="700.0">
+                           <top>
+                              <VBox prefHeight="58.0" prefWidth="700.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#viewAll" prefHeight="25.0" prefWidth="86.0" text="View All">
+                                       <VBox.margin>
+                                          <Insets left="305.0" top="15.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                 </children>
+                              </VBox>
+                           </top>
+                           <center>
+                              <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                <content>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="716.0" prefWidth="702.0">
+                                       <children>
+                                          <VBox fx:id="viewAllBox" prefHeight="712.0" prefWidth="700.0" />
+                                       </children>
+                                    </AnchorPane>
+                                </content>
+                              </ScrollPane>
+                           </center>
                         </BorderPane>
                      </children>
                   </AnchorPane>

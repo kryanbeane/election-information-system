@@ -26,7 +26,7 @@ public class Controller {
     @FXML TextField searchCandName, searchCandCounty, searchCandParty;
     @FXML TextField searchElecLocation, searchElecType;
     @FXML DatePicker polDatePicker, textElectionDatePicker;
-    @FXML VBox polVBox, elVBox, polSearchVBox, elSearchVBox, candidateVBox, candSearchVBox, polVBox1;
+    @FXML VBox polVBox, elVBox, polSearchVBox, elSearchVBox, candidateVBox, candSearchVBox, viewAllBox, polVBox1;
     Politician tempPol, updatePol;
     Election tempElec, currentElection;
     Candidate candidate;
@@ -431,7 +431,7 @@ public class Controller {
      * @param polID - ID of sought politician.
      * @return - True if exists, otherwise false.
      */
-    public Boolean politicianExists(String polID){
+    public Boolean politicianExists(String polID) {
         for(Politician pol: Main.politicianList){
             if (polID.equals(pol.getId())){
                 System.out.println("That Politician Exists!");
@@ -446,7 +446,7 @@ public class Controller {
      * @param elID - ID of sought election.
      * @return - True if exists, otherwise false.
      */
-    public Boolean electionExists(String elID){
+    public Boolean electionExists(String elID) {
         for(Election el: Main.electionsList){
             if (elID.equals(el.getId())){
                 System.out.println("That Election Exists!");
@@ -782,6 +782,36 @@ public class Controller {
         }
     }
 
+    public void viewAll() {
+        viewAllBox.getChildren().clear();
+        viewAllBox.getChildren().add(new Text("Politicians in Database:"));
+        for (Politician pol : Main.politicianList) {
+            String polString = pol.toString() + "\n";
+            Text polText = new Text();
+            polText.setText(polString);
+            ImageView polImageView = pol.getPolImage();
+            viewAllBox.getChildren().add(polImageView);
+            viewAllBox.getChildren().add(polText);
+        }
+
+        viewAllBox.getChildren().add(new Text("Elections in Database:"));
+        for (Election elec : Main.electionsList) {
+            for(Candidate cand: elec.electionCandidateList) {
+                viewAllBox.getChildren().add(new Text("Candidates in:" + elec.getId()));
+                String candString = cand.toString() + "\n";
+                Text candText = new Text();
+                candText.setText(candString);
+                ImageView candImageView = cand.getCandImage();
+                viewAllBox.getChildren().add(candImageView);
+                viewAllBox.getChildren().add(candText);
+            }
+            String elecString = elec.toString() + "\n";
+            Text elecText = new Text();
+            elecText.setText(elecString);
+            viewAllBox.getChildren().add(elecText);
+        }
+
+    }
 
     /////////////////////////////////////////////////////////////////
     //////////////  Sort Searched Politician Methods  ///////////////
@@ -1055,6 +1085,18 @@ public class Controller {
         return candList;
     }
 
+    /**
+     * Sort button for sorting list of Politicians.
+     */
+    public void sortCandidateList(){
+        String ID = electionChooser.getText();
+        Election elec = getElection(ID);
+        List<Candidate> candList = elec.electionCandidateList;
+        candList = candidateSelectionSort(candList);
+        elec.electionCandidateList=candList;
+        updateCandidateVBox(elec);
+    }
+
 
     /////////////////////////////////////////////////////////////////
     //////////////  Sort Searched Elections Methods  ////////////////
@@ -1097,11 +1139,27 @@ public class Controller {
     /////////////////////////////////////////////////////////////////
 
 
+    /**
+     * Selection sort for sorting a list of Elections.
+     * @param elecList - List of Elections to sort.
+     * @return - New sorted list.
+     */
+    public List<Election> electionSelectionSort(List<Election> elecList) {
+        for (int i = elecList.length(); i > 0; i--) {
+            int posLargest = findLargestElectionWinners(elecList, i);
+            elecList.swapContents(posLargest, i - 1);
+            System.out.println(elecList);
+        }
+        return elecList;
+    }
 
-
-    // >>>>>>>>>>>>>>>>>>>>>>> THIS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<//
-
-
+    /**
+     * Sort button for sorting list of Elections.
+     */
+    public void sortElectionList(){
+        Main.electionsList = electionSelectionSort(Main.electionsList);
+        updateElectionVBox();
+    }
 
 
     /////////////////////////////////////////////////////////////////
