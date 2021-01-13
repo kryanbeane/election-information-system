@@ -7,6 +7,7 @@ public class HashTable<T> {
      * Constructor.
      * @param size - takes in ths size of the hashtable.
      */
+    @SuppressWarnings("unchecked")
     public HashTable(int size) {
         hashTableList= new List[size];
         for(int i=0; i<hashTableList.length; i++) {

@@ -43,6 +43,10 @@ public class Politician {
         return homeCounty;
     }
 
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
     public ImageView getPolImage(){
         ImageView imagev = new ImageView(photo);
         imagev.setFitWidth(50);

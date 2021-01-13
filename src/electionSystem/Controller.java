@@ -28,11 +28,11 @@ public class Controller {
     @FXML DatePicker polDatePicker, textElectionDatePicker;
     @FXML VBox polVBox, elVBox, polSearchVBox, elSearchVBox, candidateVBox, candSearchVBox, viewAllBox, polVBox1;
     Politician tempPol, updatePol;
-    Election tempElec, currentElection;
+    Election tempElec, currentElection, updateEl;
     Candidate candidate;
-    List<Politician> namedPols, countyPols, partyPols = new List<>();
-    List<Candidate> namedCands, countyCands, partyCands = new List<>();
-    List<Election> locationElec, typeElec = new List<>();
+    List<Politician> namedPols, countyPols, partyPols;
+    List<Candidate> namedCands, countyCands, partyCands;
+    List<Election> locationElec, typeElec;
 
     /////////////////////////////////////////////////////////////////
     ///////////////////////    HashTables   /////////////////////////
@@ -54,6 +54,7 @@ public class Controller {
     /////////////////////////////////////////////////////////////////
 
     public void searchPolByName() {
+        namedPols = new List<>();
         namedPols.clear();
 
         String name = searchPolName.getText();
@@ -81,6 +82,9 @@ public class Controller {
     }
 
     public void searchPolByCounty() {
+        countyPols = new List<>();
+        countyPols.clear();
+
         String county = searchPolCounty.getText();
         int hash = polCountyHashTable.hashFunction(county);
         System.out.println("Running searchPolByCounty");
@@ -106,7 +110,9 @@ public class Controller {
     }
 
     public void searchPolByParty() {
+        partyPols = new List<>();
         partyPols.clear();
+
         String party = searchPolParty.getText();
         int hash = polPartyHashTable.hashFunction(party);
         List<Politician> tempList =  polPartyHashTable.hashTableList[hash];
@@ -131,7 +137,9 @@ public class Controller {
     }
 
     public void searchCandByName() {
+        namedCands = new List<>();
         namedCands.clear();
+
         String name = searchCandName.getText();
         int hash = candNameHashTable.hashFunction(name);
         List<Candidate> tempList =  candNameHashTable.hashTableList[hash];
@@ -156,8 +164,11 @@ public class Controller {
     }
 
     public void searchCandByCounty() {
+        countyCands = new List<>();
         countyCands.clear();
-        String county = searchCandParty.getText();
+
+
+        String county = searchCandCounty.getText();
         int hash = candCountyHashTable.hashFunction(county);
         List<Candidate> tempList =  candCountyHashTable.hashTableList[hash];
 
@@ -180,9 +191,9 @@ public class Controller {
     }
 
     public void searchCandByParty() {
-        System.out.println("Search cand by party called");
-
+        partyCands = new List<>();
         partyCands.clear();
+
         String party = searchCandParty.getText();
         int hash = candPartyHashTable.hashFunction(party);
         List<Candidate> tempList =  candPartyHashTable.hashTableList[hash];
@@ -207,7 +218,9 @@ public class Controller {
     }
 
     public void searchElectionByLocation() {
+        locationElec = new List<>();
         locationElec.clear();
+
         String location = searchElecLocation.getText();
         int hash = elecLocationHashTable.hashFunction(location);
         List<Election> tempList =  elecLocationHashTable.hashTableList[hash];
@@ -232,7 +245,9 @@ public class Controller {
     }
 
     public void searchElectionByType() {
+        typeElec = new List<>();
         typeElec.clear();
+
         String type = searchElecType.getText();
         int hash = elecTypeHashTable.hashFunction(type);
         List<Election> tempList =  elecTypeHashTable.hashTableList[hash];
@@ -300,7 +315,7 @@ public class Controller {
         Politician politician = (new Politician(generateID(), name, currentParty, DOB, homeCounty, image));
         // Adds that politician to the politicianList.
         Main.politicianList.addNode(politician);
-        //THIS NEEDS TO BE REPLACED WITH UPDATE POLITICIAN TEXT.
+
         updatePoliticianVBox();
 
         System.out.println(Main.politicianList.printList());
@@ -554,16 +569,38 @@ public class Controller {
     }
 
     /**
+     * Populates the election tab's text fields.
+     */
+    public void populateElection() {
+        String soughtID=electionID.getText();
+
+        for(Election el: Main.electionsList) {
+            if(soughtID.equals(el.Id)) {
+                updateEl=el;
+            }
+        }
+
+        textElectionType.setText(updateEl.electionType);
+        textElectionLocation.setText(updateEl.location);
+        textElectionDatePicker.getEditor().setText(updateEl.date);
+        textElectionNumberOfWinners.setText(String.valueOf(updateEl.numberOfWinners));
+    }
+
+    /**
      * Edits the attributes of a politician node to new values.
      */
     public void updatePol(){
         for(Politician pol: Main.politicianList) {
             if(pol.id.equalsIgnoreCase(polID.getText())) {
+                polNameHashTable.edit(pol.name, pol, textPoliticianName.getText(), pol);
                 pol.setName(textPoliticianName.getText());
+                polCountyHashTable.edit(pol.homeCounty, pol, textHomeCounty.getText(), pol);
                 pol.setHomeCounty(textHomeCounty.getText());
+                polPartyHashTable.edit(pol.currentParty, pol, textCurrentParty.getText(), pol);
                 pol.setCurrentParty(textCurrentParty.getText());
                 pol.setDOB(polDatePicker.getEditor().getText());
                 pol.setPhotoUrl(textImageURL.getText());
+
 
             } else {
                 System.out.println("There is no politician by that ID");
@@ -574,9 +611,10 @@ public class Controller {
         for(Election el : Main.electionsList){
             for(Candidate cand: el.electionCandidateList){
                 if(cand.id.equalsIgnoreCase(polID.getText())) {
+                    candNameHashTable.edit(cand.name, cand, textPoliticianName.getText(), cand);
                     cand.setName(textPoliticianName.getText());
+                    candCountyHashTable.edit(cand.homeCounty, cand, textHomeCounty.getText(), cand);
                     cand.setHomeCounty(textHomeCounty.getText());
-                    cand.setCurrentParty(textCurrentParty.getText());
                     cand.setDOB(polDatePicker.getEditor().getText());
                     cand.setPhotoUrl(textImageURL.getText());
 
@@ -593,6 +631,31 @@ public class Controller {
         polDatePicker.getEditor().clear();
         textImageURL.clear();
         updatePoliticianVBox();
+    }
+
+    /**
+     * Edits the attributes of a election node to new values.
+     */
+    public void updateElec(){
+        for(Election elec: Main.electionsList) {
+            if(elec.getId().equalsIgnoreCase(electionID.getText())) {
+                elec.setDate(textElectionDatePicker.getEditor().getText());
+                elecTypeHashTable.edit(elec.electionType, elec, textElectionType.getText(), elec);
+                elec.setElectionType(textElectionType.getText());
+                elecLocationHashTable.edit(elec.location, elec, textElectionLocation.getText(), elec);
+                elec.setLocation(textElectionLocation.getText());
+                elec.setNumberOfWinners(Integer.parseInt(textElectionNumberOfWinners.getText()));
+            } else {
+                System.out.println("There is no election by that ID");
+            }
+        }
+
+        textElectionType.clear();
+        textElectionLocation.clear();
+        textElectionDatePicker.getEditor().clear();
+        textElectionNumberOfWinners.clear();
+        electionID.clear();
+        updateElectionVBox();
     }
 
 
@@ -784,7 +847,7 @@ public class Controller {
 
     public void viewAll() {
         viewAllBox.getChildren().clear();
-        viewAllBox.getChildren().add(new Text("Politicians in Database:"));
+        viewAllBox.getChildren().add(new Text("Politicians in Database: "));
         for (Politician pol : Main.politicianList) {
             String polString = pol.toString() + "\n";
             Text polText = new Text();
@@ -794,10 +857,15 @@ public class Controller {
             viewAllBox.getChildren().add(polText);
         }
 
-        viewAllBox.getChildren().add(new Text("Elections in Database:"));
+        viewAllBox.getChildren().add(new Text("Elections in Database: "));
         for (Election elec : Main.electionsList) {
+            String elecString = elec.toString() + "\n";
+            Text elecText = new Text();
+            elecText.setText(elecString);
+            viewAllBox.getChildren().add(elecText);
+
             for(Candidate cand: elec.electionCandidateList) {
-                viewAllBox.getChildren().add(new Text("Candidates in:" + elec.getId()));
+                viewAllBox.getChildren().add(new Text("Candidates in: " + elec.getId()));
                 String candString = cand.toString() + "\n";
                 Text candText = new Text();
                 candText.setText(candString);
@@ -805,10 +873,7 @@ public class Controller {
                 viewAllBox.getChildren().add(candImageView);
                 viewAllBox.getChildren().add(candText);
             }
-            String elecString = elec.toString() + "\n";
-            Text elecText = new Text();
-            elecText.setText(elecString);
-            viewAllBox.getChildren().add(elecText);
+
         }
 
     }
@@ -871,7 +936,7 @@ public class Controller {
     public int findLargestPoliticianNamePos(List<Politician> polList, int length){
         int largestPos = 0;
         for(int i = 1; i<length;i++){
-            if(polList.accessAtIndex(i).getContents().getName().compareTo(polList.accessAtIndex(largestPos).getContents().getName())>0){
+            if(polList.accessAtIndex(i).getContents().getName().compareToIgnoreCase(polList.accessAtIndex(largestPos).getContents().getName())>0){
                 largestPos = i;
             }
         }
@@ -887,7 +952,7 @@ public class Controller {
     public int findLargestPoliticianPartyPos(List<Politician> polList, int length){
         int largestPos = 0;
         for(int i = 1; i<length;i++){
-            if(polList.accessAtIndex(i).getContents().getCurrentParty().compareTo(polList.accessAtIndex(largestPos).getContents().getCurrentParty()) > 0) {
+            if(polList.accessAtIndex(i).getContents().getCurrentParty().compareToIgnoreCase(polList.accessAtIndex(largestPos).getContents().getCurrentParty()) > 0) {
                 largestPos = i;
             }
         }
@@ -903,7 +968,7 @@ public class Controller {
     public int findLargestPoliticianCountyPos(List<Politician> polList, int length){
         int largestPos = 0;
         for(int i = 1; i<length;i++){
-            if(polList.accessAtIndex(i).getContents().getHomeCounty().compareTo(polList.accessAtIndex(largestPos).getContents().getHomeCounty()) > 0) {
+            if(polList.accessAtIndex(i).getContents().getHomeCounty().compareToIgnoreCase(polList.accessAtIndex(largestPos).getContents().getHomeCounty()) > 0) {
                 largestPos = i;
             }
         }
@@ -924,7 +989,7 @@ public class Controller {
     public int findLargestPoliticianPos(List<Politician> polList, int length){
         int largestPos = 0;
         for(int i = 1; i<length;i++){
-            if(polList.accessAtIndex(i).getContents().getName().compareTo(polList.accessAtIndex(largestPos).getContents().getName())>0){
+            if(polList.accessAtIndex(i).getContents().getName().compareToIgnoreCase(polList.accessAtIndex(largestPos).getContents().getName())>0){
                 largestPos = i;
             }
         }
@@ -1012,7 +1077,7 @@ public class Controller {
     public int findLargestCandidateNamePos(List<Candidate> candList, int length){
         int largestPos = 0;
         for(int i = 1; i<length;i++){
-            if(candList.accessAtIndex(i).getContents().getCandName().compareTo(candList.accessAtIndex(largestPos).getContents().getCandName())>0){
+            if(candList.accessAtIndex(i).getContents().getCandName().compareToIgnoreCase(candList.accessAtIndex(largestPos).getContents().getCandName())>0){
                 largestPos = i;
             }
         }
@@ -1028,7 +1093,7 @@ public class Controller {
     public int findLargestCandidatePartyPos(List<Candidate> candList, int length){
         int largestPos = 0;
         for(int i = 1; i<length;i++){
-            if(candList.accessAtIndex(i).getContents().getCandCurrentParty().compareTo(candList.accessAtIndex(largestPos).getContents().getCandCurrentParty()) > 0) {
+            if(candList.accessAtIndex(i).getContents().getCandCurrentParty().compareToIgnoreCase(candList.accessAtIndex(largestPos).getContents().getCandCurrentParty()) > 0) {
                 largestPos = i;
             }
         }
@@ -1044,7 +1109,7 @@ public class Controller {
     public int findLargestCandidateCountyPos(List<Candidate> candList, int length){
         int largestPos = 0;
         for(int i = 1; i<length;i++){
-            if(candList.accessAtIndex(i).getContents().getCandHomeCounty().compareTo(candList.accessAtIndex(largestPos).getContents().getCandHomeCounty()) > 0) {
+            if(candList.accessAtIndex(i).getContents().getCandHomeCounty().compareToIgnoreCase(candList.accessAtIndex(largestPos).getContents().getCandHomeCounty()) > 0) {
                 largestPos = i;
             }
         }
@@ -1064,7 +1129,7 @@ public class Controller {
     public int findLargestCandidatePos(List<Candidate> candList, int length){
         int largestPos = 0;
         for(int i = 1; i<length;i++){
-            if(candList.accessAtIndex(i).getContents().getCandName().compareTo(candList.accessAtIndex(largestPos).getContents().getCandName())>0){
+            if(candList.accessAtIndex(i).getContents().getCandName().compareToIgnoreCase(candList.accessAtIndex(largestPos).getContents().getCandName())>0){
                 largestPos = i;
             }
         }

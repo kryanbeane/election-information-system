@@ -257,12 +257,12 @@
                                  <children>
                                     <Button mnemonicParsing="false" onAction="#addElection" prefHeight="27.0" prefWidth="70.0" text="Add" VBox.vgrow="NEVER">
                                        <VBox.margin>
-                                          <Insets bottom="5.0" left="20.0" top="-30.0" />
+                                          <Insets bottom="5.0" left="20.0" top="-10.0" />
                                        </VBox.margin>
                                     </Button>
                                     <Button mnemonicParsing="false" onAction="#viewElections2" prefHeight="27.0" prefWidth="70.0" text="View" VBox.vgrow="NEVER">
                                        <VBox.margin>
-                                          <Insets left="20.0" />
+                                          <Insets bottom="5.0" left="20.0" top="5.0" />
                                        </VBox.margin>
                                     </Button>
                                     <Button mnemonicParsing="false" onAction="#sortElectionList" prefHeight="27.0" prefWidth="70.0" text="Sort">
@@ -272,7 +272,17 @@
                                     </Button>
                                     <Button mnemonicParsing="false" onAction="#deleteElection" prefWidth="70.0" text="Delete" VBox.vgrow="NEVER">
                                        <VBox.margin>
-                                          <Insets left="20.0" top="120.0" />
+                                          <Insets left="20.0" top="75.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onAction="#populateElection" prefWidth="70.0" text="Populate">
+                                       <VBox.margin>
+                                          <Insets left="20.0" top="10.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onAction="#updateElec" prefWidth="70.0" text="Update">
+                                       <VBox.margin>
+                                          <Insets left="20.0" top="10.0" />
                                        </VBox.margin>
                                     </Button>
                                  </children>
@@ -322,7 +332,7 @@
                                           <Insets left="20.0" right="20.0" />
                                        </VBox.margin>
                                     </TextField>
-                                    <Label prefHeight="17.0" prefWidth="195.0" text="Enter ID to Delete">
+                                    <Label prefHeight="17.0" prefWidth="195.0" text="Enter ID to Delete or Update">
                                        <VBox.margin>
                                           <Insets left="20.0" top="40.0" />
                                        </VBox.margin>

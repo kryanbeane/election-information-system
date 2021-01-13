@@ -260,7 +260,7 @@ public class List<F> implements Iterable<F>{
 
     public void clear() { //Empty list
         head=tail=null;
-        this.countOfContents=0;
+        countOfContents=0;
     }
 
     public  String printList() {

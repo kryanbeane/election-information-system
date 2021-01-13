@@ -29,6 +29,22 @@ public class Election {
         return numberOfWinners;
     }
 
+    public void setElectionType(String electionType) {
+        this.electionType = electionType;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public void setNumberOfWinners(int numberOfWinners) {
+        this.numberOfWinners = numberOfWinners;
+    }
+
     public Election(String Id, String electionType, String location, String date, int numberOfWinners) {
         this.Id = Id;
         this.electionType = electionType;
