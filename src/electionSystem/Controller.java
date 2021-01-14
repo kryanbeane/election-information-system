@@ -498,6 +498,7 @@ public class Controller {
             }
         } catch (Exception e) {
             System.out.println("You have not entered a valid ID!");
+            polID.clear();
         }
     }
 
@@ -667,6 +668,7 @@ public class Controller {
      * Updates politician VBox with recently added politicians.
      */
     public void updatePoliticianVBox(){
+        polVBox.setMaxHeight(6000);
         polVBox.getChildren().clear();
         polVBox.getChildren().add(new Text("Politicians in Database:"));
 
@@ -685,6 +687,7 @@ public class Controller {
      * @param election - Election to display.
      */
     public void updateCandidateVBox(Election election) {
+        candidateVBox.setMaxHeight(6000);
         candidateVBox.getChildren().clear();
         for(Candidate candidate: election.electionCandidateList) {
             String candString = candidate.toString()+"\n";
@@ -700,6 +703,7 @@ public class Controller {
      * Updates election VBox with recently added elections.
      */
     public void updateElectionVBox(){
+        elVBox.setMaxHeight(6000);
         elVBox.getChildren().clear();
         elVBox.getChildren().add(new Text("Elections in Database:"));
         for(Election el: Main.electionsList){
@@ -716,6 +720,7 @@ public class Controller {
      * @param politicianList - Politician list to display.
      */
     public void updatePoliticianSearchVBox(List<Politician> politicianList){
+        polSearchVBox.setMaxHeight(6000);
         polSearchVBox.getChildren().clear();
         polSearchVBox.getChildren().add(new Text("Politicians in Database:"));
         for(Politician pol: politicianList){
@@ -734,6 +739,7 @@ public class Controller {
      * @param candidateList - Candidate list to display.
      */
     public void updateCandidateSearchVBox(List<Candidate> candidateList){
+        candSearchVBox.setMaxHeight(6000);
         candSearchVBox.getChildren().clear();
         candSearchVBox.getChildren().add(new Text("Candidates in Database:"));
         for(Candidate cand: candidateList) {
@@ -751,6 +757,7 @@ public class Controller {
      * @param electionList - Election list to display.
      */
     public void updateElectionSearchVBox(List<Election> electionList){
+        elSearchVBox.setMaxHeight(6000);
         elSearchVBox.getChildren().clear();
         elSearchVBox.getChildren().add(new Text("Politicians in Database:"));
         for(Election el: electionList){
@@ -788,7 +795,7 @@ public class Controller {
             } else {
                 currentElection = null;
                 System.out.println(" That election does not exist");
-                return;
+
             }
         }
     }
@@ -846,6 +853,7 @@ public class Controller {
     }
 
     public void viewAll() {
+        viewAllBox.setMaxHeight(6000);
         viewAllBox.getChildren().clear();
         viewAllBox.getChildren().add(new Text("Politicians in Database: "));
         for (Politician pol : Main.politicianList) {
